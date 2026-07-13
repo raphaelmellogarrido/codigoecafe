@@ -47,6 +47,7 @@ const projects = [
     description: 'Painel administrativo com gráficos em tempo real e relatórios personalizáveis.',
     tags: ['React', 'D3.js', 'Node.js'],
     gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=75',
     path: '/projetos/dashboard-analytics',
   },
   {
@@ -54,6 +55,7 @@ const projects = [
     description: 'Loja online completa com pagamentos, gestão de stock e área de cliente.',
     tags: ['React', 'Node.js', 'SQLite'],
     gradient: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
+    image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=900&q=75',
     path: '/projetos/ecommerce-platform',
   },
   {
@@ -61,6 +63,7 @@ const projects = [
     description: 'Aplicação de entregas em tempo real com tracking e pagamentos.',
     tags: ['React', 'React Router', 'Leaflet'],
     gradient: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+    image: 'https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?auto=format&fit=crop&w=900&q=75',
     path: '/projetos/app-delivery',
   },
   {
@@ -68,6 +71,7 @@ const projects = [
     description: 'ERP personalizado para automatizar processos internos da empresa.',
     tags: ['React', 'Node.js', 'SQLite'],
     gradient: 'linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)',
+    image: 'https://images.unsplash.com/photo-1758876202468-5ffe0ee61f07?auto=format&fit=crop&w=900&q=75',
     path: '/projetos/sistema-gestao',
   },
   {
@@ -75,6 +79,7 @@ const projects = [
     description: 'Landing page de alta conversão para startup de tecnologia.',
     tags: ['React', 'Tailwind', 'Framer Motion'],
     gradient: 'linear-gradient(135deg, #ec4899 0%, #be185d 100%)',
+    image: 'https://images.unsplash.com/photo-1768293336571-c48f8765a82d?auto=format&fit=crop&w=900&q=75',
     path: '/projetos/landing-page-saas',
   },
   {
@@ -82,6 +87,7 @@ const projects = [
     description: 'Site portfolio interativo com animações 3D e efeitos visuais.',
     tags: ['Three.js', 'GSAP', 'React'],
     gradient: 'linear-gradient(135deg, #06b6d4 0%, #0e7490 100%)',
+    image: 'https://images.unsplash.com/photo-1768729797971-472ce92e7a71?auto=format&fit=crop&w=900&q=75',
     path: '/projetos/portfolio-criativo',
   },
 ];

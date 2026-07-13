@@ -15,7 +15,10 @@ export default function HomeScreen() {
       <div className="dl-restaurant-list">
         {restaurants.map((r) => (
           <Link key={r.id} to={`/projetos/app-delivery/restaurantes/${r.id}`} className="dl-restaurant-card">
-            <div className="dl-restaurant-thumb" style={{ background: r.gradient }} />
+            <div
+              className="dl-restaurant-thumb"
+              style={{ backgroundImage: `${r.gradient}, url(${r.image})` }}
+            />
             <div className="dl-restaurant-info">
               <h3>{r.name}</h3>
               <span className="dl-restaurant-category">{r.category}</span>

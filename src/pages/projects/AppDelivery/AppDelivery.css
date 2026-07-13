@@ -93,6 +93,9 @@
   height: 64px;
   border-radius: 10px;
   flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: soft-light;
 }
 
 .dl-restaurant-info h3 {
@@ -131,6 +134,9 @@
 .dl-restaurant-banner {
   height: 110px;
   border-radius: 14px;
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: soft-light;
 }
 
 .dl-menu-title {

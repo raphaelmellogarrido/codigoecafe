@@ -17,7 +17,7 @@ function ProjectCard({ project, index }) {
     <div
       ref={ref}
       className={`project-card reveal reveal-delay-${(index % 3) + 1}`}
-      style={{ '--card-gradient': project.gradient }}
+      style={{ '--card-gradient': project.gradient, '--card-image': `url(${project.image})` }}
     >
       <div className="project-image">
         <div className="project-overlay">

@@ -118,7 +118,9 @@
   height: 160px;
   border-radius: 10px;
   margin-bottom: 1.25rem;
-  background: linear-gradient(135deg, #8b5cf6, #22d3ee);
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: soft-light;
 }
 
 .pc-work-card h3 {

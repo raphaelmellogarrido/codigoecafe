@@ -35,6 +35,7 @@ db.exec(`
     price_cents INTEGER NOT NULL,
     category TEXT NOT NULL,
     gradient TEXT NOT NULL,
+    image TEXT NOT NULL DEFAULT '',
     stock INTEGER NOT NULL DEFAULT 20
   );
 
@@ -80,8 +81,8 @@ const productCount = db.prepare('SELECT COUNT(*) AS count FROM products').get().
 
 if (productCount === 0) {
   const seed = db.prepare(`
-    INSERT INTO products (name, description, price_cents, category, gradient, stock)
-    VALUES (@name, @description, @price_cents, @category, @gradient, @stock)
+    INSERT INTO products (name, description, price_cents, category, gradient, image, stock)
+    VALUES (@name, @description, @price_cents, @category, @gradient, @image, @stock)
   `);
 
   const products = [
@@ -91,6 +92,7 @@ if (productCount === 0) {
       price_cents: 34900,
       category: 'Periféricos',
       gradient: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+      image: 'https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?auto=format&fit=crop&w=600&q=75',
       stock: 14,
     },
     {
@@ -99,6 +101,7 @@ if (productCount === 0) {
       price_cents: 18900,
       category: 'Periféricos',
       gradient: 'linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)',
+      image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=600&q=75',
       stock: 22,
     },
     {
@@ -107,6 +110,7 @@ if (productCount === 0) {
       price_cents: 189900,
       category: 'Monitores',
       gradient: 'linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)',
+      image: 'https://images.unsplash.com/photo-1578091879915-33ee869e2cd7?auto=format&fit=crop&w=600&q=75',
       stock: 6,
     },
     {
@@ -115,6 +119,7 @@ if (productCount === 0) {
       price_cents: 27900,
       category: 'Áudio',
       gradient: 'linear-gradient(135deg, #ec4899 0%, #be185d 100%)',
+      image: 'https://images.unsplash.com/photo-1591105866700-cb5d708ccd93?auto=format&fit=crop&w=600&q=75',
       stock: 18,
     },
     {
@@ -123,6 +128,7 @@ if (productCount === 0) {
       price_cents: 22900,
       category: 'Vídeo',
       gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+      image: 'https://images.unsplash.com/photo-1726127461372-547b9ffa4236?auto=format&fit=crop&w=600&q=75',
       stock: 11,
     },
     {
@@ -131,6 +137,7 @@ if (productCount === 0) {
       price_cents: 8900,
       category: 'Acessórios',
       gradient: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+      image: 'https://images.unsplash.com/photo-1760376789487-994070337c76?auto=format&fit=crop&w=600&q=75',
       stock: 40,
     },
   ];

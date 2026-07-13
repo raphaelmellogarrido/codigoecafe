@@ -35,7 +35,10 @@ export default function MenuScreen() {
         <HiArrowLeft /> Voltar
       </button>
 
-      <div className="dl-restaurant-banner" style={{ background: restaurant.gradient }} />
+      <div
+        className="dl-restaurant-banner"
+        style={{ backgroundImage: `${restaurant.gradient}, url(${restaurant.image})` }}
+      />
       <h1 className="dl-menu-title">{restaurant.name}</h1>
       <p className="dl-menu-subtitle">{restaurant.category} · {restaurant.eta}</p>
 

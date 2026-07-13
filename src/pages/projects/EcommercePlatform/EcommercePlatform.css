@@ -133,6 +133,9 @@
 
 .ep-product-thumb {
   height: 140px;
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: soft-light;
 }
 
 .ep-product-body {
@@ -244,6 +247,9 @@
   width: 52px;
   height: 52px;
   border-radius: 10px;
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: soft-light;
 }
 
 .ep-cart-info h3 {

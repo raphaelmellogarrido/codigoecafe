@@ -13,10 +13,26 @@ import './PortfolioCriativo.css';
 gsap.registerPlugin(ScrollTrigger);
 
 const works = [
-  { title: 'Nébula', category: 'Identidade visual' },
-  { title: 'Aurora', category: 'Web design' },
-  { title: 'Prisma', category: 'Motion design' },
-  { title: 'Vórtice', category: 'Experiência 3D' },
+  {
+    title: 'Nébula',
+    category: 'Identidade visual',
+    image: 'https://images.unsplash.com/photo-1763705857736-2b4f16a33758?auto=format&fit=crop&w=600&q=75',
+  },
+  {
+    title: 'Aurora',
+    category: 'Web design',
+    image: 'https://images.unsplash.com/photo-1772272935464-2e90d8218987?auto=format&fit=crop&w=600&q=75',
+  },
+  {
+    title: 'Prisma',
+    category: 'Motion design',
+    image: 'https://images.unsplash.com/photo-1699060463533-94ceb428c67f?auto=format&fit=crop&w=600&q=75',
+  },
+  {
+    title: 'Vórtice',
+    category: 'Experiência 3D',
+    image: 'https://images.unsplash.com/photo-1643139863038-7355941e9e89?auto=format&fit=crop&w=600&q=75',
+  },
 ];
 
 export default function PortfolioCriativo() {
@@ -81,7 +97,12 @@ export default function PortfolioCriativo() {
         <div className="pc-work-grid">
           {works.map((w, i) => (
             <div key={w.title} className="pc-work-card" ref={(el) => (workRefs.current[i] = el)}>
-              <div className="pc-work-thumb" />
+              <div
+                className="pc-work-thumb"
+                style={{
+                  backgroundImage: `linear-gradient(135deg, rgba(139, 92, 246, 0.55), rgba(34, 211, 238, 0.55)), url(${w.image})`,
+                }}
+              />
               <h3>{w.title}</h3>
               <span>{w.category}</span>
             </div>

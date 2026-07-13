@@ -28,7 +28,10 @@ export default function CartPage() {
       <div className="ep-cart-list">
         {items.map((item) => (
           <div key={item.productId} className="ep-cart-row">
-            <div className="ep-cart-thumb" style={{ background: item.gradient }} />
+            <div
+              className="ep-cart-thumb"
+              style={{ backgroundImage: `${item.gradient}, url(${item.image})` }}
+            />
             <div className="ep-cart-info">
               <h3>{item.name}</h3>
               <span>{formatPrice(item.price_cents)}</span>

@@ -42,7 +42,10 @@ export default function ShopPage() {
       <div className="ep-grid">
         {products.map((product) => (
           <div key={product.id} className="ep-product-card">
-            <div className="ep-product-thumb" style={{ background: product.gradient }} />
+            <div
+              className="ep-product-thumb"
+              style={{ backgroundImage: `${product.gradient}, url(${product.image})` }}
+            />
             <div className="ep-product-body">
               <span className="ep-product-category">{product.category}</span>
               <h3>{product.name}</h3>

@@ -31,7 +31,10 @@
   position: relative;
   width: 100%;
   height: 200px;
-  background: var(--card-gradient);
+  background-image: var(--card-gradient), var(--card-image);
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: soft-light;
   overflow: hidden;
 }
 

@@ -32,6 +32,7 @@ export function CartProvider({ children }) {
           name: product.name,
           price_cents: product.price_cents,
           gradient: product.gradient,
+          image: product.image,
           quantity: 1,
         },
       ];
