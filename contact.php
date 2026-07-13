@@ -2,10 +2,18 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 
+require __DIR__ . '/config.php';
+require __DIR__ . '/phpmailer/src/Exception.php';
+require __DIR__ . '/phpmailer/src/PHPMailer.php';
+require __DIR__ . '/phpmailer/src/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $name = htmlspecialchars(trim($_POST["name"] ?? ''));
     $email = filter_var(trim($_POST["email"] ?? ''), FILTER_VALIDATE_EMAIL);
-    $body = "Nome: $name\nE-mail: $email\nAssunto: $subject_field\n\nMensagem:\n$message";
+    $subject_field = htmlspecialchars(trim($_POST["subject"] ?? ''));
     $message = htmlspecialchars(trim($_POST["message"] ?? ''));
 
     if (!$name || !$email || !$message) {
@@ -14,17 +22,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 
-    $to = "contacto@codigoecafe.com";
-    $subject = "Novo contato pelo site - $name";
-    $body = "Nome: $name\nE-mail: $email\n\nMensagem:\n$message";
-    $headers = "From: no-reply@codigoecafe.com\r\nReply-To: $email";
-    $subject_field = htmlspecialchars(trim($_POST["subject"] ?? ''));
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.hostinger.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = SMTP_USER;
+        $mail->Password = SMTP_PASS;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port = 465;
 
-    if (mail($to, $subject, $body, $headers)) {
+        $mail->setFrom(SMTP_USER, 'Site CodigoECafe');
+        $mail->addAddress(SMTP_USER);
+        $mail->addReplyTo($email, $name);
+
+        $mail->isHTML(false);
+        $mail->Subject = "Novo contato pelo site - $name";
+        $mail->Body = "Nome: $name\nE-mail: $email\nAssunto: $subject_field\n\nMensagem:\n$message";
+
+        $mail->send();
         echo json_encode(["success" => true]);
-    } else {
+    } catch (Exception $e) {
         http_response_code(500);
-        echo json_encode(["success" => false, "error" => "Erro ao enviar e-mail."]);
+        echo json_encode(["success" => false, "error" => $mail->ErrorInfo]);
     }
 } else {
     http_response_code(405);
