@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { HiArrowLeft } from 'react-icons/hi';
 import { FaDollarSign, FaUsers, FaChartLine, FaClock } from 'react-icons/fa';
+import { API_BASE } from '../../../lib/apiBase';
 import LineChart from './LineChart';
 import BarChart from './BarChart';
 import './DashboardAnalytics.css';
@@ -39,9 +40,9 @@ export default function DashboardAnalytics() {
 
   useEffect(() => {
     Promise.all([
-      fetch('/api/analytics/overview').then((r) => r.json()),
-      fetch('/api/analytics/revenue').then((r) => r.json()),
-      fetch('/api/analytics/traffic').then((r) => r.json()),
+      fetch(`${API_BASE}/api/analytics/overview`).then((r) => r.json()),
+      fetch(`${API_BASE}/api/analytics/revenue`).then((r) => r.json()),
+      fetch(`${API_BASE}/api/analytics/traffic`).then((r) => r.json()),
     ])
       .then(([overviewData, revenueData, trafficData]) => {
         setOverview(overviewData);
