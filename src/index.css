@@ -229,6 +229,9 @@ ol {
 .btn-primary span {
   position: relative;
   z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .btn-outline {

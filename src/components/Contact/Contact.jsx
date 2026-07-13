@@ -95,17 +95,19 @@ export default function Contact() {
             </div>
 
             <button type="submit" className="btn-primary form-submit" disabled={isSubmitting}>
-              {isSubmitting ? (
-                "Enviando..."
-              ) : sent ? (
-                <>
-                  <FaCheckCircle /> Mensagem Enviada!
-                </>
-              ) : (
-                <>
-                  <FaPaperPlane /> Enviar Mensagem
-                </>
-              )}
+              <span>
+                {isSubmitting ? (
+                  "Enviando..."
+                ) : sent ? (
+                  <>
+                    <FaCheckCircle /> Mensagem Enviada!
+                  </>
+                ) : (
+                  <>
+                    <FaPaperPlane /> Enviar Mensagem
+                  </>
+                )}
+              </span>
             </button>
 
             {error && <p className="form-error">Algo correu mal. Tenta novamente.</p>}
