@@ -1,9 +1,3 @@
-// src/components/Contact/Contact.jsx
-// Duas colunas:
-//  - Esquerda: formulário com useState para gerir o estado
-//  - Direita: informações de contacto (email, telefone, localização)
-// useState para campos do form; handleSubmit com preventDefault e feedback.
-
 import { useState } from "react";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane, FaCheckCircle } from "react-icons/fa";
 import { HiMail } from "react-icons/hi";
@@ -46,7 +40,10 @@ export default function Contact() {
       const data = text ? JSON.parse(text) : { success: false };
 
       if (data.success) {
-        // sucesso
+        setSent(true);
+        setError(false);
+        setForm({ name: "", email: "", subject: "", message: "" }); // reseta o form
+        setTimeout(() => setSent(false), 4000); // volta ao texto normal depois de 4s
       } else {
         setError(true);
       }

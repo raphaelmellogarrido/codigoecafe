@@ -19,7 +19,7 @@ header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 
-require __DIR__ . '/config.php';
+require dirname(__DIR__) . '/config.php';
 require __DIR__ . '/phpmailer/src/Exception.php';
 require __DIR__ . '/phpmailer/src/PHPMailer.php';
 require __DIR__ . '/phpmailer/src/SMTP.php';
@@ -40,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     $mail = new PHPMailer(true);
+    $mail->CharSet = 'UTF-8';
     try {
         $mail->isSMTP();
         $mail->Host = 'smtp.hostinger.com';
