@@ -25,15 +25,36 @@ export default function Contact() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // Submete o formulário (aqui só simula; em produção ligarias a um backend)
-  const handleSubmit = (e) => {
+  const [error, setError] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", form);
-    setSent(true);
-    // Limpa o formulário
-    setForm({ name: "", email: "", subject: "", message: "" });
-    // Esconde a mensagem de sucesso após 4 segundos
-    setTimeout(() => setSent(false), 4000);
+
+    const formData = new FormData();
+    formData.append("name", form.name);
+    formData.append("email", form.email);
+    formData.append("subject", form.subject);
+    formData.append("message", form.message);
+
+    try {
+      const response = await fetch("/contact.php", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        setSent(true);
+        setError(false);
+        setForm({ name: "", email: "", subject: "", message: "" }); // limpa o form
+        setTimeout(() => setSent(false), 4000); // volta ao normal depois de 4s
+      } else {
+        setError(true);
+      }
+    } catch (err) {
+      console.error(err);
+      setError(true);
+    }
   };
 
   return (
@@ -81,6 +102,8 @@ export default function Contact() {
                 </>
               )}
             </button>
+
+            {error && <p className="form-error">Algo correu mal. Tenta novamente.</p>}
           </form>
 
           {/* Coluna direita — Informações */}
