@@ -1,0 +1,148 @@
+body {
+  background-color: #000000;
+  background-image: linear-gradient(180deg, #000000 0%, #3a3a3a 100%);
+  background-attachment: fixed;
+  margin: 0;
+  height: 100vh;
+  font-family: "Geist Pixel", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+p {
+  /* color: #757272; */
+  color: #cac8c8;
+}
+
+.main_container {
+  text-align: center;
+}
+
+.destaque {
+  color: rgb(212, 79, 79);
+}
+
+.contacto-container {
+  background: transparent; /* Remove a div duplicada exterior */
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  max-width: 600px;
+  margin: 40px auto;
+}
+
+.formulario-contacto {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;
+  padding-bottom: 20px;
+}
+
+.titulo-formulario {
+  color: #ffffff;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.grupo-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.grupo-campo label {
+  font-weight: 500;
+  font-size: 11pt;
+  color: #cbd5e1;
+}
+
+.grupo-campo input,
+.grupo-campo textarea {
+  width: 100%;
+  padding: 12px;
+  background-color: #1f2937;
+  border: 1px solid #334155;
+  color: #ffffff;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 11pt;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.grupo-campo input::placeholder,
+.grupo-campo textarea::placeholder {
+  color: #64748b;
+}
+
+.grupo-campo input:focus,
+.grupo-campo textarea:focus {
+  border-color: #7ed957;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+  background-color: #1f2937;
+}
+
+.grupo-campo textarea {
+  resize: vertical;
+}
+
+.botao-enviar {
+  background: linear-gradient(135deg, #236d04);
+  color: #ffffff;
+  border: none;
+  padding: 14px;
+  width: 100%;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+  transition: all 0.3s ease;
+  margin-top: 15px;
+}
+
+.botao-enviar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.6);
+  filter: brightness(1.1);
+}
+
+/* Mensagem de Sucesso */
+#mensagem-sucesso {
+  background-color: #111827;
+  border: 2px solid #7ed957;
+  border-radius: 12px;
+  color: #ffffff;
+  padding: 30px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Customização do Plugin de Telefone (intl-tel-input) */
+.iti {
+  width: 100%;
+}
+
+.iti input#tlmv {
+  padding-left: 90px !important; /* Mantido para não quebrar a bandeira */
+}
+
+.iti__country-list {
+  border: 1px solid #334155;
+  background-color: #1f2937;
+  color: #ffffff;
+  z-index: 10;
+}
+
+.iti__country:hover {
+  background-color: #334155;
+}
