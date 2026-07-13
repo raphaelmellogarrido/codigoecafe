@@ -21,8 +21,13 @@ export default function Contact() {
 
   const [error, setError] = useState(false);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return; // trava extra, por segurança
+
+    setIsSubmitting(true);
 
     const formData = new FormData();
     formData.append("name", form.name);
@@ -42,14 +47,16 @@ export default function Contact() {
       if (data.success) {
         setSent(true);
         setError(false);
-        setForm({ name: "", email: "", subject: "", message: "" }); // reseta o form
-        setTimeout(() => setSent(false), 4000); // volta ao texto normal depois de 4s
+        setForm({ name: "", email: "", subject: "", message: "" });
+        setTimeout(() => setSent(false), 4000);
       } else {
         setError(true);
       }
     } catch (err) {
       console.error(err);
       setError(true);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
