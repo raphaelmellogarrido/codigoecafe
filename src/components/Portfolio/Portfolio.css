@@ -75,6 +75,16 @@
   transform: translateX(4px);
 }
 
+.project-link-disabled {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: default;
+}
+
+.project-link-disabled:hover {
+  transform: none;
+}
+
 .project-body {
   padding: 1.5rem;
 }

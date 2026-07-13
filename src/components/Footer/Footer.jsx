@@ -5,15 +5,14 @@
 //  - Copyright
 //  - Linha "Feito com ☕ e React"
 
-import { FaGithub, FaLinkedin, FaInstagram, FaTwitter } from 'react-icons/fa';
-import { FaCoffee } from 'react-icons/fa';
-import './Footer.css';
+import { FaGithub, FaLinkedin, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaCoffee } from "react-icons/fa";
+import "./Footer.css";
 
 const socials = [
-  { icon: FaGithub, href: '#', label: 'GitHub' },
-  { icon: FaLinkedin, href: '#', label: 'LinkedIn' },
-  { icon: FaInstagram, href: '#', label: 'Instagram' },
-  { icon: FaTwitter, href: '#', label: 'Twitter / X' },
+  { icon: FaGithub, href: "https://github.com/raphaelmellogarrido", label: "GitHub" },
+  { icon: FaLinkedin, href: "https://www.linkedin.com/in/raphaelmgs/", label: "LinkedIn" },
+  { icon: FaInstagram, href: "https://www.instagram.com/codigoecafe.dev/", label: "Instagram" },
 ];
 
 export default function Footer() {
@@ -24,22 +23,14 @@ export default function Footer() {
           <a href="#home" className="footer-logo">
             <FaCoffee /> Código e <span className="gradient-text">Café</span>
           </a>
-          <p className="footer-description">
-            Desenvolvimento Full Stack com Paixão. Transformamos ideias em produtos digitais
-            de excelência.
-          </p>
+          <p className="footer-description">Desenvolvimento Full Stack com Paixão. Transformamos ideias em produtos digitais de excelência.</p>
         </div>
 
         <div className="footer-socials">
           {socials.map((social, i) => {
             const Icon = social.icon;
             return (
-              <a
-                key={i}
-                href={social.href}
-                className="footer-social-link"
-                aria-label={social.label}
-              >
+              <a key={i} href={social.href} className="footer-social-link" aria-label={social.label} target="_blank">
                 <Icon />
               </a>
             );

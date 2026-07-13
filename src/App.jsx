@@ -1,120 +1,56 @@
 // src/App.jsx
-// Componente raiz: importa todos os componentes e organiza-os em ordem.
-// Os dados (services, projects, testimonials) ficam aqui como constantes,
-// para serem facilmente editáveis sem entrar nos componentes.
+// Componente raiz: só define as rotas da aplicação.
+// Cada rota aponta para uma página em src/pages/.
 
-import Navbar from './components/Navbar/Navbar';
-import Hero from './components/Hero/Hero';
-import Services from './components/Services/Services';
-import Portfolio from './components/Portfolio/Portfolio';
-import Stats from './components/Stats/Stats';
-import Testimonials from './components/Testimonials/Testimonials';
-import Contact from './components/Contact/Contact';
-import Footer from './components/Footer/Footer';
-
-// Dados dos serviços
-const services = [
-  {
-    icon: 'FaCode',
-    title: 'Desenvolvimento Web',
-    description: 'Sites e aplicações web modernas, rápidas e totalmente responsivas.',
-    features: ['React & Next.js', 'Performance otimizada', 'SEO técnico'],
-  },
-  {
-    icon: 'FaMobileScreen',
-    title: 'Aplicações Mobile',
-    description: 'Apps nativos e multiplataforma para iOS e Android.',
-    features: ['React Native', 'UI/UX Mobile-first', 'Integração com APIs'],
-  },
-  {
-    icon: 'FaPalette',
-    title: 'UI/UX Design',
-    description: 'Interfaces intuitivas e visualmente marcantes.',
-    features: ['Prototipagem em Figma', 'Design Systems', 'Testes com utilizadores'],
-  },
-  {
-    icon: 'FaLightbulb',
-    title: 'Consultoria Tech',
-    description: 'Orientação estratégica para o teu projeto digital.',
-    features: ['Arquitetura de software', 'Escolha de stack', 'Code review'],
-  },
-];
-
-// Dados dos projetos do portfólio
-const projects = [
-  {
-    name: 'Dashboard Analytics',
-    description: 'Painel administrativo com gráficos em tempo real e relatórios personalizáveis.',
-    tags: ['React', 'D3.js', 'Node.js'],
-    gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-  },
-  {
-    name: 'E-commerce Platform',
-    description: 'Loja online completa com pagamentos, gestão de stock e área de cliente.',
-    tags: ['Next.js', 'Stripe', 'PostgreSQL'],
-    gradient: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
-  },
-  {
-    name: 'App de Delivery',
-    description: 'Aplicação de entregas em tempo real com tracking e pagamentos.',
-    tags: ['React Native', 'Firebase', 'Maps API'],
-    gradient: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-  },
-  {
-    name: 'Sistema de Gestão',
-    description: 'ERP personalizado para automatizar processos internos da empresa.',
-    tags: ['Vue.js', 'Laravel', 'MySQL'],
-    gradient: 'linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)',
-  },
-  {
-    name: 'Landing Page SaaS',
-    description: 'Landing page de alta conversão para startup de tecnologia.',
-    tags: ['React', 'Tailwind', 'Framer Motion'],
-    gradient: 'linear-gradient(135deg, #ec4899 0%, #be185d 100%)',
-  },
-  {
-    name: 'Portfolio Criativo',
-    description: 'Site portfolio interativo com animações 3D e efeitos visuais.',
-    tags: ['Three.js', 'GSAP', 'React'],
-    gradient: 'linear-gradient(135deg, #06b6d4 0%, #0e7490 100%)',
-  },
-];
-
-// Dados dos testemunhos
-const testimonials = [
-  {
-    text: 'O Código e Café transformou completamente a nossa presença digital. O site novo gerou um aumento de 200% nas conversões em apenas 3 meses.',
-    name: 'Maria Santos',
-    role: 'CEO, TechStart',
-    initials: 'MS',
-  },
-  {
-    text: 'Profissionais excepcionais. Entregaram o projeto antes do prazo e a qualidade superou todas as expectativas. Recomendo vivamente.',
-    name: 'João Pereira',
-    role: 'CTO, InnovateLab',
-    initials: 'JP',
-  },
-  {
-    text: 'A equipa entendeu perfeitamente o que precisávamos. Comunicação impecável e resultados que falam por si. Parceria de longo prazo.',
-    name: 'Ana Costa',
-    role: 'Diretora Marketing, BrandCo',
-    initials: 'AC',
-  },
-];
+import { Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import LandingPageSaaS from './pages/projects/LandingPageSaaS/LandingPageSaaS';
+import PortfolioCriativo from './pages/projects/PortfolioCriativo/PortfolioCriativo';
+import DashboardAnalytics from './pages/projects/DashboardAnalytics/DashboardAnalytics';
+import EcommercePlatform from './pages/projects/EcommercePlatform/EcommercePlatform';
+import ShopPage from './pages/projects/EcommercePlatform/ShopPage';
+import CartPage from './pages/projects/EcommercePlatform/CartPage';
+import CheckoutPage from './pages/projects/EcommercePlatform/CheckoutPage';
+import OrdersPage from './pages/projects/EcommercePlatform/OrdersPage';
+import AuthPage from './pages/projects/EcommercePlatform/AuthPage';
+import AppDelivery from './pages/projects/AppDelivery/AppDelivery';
+import HomeScreen from './pages/projects/AppDelivery/HomeScreen';
+import MenuScreen from './pages/projects/AppDelivery/MenuScreen';
+import CartScreen from './pages/projects/AppDelivery/CartScreen';
+import TrackingScreen from './pages/projects/AppDelivery/TrackingScreen';
+import SistemaGestao from './pages/projects/SistemaGestao/SistemaGestao';
+import OverviewPage from './pages/projects/SistemaGestao/OverviewPage';
+import ClientsPage from './pages/projects/SistemaGestao/ClientsPage';
+import TasksPage from './pages/projects/SistemaGestao/TasksPage';
 
 export default function App() {
   return (
-    <>
-      <Navbar />
-      <main>
-        <Hero />
-        <Services services={services} />
-        <Portfolio projects={projects} />
-        <Stats />
-        <Testimonials testimonials={testimonials} />
-        <Contact />
-      </main>
-      <Footer />
-    </>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/projetos/landing-page-saas" element={<LandingPageSaaS />} />
+      <Route path="/projetos/portfolio-criativo" element={<PortfolioCriativo />} />
+      <Route path="/projetos/dashboard-analytics" element={<DashboardAnalytics />} />
+
+      <Route path="/projetos/ecommerce-platform" element={<EcommercePlatform />}>
+        <Route index element={<ShopPage />} />
+        <Route path="carrinho" element={<CartPage />} />
+        <Route path="finalizar" element={<CheckoutPage />} />
+        <Route path="pedidos" element={<OrdersPage />} />
+        <Route path="entrar" element={<AuthPage />} />
+      </Route>
+
+      <Route path="/projetos/app-delivery" element={<AppDelivery />}>
+        <Route index element={<HomeScreen />} />
+        <Route path="restaurantes/:id" element={<MenuScreen />} />
+        <Route path="carrinho" element={<CartScreen />} />
+        <Route path="pedido" element={<TrackingScreen />} />
+      </Route>
+
+      <Route path="/projetos/sistema-gestao" element={<SistemaGestao />}>
+        <Route index element={<OverviewPage />} />
+        <Route path="clientes" element={<ClientsPage />} />
+        <Route path="tarefas" element={<TasksPage />} />
+      </Route>
+    </Routes>
   );
 }

@@ -5,6 +5,7 @@
 //  - Botão "Ver Projeto"
 // Hover: overlay escuro com zoom
 
+import { Link } from 'react-router-dom';
 import { HiArrowRight } from 'react-icons/hi';
 import useScrollReveal from '../../hooks/useScrollReveal';
 import './Portfolio.css';
@@ -20,9 +21,13 @@ function ProjectCard({ project, index }) {
     >
       <div className="project-image">
         <div className="project-overlay">
-          <a href="#" className="project-link">
-            Ver Projeto <HiArrowRight />
-          </a>
+          {project.path ? (
+            <Link to={project.path} className="project-link">
+              Ver Projeto <HiArrowRight />
+            </Link>
+          ) : (
+            <span className="project-link project-link-disabled">Em breve</span>
+          )}
         </div>
       </div>
       <div className="project-body">

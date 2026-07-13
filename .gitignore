@@ -3,10 +3,12 @@ dist
 dist-ssr
 *.local
 config.php
+server/data/*.sqlite*
 
 # Editor
 .vscode/*
 !.vscode/extensions.json
+.claude
 .idea
 .DS_Store
 *.suo

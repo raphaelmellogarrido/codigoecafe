@@ -58,13 +58,18 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  // Fecha o menu mobile ao clicar num link
-  const handleLinkClick = () => setMenuOpen(false);
+  // Faz scroll suave até à secção sem alterar o URL (evita o "#hash" na barra de endereço)
+  // e fecha o menu mobile ao clicar num link
+  const handleLinkClick = (e, href) => {
+    e.preventDefault();
+    document.getElementById(href.slice(1))?.scrollIntoView({ behavior: 'smooth' });
+    setMenuOpen(false);
+  };
 
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container container">
-        <a href="#home" className="navbar-logo" onClick={handleLinkClick}>
+        <a href="#home" className="navbar-logo" onClick={(e) => handleLinkClick(e, '#home')}>
           <FaCoffee className="logo-icon" />
           <span>
             Código e <span className="gradient-text">Café</span>
@@ -76,7 +81,7 @@ export default function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
-                onClick={handleLinkClick}
+                onClick={(e) => handleLinkClick(e, link.href)}
                 className={activeSection === link.href.slice(1) ? 'active' : ''}
               >
                 {link.label}
