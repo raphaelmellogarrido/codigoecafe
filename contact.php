@@ -10,7 +10,7 @@ register_shutdown_function(function () {
             header("Content-Type: application/json");
             http_response_code(500);
         }
-        echo json_encode(["success" => false, "error" => "Erro interno no servidor."]);
+        echo json_encode(["success" => false, "error" => $error['message'] . " em " . $error['file'] . ":" . $error['line']]);
     }
 });
 
@@ -59,9 +59,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $mail->send();
         echo json_encode(["success" => true]);
-    } catch (Exception $e) {
+    } catch (\Throwable $e) {
         http_response_code(500);
-        echo json_encode(["success" => false, "error" => $mail->ErrorInfo]);
+        echo json_encode(["success" => false, "error" => $e->getMessage()]);
     }
 } else {
     http_response_code(405);
