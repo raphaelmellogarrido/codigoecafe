@@ -94,8 +94,10 @@ export default function Contact() {
               <textarea id="message" name="message" value={form.message} onChange={handleChange} placeholder="Conta-nos mais sobre o teu projeto..." rows="5" required />
             </div>
 
-            <button type="submit" className="btn-primary form-submit">
-              {sent ? (
+            <button type="submit" className="btn-primary form-submit" disabled={isSubmitting}>
+              {isSubmitting ? (
+                "Enviando..."
+              ) : sent ? (
                 <>
                   <FaCheckCircle /> Mensagem Enviada!
                 </>
