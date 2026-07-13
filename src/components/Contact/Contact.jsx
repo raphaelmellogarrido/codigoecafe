@@ -41,13 +41,12 @@ export default function Contact() {
         method: "POST",
         body: formData,
       });
-      const data = await response.json();
+
+      const text = await response.text();
+      const data = text ? JSON.parse(text) : { success: false };
 
       if (data.success) {
-        setSent(true);
-        setError(false);
-        setForm({ name: "", email: "", subject: "", message: "" }); // limpa o form
-        setTimeout(() => setSent(false), 4000); // volta ao normal depois de 4s
+        // sucesso
       } else {
         setError(true);
       }

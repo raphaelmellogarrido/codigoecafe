@@ -1,4 +1,21 @@
 <?php
+
+ini_set('display_errors', 0); // não mostra erro em HTML, só loga
+error_reporting(E_ALL);
+
+register_shutdown_function(function () {
+    $error = error_get_last();
+    if ($error && in_array($error['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
+        if (!headers_sent()) {
+            header("Content-Type: application/json");
+            http_response_code(500);
+        }
+        echo json_encode(["success" => false, "error" => "Erro interno no servidor."]);
+    }
+});
+
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 
