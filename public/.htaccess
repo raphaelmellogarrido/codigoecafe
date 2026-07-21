@@ -1,12 +1,29 @@
 # Necessário para o React Router funcionar em hospedagem Apache (Hostinger):
+
 # qualquer rota que não seja um ficheiro/pasta real é reencaminhada para index.html,
+
 # para o React tratar da navegação no lado do cliente.
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
 
-  # Não reescreve pedidos a ficheiros ou pastas que existem de verdade
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+# Não reescreve pedidos a ficheiros ou pastas que existem de verdade
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
 </IfModule>
+
+RewriteEngine On
+
+# 1. Se acessar COM www, redireciona para a versão SEM www
+
+RewriteCond %{HTTP_HOST} ^www\.(._)$ [NC]
+RewriteRule ^(._)$ https://%1/$1 [R=301,L]
+
+# 2. Mantém o React Router funcionando perfeitamente sem quebrar rotas
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
