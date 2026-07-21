@@ -2,26 +2,26 @@
 // Componente raiz: só define as rotas da aplicação.
 // Cada rota aponta para uma página em src/pages/.
 
-import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import LandingPageSaaS from './pages/projects/LandingPageSaaS/LandingPageSaaS';
-import PortfolioCriativo from './pages/projects/PortfolioCriativo/PortfolioCriativo';
-import DashboardAnalytics from './pages/projects/DashboardAnalytics/DashboardAnalytics';
-import EcommercePlatform from './pages/projects/EcommercePlatform/EcommercePlatform';
-import ShopPage from './pages/projects/EcommercePlatform/ShopPage';
-import CartPage from './pages/projects/EcommercePlatform/CartPage';
-import CheckoutPage from './pages/projects/EcommercePlatform/CheckoutPage';
-import OrdersPage from './pages/projects/EcommercePlatform/OrdersPage';
-import AuthPage from './pages/projects/EcommercePlatform/AuthPage';
-import AppDelivery from './pages/projects/AppDelivery/AppDelivery';
-import HomeScreen from './pages/projects/AppDelivery/HomeScreen';
-import MenuScreen from './pages/projects/AppDelivery/MenuScreen';
-import CartScreen from './pages/projects/AppDelivery/CartScreen';
-import TrackingScreen from './pages/projects/AppDelivery/TrackingScreen';
-import SistemaGestao from './pages/projects/SistemaGestao/SistemaGestao';
-import OverviewPage from './pages/projects/SistemaGestao/OverviewPage';
-import ClientsPage from './pages/projects/SistemaGestao/ClientsPage';
-import TasksPage from './pages/projects/SistemaGestao/TasksPage';
+import { Routes, Route, Navigate } from "react-router-dom";
+import Home from "./pages/Home";
+import LandingPageSaaS from "./pages/projects/LandingPageSaaS/LandingPageSaaS";
+import PortfolioCriativo from "./pages/projects/PortfolioCriativo/PortfolioCriativo";
+import DashboardAnalytics from "./pages/projects/DashboardAnalytics/DashboardAnalytics";
+import EcommercePlatform from "./pages/projects/EcommercePlatform/EcommercePlatform";
+import ShopPage from "./pages/projects/EcommercePlatform/ShopPage";
+import CartPage from "./pages/projects/EcommercePlatform/CartPage";
+import CheckoutPage from "./pages/projects/EcommercePlatform/CheckoutPage";
+import OrdersPage from "./pages/projects/EcommercePlatform/OrdersPage";
+import AuthPage from "./pages/projects/EcommercePlatform/AuthPage";
+import AppDelivery from "./pages/projects/AppDelivery/AppDelivery";
+import HomeScreen from "./pages/projects/AppDelivery/HomeScreen";
+import MenuScreen from "./pages/projects/AppDelivery/MenuScreen";
+import CartScreen from "./pages/projects/AppDelivery/CartScreen";
+import TrackingScreen from "./pages/projects/AppDelivery/TrackingScreen";
+import SistemaGestao from "./pages/projects/SistemaGestao/SistemaGestao";
+import OverviewPage from "./pages/projects/SistemaGestao/OverviewPage";
+import ClientsPage from "./pages/projects/SistemaGestao/ClientsPage";
+import TasksPage from "./pages/projects/SistemaGestao/TasksPage";
 
 export default function App() {
   return (
@@ -30,6 +30,7 @@ export default function App() {
       <Route path="/projetos/landing-page-saas" element={<LandingPageSaaS />} />
       <Route path="/projetos/portfolio-criativo" element={<PortfolioCriativo />} />
       <Route path="/projetos/dashboard-analytics" element={<DashboardAnalytics />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
 
       <Route path="/projetos/ecommerce-platform" element={<EcommercePlatform />}>
         <Route index element={<ShopPage />} />
