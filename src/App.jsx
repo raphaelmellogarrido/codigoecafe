@@ -30,7 +30,6 @@ export default function App() {
       <Route path="/projetos/landing-page-saas" element={<LandingPageSaaS />} />
       <Route path="/projetos/portfolio-criativo" element={<PortfolioCriativo />} />
       <Route path="/projetos/dashboard-analytics" element={<DashboardAnalytics />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
 
       <Route path="/projetos/ecommerce-platform" element={<EcommercePlatform />}>
         <Route index element={<ShopPage />} />
@@ -52,6 +51,8 @@ export default function App() {
         <Route path="clientes" element={<ClientsPage />} />
         <Route path="tarefas" element={<TasksPage />} />
       </Route>
+
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
