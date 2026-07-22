@@ -22,8 +22,25 @@ import SistemaGestao from "./pages/projects/SistemaGestao/SistemaGestao";
 import OverviewPage from "./pages/projects/SistemaGestao/OverviewPage";
 import ClientsPage from "./pages/projects/SistemaGestao/ClientsPage";
 import TasksPage from "./pages/projects/SistemaGestao/TasksPage";
+import { useEffect } from "react";
+import ReactPixel from "react-facebook-pixel";
 
 export default function App() {
+  const PIXEL_ID = "901860909646939";
+
+  useEffect(() => {
+    const options = {
+      autoConfig: true,
+      debug: false, //
+    };
+
+    ReactPixel.init(PIXEL_ID, null, options);
+  }, []);
+
+  useEffect(() => {
+    ReactPixel.pageView();
+  }, [location]);
+
   return (
     <Routes>
       <Route path="/" element={<Home />} />

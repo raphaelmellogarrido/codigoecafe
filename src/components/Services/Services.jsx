@@ -4,7 +4,7 @@
 // Hover: card sobe e ganha brilho verde.
 // Animação fadeInUp via useScrollReveal (cada card individualmente).
 
-import { FaCode, FaMobileScreen, FaPalette, FaLightbulb, FaCheck, FaBolt } from "react-icons/fa6";
+import { FaCode, FaMobileScreen, FaGaugeHigh, FaBagShopping, FaCheck, FaBolt } from "react-icons/fa6";
 import useScrollReveal from "../../hooks/useScrollReveal";
 import "./Services.css";
 
@@ -13,8 +13,8 @@ const iconMap = {
   FaCode: FaCode,
   FaMobileScreen: FaMobileScreen,
   FaBolt: FaBolt,
-  FaPalette: FaPalette,
-  FaLightbulb: FaLightbulb,
+  FaGaugeHigh: FaGaugeHigh,
+  FaBagShopping: FaBagShopping,
 };
 
 function ServiceCard({ service, index }) {
