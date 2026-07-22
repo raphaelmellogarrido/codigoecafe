@@ -4,14 +4,15 @@
 // Hover: card sobe e ganha brilho verde.
 // Animação fadeInUp via useScrollReveal (cada card individualmente).
 
-import { FaCode, FaMobileScreen, FaPalette, FaLightbulb, FaCheck } from 'react-icons/fa6';
-import useScrollReveal from '../../hooks/useScrollReveal';
-import './Services.css';
+import { FaCode, FaMobileScreen, FaPalette, FaLightbulb, FaCheck, FaBolt } from "react-icons/fa6";
+import useScrollReveal from "../../hooks/useScrollReveal";
+import "./Services.css";
 
 // Mapa de nomes de ícones para componentes reais
 const iconMap = {
   FaCode: FaCode,
   FaMobileScreen: FaMobileScreen,
+  FaBolt: FaBolt,
   FaPalette: FaPalette,
   FaLightbulb: FaLightbulb,
 };
@@ -50,9 +51,7 @@ export default function Services({ services }) {
           <h2 className="section-title">
             Serviços que <span className="gradient-text">transformam ideias</span>
           </h2>
-          <p className="section-description">
-            Do conceito ao deploy — oferecemos soluções completas para o teu projeto digital.
-          </p>
+          <p className="section-description">Do conceito ao deploy — oferecemos soluções completas para o teu projeto digital.</p>
         </div>
 
         <div className="services-grid">
