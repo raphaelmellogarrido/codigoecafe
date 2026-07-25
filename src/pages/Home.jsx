@@ -16,27 +16,27 @@ import Footer from "../components/Footer/Footer";
 const services = [
   {
     icon: "FaCode",
-    title: "Desenvolvimento Web",
-    description: "Sites e aplicações web modernas, rápidas e totalmente responsivas.",
-    features: ["React, Next.js & Headless CMS", "Sites Institucionais & Blogs", "Performance & SEO Técnico"],
+    title: "Web Sites",
+    description: "Sites e aplicações web modernas, de alta performance e totalmente responsivas.",
+    features: ["React, Next.js e Headless CMS", "Sites Institucionais & Blogs", "Alta Performance e SEO Técnico"],
   },
   {
     icon: "FaBolt",
-    title: "Automação de Processos",
-    description: "Conexão e automação de fluxos de trabalho para eliminar tarefas repetitivas e otimizar a sua operação.",
-    features: ["Relatórios Automáticos (Vendas/Métricas)", "Fluxos de Trabalho Automatizados", "Otimização de Processos"],
+    title: "Automação",
+    description: "Conexão e automação de fluxos de trabalho para eliminar tarefas manuais e escalar a operação.",
+    features: ["Relatórios Automáticos e Métricas", "Fluxos de Trabalho Inteligentes", "Otimização de Processos Internos"],
   },
   {
-    icon: "FaGaugeHigh",
-    title: "Otimização & Manutenção",
-    description: "Garantia de que o teu site ou loja virtual permanece seguro, ultrarrápido e no topo das buscas.",
-    features: ["SEO Técnico & On-Page", "Otimização de Velocidade (Core Web Vitals)", "Backups & Segurança Contínua"],
+    icon: "FaMobileScreen",
+    title: "Apps Mobile",
+    description: "Aplicações para iOS e Android intuitivas, rápidas e otimizadas para a melhor experiência.",
+    features: ["Desenvolvidas em React Native", "Design Intuitivo e Foco no Utilizador", "Integração de APIs e Notificações"],
   },
   {
     icon: "FaBagShopping",
     title: "Loja Virtual",
-    description: "Plataformas de vendas online completas, seguras e otimizadas para converter visitantes em clientes.",
-    features: ["Pagamentos & Checkouts", "Gestão de Stock e Pedidos", "Foco em Conversão (CRO)"],
+    description: "Plataformas e-commerce completas, seguras e otimizadas para converter visitantes em clientes.",
+    features: ["Pagamentos Seguros e Checkout Rapid", "Gestão Simples de Stock e Pedidos", "Estrutura Otimizada para Conversão"],
   },
 ];
 

@@ -5,6 +5,13 @@ dist-ssr
 config.php
 server/data/*.sqlite*
 
+# PocketBase (backend do blog) — o binário e os dados locais não vão para o Git,
+# só o schema (blog-server/pb_migrations/) é versionado.
+blog-server/pocketbase.exe
+blog-server/pocketbase
+blog-server/pb_data/
+blog-server/pb_logs/
+
 # Editor
 .vscode/*
 !.vscode/extensions.json

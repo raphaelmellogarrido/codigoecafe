@@ -1,5 +1,6 @@
 // src/components/Navbar/Navbar.jsx
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { FaCoffee } from "react-icons/fa";
 import ReactPixel from "react-facebook-pixel";
@@ -83,6 +84,11 @@ export default function Navbar() {
               </a>
             </li>
           ))}
+          <li>
+            <Link to="/blog" onClick={() => setMenuOpen(false)}>
+              Blog
+            </Link>
+          </li>
         </ul>
 
         <button className="navbar-toggle" onClick={() => setMenuOpen((v) => !v)} aria-label="Abrir menu">

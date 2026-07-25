@@ -22,6 +22,12 @@ import SistemaGestao from "./pages/projects/SistemaGestao/SistemaGestao";
 import OverviewPage from "./pages/projects/SistemaGestao/OverviewPage";
 import ClientsPage from "./pages/projects/SistemaGestao/ClientsPage";
 import TasksPage from "./pages/projects/SistemaGestao/TasksPage";
+import Blog from "./pages/Blog/Blog";
+import BlogListPage from "./pages/Blog/BlogListPage";
+import BlogPostPage from "./pages/Blog/BlogPostPage";
+import BlogLoginPage from "./pages/Blog/BlogLoginPage";
+import BlogAdminPage from "./pages/Blog/BlogAdminPage";
+import BlogEditorPage from "./pages/Blog/BlogEditorPage";
 import { useEffect } from "react";
 import ReactPixel from "react-facebook-pixel";
 
@@ -67,6 +73,15 @@ export default function App() {
         <Route index element={<OverviewPage />} />
         <Route path="clientes" element={<ClientsPage />} />
         <Route path="tarefas" element={<TasksPage />} />
+      </Route>
+
+      <Route path="/blog" element={<Blog />}>
+        <Route index element={<BlogListPage />} />
+        <Route path="entrar" element={<BlogLoginPage />} />
+        <Route path="admin" element={<BlogAdminPage />} />
+        <Route path="admin/novo" element={<BlogEditorPage />} />
+        <Route path="admin/editar/:id" element={<BlogEditorPage />} />
+        <Route path=":slug" element={<BlogPostPage />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
