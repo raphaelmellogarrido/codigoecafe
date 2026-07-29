@@ -3,6 +3,7 @@
 // e agora também a loja (auth, produtos, checkout) do E-commerce Platform.
 // Corre em paralelo ao Vite (npm run server) — o Vite faz proxy de /api para aqui.
 
+import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import "./db.js";
@@ -11,6 +12,7 @@ import { productsRouter } from "./routes/products.js";
 import { ordersRouter } from "./routes/orders.js";
 import { clientsRouter } from "./routes/clients.js";
 import { tasksRouter } from "./routes/tasks.js";
+import { achadinhosRouter } from "./routes/achadinhos.js";
 
 const app = express();
 // Serviços como o Render atribuem a porta via variável de ambiente — não pode ser fixa.
@@ -26,6 +28,7 @@ app.use("/api/products", productsRouter);
 app.use("/api/orders", ordersRouter);
 app.use("/api/clients", clientsRouter);
 app.use("/api/tasks", tasksRouter);
+app.use("/api/achadinhos", achadinhosRouter);
 
 // Gera uma série de 30 dias com um "random walk" (parece receita real, com altos e baixos)
 function generateRevenueSeries(days = 30) {

@@ -100,6 +100,14 @@ const projects = [
     image: "https://images.unsplash.com/photo-1662837625421-5fd8ed6131a0?auto=format&fit=crop&w=900&q=75",
     path: "/projetos/clinica-dentista",
   },
+  {
+    name: "Achadinhos",
+    description: "Catálogo de produtos com painel administrativo para afiliados — cadastro de fotos, preços e links, pronto para redes sociais.",
+    tags: ["React", "Firebase", "Cloudflare R2"],
+    gradient: "linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)",
+    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=75",
+    path: "/projetos/achadinhos",
+  },
 ];
 
 // Dados dos testemunhos
