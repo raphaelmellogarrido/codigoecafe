@@ -1,10 +1,10 @@
 // src/pages/projects/Achadinhos/AchadinhosProducts.jsx
 // Catálogo completo: todos os produtos cadastrados, mais recentes primeiro.
 
-import AchadinhosNavbar from './AchadinhosNavbar';
-import AchadinhosFooter from './AchadinhosFooter';
-import { ProductCard, ProductCardSkeleton } from './ProductCard';
-import useProducts from './useProducts';
+import AchadinhosNavbar from "./AchadinhosNavbar";
+import AchadinhosFooter from "./AchadinhosFooter";
+import { ProductCard, ProductCardSkeleton } from "./ProductCard";
+import useProducts from "./useProducts";
 
 export default function AchadinhosProducts() {
   const { products, loading, error } = useProducts();
@@ -16,7 +16,6 @@ export default function AchadinhosProducts() {
       <header className="ach-products-header">
         <span className="ach-eyebrow">Catálogo completo</span>
         <h1>Todos os produtos</h1>
-        <p>Os mais recentes aparecem primeiro.</p>
       </header>
 
       <main className="ach-main">
@@ -30,9 +29,7 @@ export default function AchadinhosProducts() {
           </div>
         )}
 
-        {!loading && !error && products.length === 0 && (
-          <p className="ach-status">Ainda não há produtos cadastrados por aqui.</p>
-        )}
+        {!loading && !error && products.length === 0 && <p className="ach-status">Ainda não há produtos cadastrados por aqui.</p>}
 
         {!loading && !error && products.length > 0 && (
           <div className="ach-grid">

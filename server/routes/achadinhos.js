@@ -10,6 +10,9 @@ import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 
 export const achadinhosRouter = Router();
 
+// Único e-mail autorizado a gerir o catálogo — ver painel admin.
+const ADMIN_EMAIL = 'admin@codigoecafe.com';
+
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB
@@ -28,7 +31,11 @@ function r2Client() {
 
 // Verifica o ID token do Firebase pela REST API do Identity Toolkit — não
 // precisa do Admin SDK/service account, só da mesma apiKey pública do frontend.
-async function isValidFirebaseToken(idToken) {
+// Confirma também que é especificamente a conta admin: um token válido só
+// prova que alguém está autenticado, não que é o dono do catálogo — se o
+// cadastro por email/senha estiver aberto no projeto, qualquer pessoa
+// conseguiria criar uma conta e passar numa checagem que só validasse "está logado".
+async function isAdminToken(idToken) {
   if (!idToken || !process.env.VITE_FIREBASE_API_KEY) return false;
   try {
     const res = await fetch(
@@ -39,7 +46,9 @@ async function isValidFirebaseToken(idToken) {
         body: JSON.stringify({ idToken }),
       }
     );
-    return res.ok;
+    if (!res.ok) return false;
+    const data = await res.json();
+    return data.users?.[0]?.email === ADMIN_EMAIL;
   } catch {
     return false;
   }
@@ -49,7 +58,7 @@ achadinhosRouter.post('/upload', upload.single('foto'), async (req, res) => {
   try {
     const authHeader = req.headers.authorization || '';
     const idToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
-    if (!(await isValidFirebaseToken(idToken))) {
+    if (!(await isAdminToken(idToken))) {
       return res.status(401).json({ error: 'Sessão inválida. Faz login novamente.' });
     }
 
