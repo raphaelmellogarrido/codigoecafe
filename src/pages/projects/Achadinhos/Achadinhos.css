@@ -389,9 +389,11 @@
 
 .ach-card-photo {
   position: relative;
+  width: 100%;
+  max-width: 260px;
   aspect-ratio: 1 / 1;
+  margin: 0 auto;
   background: var(--ach-bg-soft);
-  /* height: 250px; */
 }
 .ach-card-photo img {
   width: 100%;

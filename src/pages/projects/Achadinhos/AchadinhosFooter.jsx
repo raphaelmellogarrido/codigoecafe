@@ -1,6 +1,6 @@
 // src/pages/projects/Achadinhos/AchadinhosFooter.jsx
-import { FaWhatsapp } from 'react-icons/fa';
-import { WHATSAPP_URL } from './constants';
+import { FaWhatsapp } from "react-icons/fa";
+import { WHATSAPP_URL } from "./constants";
 
 export default function AchadinhosFooter() {
   return (
@@ -12,7 +12,9 @@ export default function AchadinhosFooter() {
           <FaWhatsapp /> Fale comigo agora
         </a>
       </div>
-      <p className="ach-footer-note">Catálogo de demonstração — parte do portfólio Código e Café.</p>
+      <p className="ach-footer-note">
+        Catálogo de demonstração — parte do portfólio <a href="http://www.codigoecafe.com">Código e Café</a>.
+      </p>
     </footer>
   );
 }
