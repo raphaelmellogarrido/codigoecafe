@@ -19,7 +19,10 @@
   min-height: 100vh;
   background: #ffffff;
   color: var(--ach-ink);
-  font-family: 'Inter', -apple-system, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -90,7 +93,10 @@
   border-radius: 999px;
   border: none;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
   white-space: nowrap;
 }
 .ach-btn-primary {
@@ -122,7 +128,10 @@
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid transparent;
-  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s,
+    background 0.25s;
 }
 .ach-nav-scrolled {
   background: rgba(255, 255, 255, 0.92);
@@ -181,7 +190,9 @@
   padding: 0.55rem 1rem;
   border-radius: 999px;
   font-size: 0.85rem !important;
-  transition: background 0.2s, transform 0.15s;
+  transition:
+    background 0.2s,
+    transform 0.15s;
 }
 .ach-nav-whatsapp:hover {
   background: var(--ach-whatsapp-dark);
@@ -216,7 +227,9 @@
     transform: translateY(-8px);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.2s, transform 0.2s;
+    transition:
+      opacity 0.2s,
+      transform 0.2s;
   }
 
   .ach-nav-links.open {
@@ -363,7 +376,10 @@
   background: #fff;
   display: flex;
   flex-direction: column;
-  transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
+  transition:
+    box-shadow 0.25s,
+    transform 0.25s,
+    border-color 0.25s;
 }
 .ach-card:hover {
   box-shadow: var(--ach-shadow-lg);
@@ -375,11 +391,12 @@
   position: relative;
   aspect-ratio: 1 / 1;
   background: var(--ach-bg-soft);
+  /* height: 250px; */
 }
 .ach-card-photo img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   transition: transform 0.4s ease;
 }
 .ach-card:hover .ach-card-photo img {
@@ -460,7 +477,9 @@
   padding: 0.5rem 1rem;
   border-radius: 999px;
   white-space: nowrap;
-  transition: background 0.2s, transform 0.15s;
+  transition:
+    background 0.2s,
+    transform 0.15s;
 }
 .ach-buy-btn:hover {
   background: var(--ach-accent);
@@ -474,7 +493,7 @@
   overflow: hidden;
 }
 .ach-skeleton::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   transform: translateX(-100%);
@@ -696,7 +715,9 @@
   border-radius: 12px;
   padding: 0.65rem;
   flex-wrap: wrap;
-  transition: box-shadow 0.2s, border-color 0.2s;
+  transition:
+    box-shadow 0.2s,
+    border-color 0.2s;
 }
 .ach-admin-row:hover {
   box-shadow: var(--ach-shadow-sm);
@@ -713,7 +734,7 @@
 .ach-admin-thumb img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .ach-admin-info {
@@ -823,7 +844,8 @@
 .ach-preview-img {
   width: 100%;
   max-height: 180px;
-  object-fit: cover;
+  object-fit: contain;
+  background: var(--ach-bg-soft);
   border-radius: var(--ach-radius-sm);
   border: 1px solid var(--ach-border);
 }
