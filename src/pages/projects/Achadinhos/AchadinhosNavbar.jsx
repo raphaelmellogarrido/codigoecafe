@@ -31,7 +31,7 @@ export default function AchadinhosNavbar() {
   }
 
   return (
-    <header className={`ach-nav ${scrolled ? 'ach-nav-scrolled' : ''}`}>
+    <header className={`ach-nav ${scrolled ? 'ach-nav-scrolled' : ''} ${menuOpen ? 'ach-nav-menu-open' : ''}`}>
       <div className="ach-nav-inner">
         <NavLink to="/projetos/achadinhos" className="ach-nav-logo" onClick={handleNavClick}>
           <HiOutlineShoppingBag /> Achadinhos

@@ -141,6 +141,14 @@
   box-shadow: var(--ach-shadow-sm);
 }
 
+/* backdrop-filter cria um novo containing block para os filhos com
+   position:fixed — isso impedia o menu mobile de esticar até o fim da
+   tela. Tira o blur enquanto o menu está aberto pra evitar o problema. */
+.ach-nav-menu-open {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
 .ach-nav-inner {
   max-width: var(--ach-container);
   margin: 0 auto;
@@ -218,8 +226,13 @@
 
   .ach-nav-links {
     position: fixed;
-    inset: 64px 0 0 0;
-    background: #fff;
+    top: 64px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 90;
+    background: var(--ach-bg-soft);
+    box-shadow: var(--ach-shadow-md);
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
@@ -569,6 +582,23 @@
 .ach-buy-btn:hover {
   background: var(--ach-accent);
   transform: translateY(-1px);
+}
+
+@media (max-width: 480px) {
+  .ach-card-text {
+    padding: 0.7rem 0.6rem 0;
+  }
+  .ach-card-footer {
+    gap: 0.25rem;
+    padding: 0.4rem 0.6rem 0.6rem;
+  }
+  .ach-card-price {
+    font-size: 0.78rem;
+  }
+  .ach-buy-btn {
+    padding: 0.35rem 0.55rem;
+    font-size: 0.72rem;
+  }
 }
 
 /* ===== Skeleton (loading) ===== */
