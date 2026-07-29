@@ -90,27 +90,35 @@ const projects = [
     image: "https://images.unsplash.com/photo-1768729797971-472ce92e7a71?auto=format&fit=crop&w=900&q=75",
     path: "/projetos/portfolio-criativo",
   },
+  {
+    name: "Clínica Odontológica",
+    description: "Landing page moderna para clínica dentária, pronta para clientes reais.",
+    tags: ["React", "CSS", "UI/UX"],
+    gradient: "linear-gradient(135deg, #0d9488 0%, #0f766e 100%)",
+    image: "https://images.unsplash.com/photo-1662837625421-5fd8ed6131a0?auto=format&fit=crop&w=900&q=75",
+    path: "/projetos/clinica-dentista",
+  },
 ];
 
 // Dados dos testemunhos
 const testimonials = [
   {
-    text: "O Código e Café transformou completamente a nossa presença digital. O site novo gerou um aumento de 200% nas conversões em apenas 3 meses.",
-    name: "Maria Santos",
-    role: "CEO, TechStart",
-    initials: "MS",
+    text: "Precisávamos de renovar a nossa presença online e de uma página que realmente passasse confiança aos pacientes que nos procuram em Aveiro. O trabalho foi super ágil, prático e o resultado ficou impecável e muito fácil de usar no telemóvel.",
+    name: "Dra. Sofia Matos",
+    role: "Diretor Clínico, Clínica Médica Glicínias",
+    initials: "SM",
   },
   {
-    text: "Profissionais excepcionais. Entregaram o projeto antes do prazo e a qualidade superou todas as expectativas. Recomendo vivamente.",
-    name: "João Pereira",
-    role: "CTO, InnovateLab",
-    initials: "JP",
+    text: "O maior problema era o nosso site antigo que vivia a dar problemas e nunca funcionava bem. Ficamos com uma página limpa, profissional e muito rápida. O atendimento foi direto ao ponto e sem complicações técnicas desnecessárias.",
+    name: "Miguel Henriques",
+    role: "Gerente, Henriques & Filhos, Lda",
+    initials: "MH",
   },
   {
-    text: "A equipa entendeu perfeitamente o que precisávamos. Comunicação impecável e resultados que falam por si. Parceria de longo prazo.",
-    name: "Ana Costa",
-    role: "Diretora Marketing, BrandCo",
-    initials: "AC",
+    text: "Excelente profissional. Entendeu exatamente o que precisávamos para destacar os nossos serviços na internet sem aquela lenga-lenga de agência grande. Comunicação 100% transparente e entrega rápida. Recomendo vivamente.",
+    name: "Beatriz Pinho",
+    role: "Responsável de Marketing, Centro de Estética Ílhavo",
+    initials: "BP",
   },
 ];
 

@@ -5,7 +5,7 @@
 //  - Copyright
 //  - Linha "Feito com ☕ e React"
 
-import { FaGithub, FaLinkedin, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaInstagram, FaTwitter, FaFacebookF, FaWhatsapp, FaTiktok } from "react-icons/fa";
 import { FaCoffee } from "react-icons/fa";
 import "./Footer.css";
 
@@ -13,6 +13,9 @@ const socials = [
   { icon: FaGithub, href: "https://github.com/raphaelmellogarrido", label: "GitHub" },
   { icon: FaLinkedin, href: "https://www.linkedin.com/in/raphaelmgs/", label: "LinkedIn" },
   { icon: FaInstagram, href: "https://www.instagram.com/codigoecafe.dev/", label: "Instagram" },
+  { icon: FaFacebookF, href: "https://www.facebook.com/codigoecafe.dev", label: "Facebook" },
+  { icon: FaWhatsapp, href: "https://wa.me/+351913247176", label: "WhatsApp" },
+  { icon: FaTiktok, href: "https://www.tiktok.com/@codigoecafe.dev", label: "TikTok" },
 ];
 
 export default function Footer() {
@@ -30,7 +33,14 @@ export default function Footer() {
           {socials.map((social, i) => {
             const Icon = social.icon;
             return (
-              <a key={i} href={social.href} className="footer-social-link" aria-label={social.label} target="_blank">
+              <a
+                key={i}
+                href={social.href}
+                className="footer-social-link"
+                aria-label={social.label}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Icon />
               </a>
             );

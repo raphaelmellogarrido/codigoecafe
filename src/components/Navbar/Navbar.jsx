@@ -84,11 +84,6 @@ export default function Navbar() {
               </a>
             </li>
           ))}
-          <li>
-            <Link to="/blog" onClick={() => setMenuOpen(false)}>
-              Blog
-            </Link>
-          </li>
         </ul>
 
         <button className="navbar-toggle" onClick={() => setMenuOpen((v) => !v)} aria-label="Abrir menu">

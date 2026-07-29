@@ -2,7 +2,7 @@
 // Componente raiz: só define as rotas da aplicação.
 // Cada rota aponta para uma página em src/pages/.
 
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import LandingPageSaaS from "./pages/projects/LandingPageSaaS/LandingPageSaaS";
 import PortfolioCriativo from "./pages/projects/PortfolioCriativo/PortfolioCriativo";
@@ -22,6 +22,7 @@ import SistemaGestao from "./pages/projects/SistemaGestao/SistemaGestao";
 import OverviewPage from "./pages/projects/SistemaGestao/OverviewPage";
 import ClientsPage from "./pages/projects/SistemaGestao/ClientsPage";
 import TasksPage from "./pages/projects/SistemaGestao/TasksPage";
+import ClinicaDentista from "./pages/projects/ClinicaDentista/ClinicaDentista";
 import Blog from "./pages/Blog/Blog";
 import BlogListPage from "./pages/Blog/BlogListPage";
 import BlogPostPage from "./pages/Blog/BlogPostPage";
@@ -30,6 +31,21 @@ import BlogAdminPage from "./pages/Blog/BlogAdminPage";
 import BlogEditorPage from "./pages/Blog/BlogEditorPage";
 import { useEffect } from "react";
 import ReactPixel from "react-facebook-pixel";
+
+// Sem isto, o React Router mantém a posição de scroll da página anterior
+// ao navegar — quem clicasse "Ver Projeto" a meio da Home caía a meio da
+// página nova em vez de aparecer no topo.
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    // "instant" força o salto imediato, ignorando o scroll-behavior: smooth
+    // global do site (que é ótimo para âncoras, mas não faz sentido ao trocar de página).
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [pathname]);
+
+  return null;
+}
 
 export default function App() {
   const PIXEL_ID = "901860909646939";
@@ -48,7 +64,9 @@ export default function App() {
   }, [location]);
 
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/projetos/landing-page-saas" element={<LandingPageSaaS />} />
       <Route path="/projetos/portfolio-criativo" element={<PortfolioCriativo />} />
@@ -75,6 +93,8 @@ export default function App() {
         <Route path="tarefas" element={<TasksPage />} />
       </Route>
 
+      <Route path="/projetos/clinica-dentista" element={<ClinicaDentista />} />
+
       <Route path="/blog" element={<Blog />}>
         <Route index element={<BlogListPage />} />
         <Route path="entrar" element={<BlogLoginPage />} />
@@ -85,6 +105,7 @@ export default function App() {
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+      </Routes>
+    </>
   );
 }
