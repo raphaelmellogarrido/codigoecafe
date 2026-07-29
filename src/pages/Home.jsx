@@ -3,6 +3,8 @@
 // Os dados (services, projects, testimonials) ficam aqui como constantes,
 // para serem facilmente editáveis sem entrar nos componentes.
 
+import { useEffect, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import Hero from "../components/Hero/Hero";
 import Services from "../components/Services/Services";
@@ -123,6 +125,23 @@ const testimonials = [
 ];
 
 export default function Home() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const hasScrolledRef = useRef(false);
+
+  // Suporte a /projetos como atalho: o App.jsx já trocou a URL de volta
+  // para "/" e pediu, via state, para rolar até a secção de Portfólio.
+  // hasScrolledRef evita disparar duas vezes (o StrictMode do React
+  // invoca os effects 2x em desenvolvimento).
+  useEffect(() => {
+    if (location.state?.scrollTo && !hasScrolledRef.current) {
+      hasScrolledRef.current = true;
+      document.getElementById(location.state.scrollTo)?.scrollIntoView({ behavior: 'instant' });
+      // Limpa o state para não rolar de novo se o utilizador voltar com o botão do navegador
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location.state, location.pathname, navigate]);
+
   return (
     <>
       <Navbar />

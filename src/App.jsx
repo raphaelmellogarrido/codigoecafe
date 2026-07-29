@@ -2,7 +2,7 @@
 // Componente raiz: só define as rotas da aplicação.
 // Cada rota aponta para uma página em src/pages/.
 
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import LandingPageSaaS from "./pages/projects/LandingPageSaaS/LandingPageSaaS";
 import PortfolioCriativo from "./pages/projects/PortfolioCriativo/PortfolioCriativo";
@@ -47,6 +47,18 @@ function ScrollToTop() {
   return null;
 }
 
+// Acesso direto a "/projetos" (ex.: link enviado a um cliente) — troca a
+// URL de volta para a raiz e pede à Home para rolar até o Portfólio.
+function ProjetosRedirect() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate('/', { replace: true, state: { scrollTo: 'portfolio' } });
+  }, [navigate]);
+
+  return null;
+}
+
 export default function App() {
   const PIXEL_ID = "901860909646939";
 
@@ -68,6 +80,7 @@ export default function App() {
       <ScrollToTop />
       <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/projetos" element={<ProjetosRedirect />} />
       <Route path="/projetos/landing-page-saas" element={<LandingPageSaaS />} />
       <Route path="/projetos/portfolio-criativo" element={<PortfolioCriativo />} />
       <Route path="/projetos/dashboard-analytics" element={<DashboardAnalytics />} />
