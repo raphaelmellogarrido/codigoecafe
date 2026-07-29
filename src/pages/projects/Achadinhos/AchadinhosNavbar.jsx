@@ -23,18 +23,25 @@ export default function AchadinhosNavbar() {
     };
   }, [menuOpen]);
 
+  // O <ScrollToTop> global só reage a mudança de rota — clicar num link
+  // para a página em que já se está não muda a rota, por isso não rola.
+  function handleNavClick() {
+    setMenuOpen(false);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }
+
   return (
     <header className={`ach-nav ${scrolled ? 'ach-nav-scrolled' : ''}`}>
       <div className="ach-nav-inner">
-        <NavLink to="/projetos/achadinhos" className="ach-nav-logo" onClick={() => setMenuOpen(false)}>
+        <NavLink to="/projetos/achadinhos" className="ach-nav-logo" onClick={handleNavClick}>
           <HiOutlineShoppingBag /> Achadinhos
         </NavLink>
 
         <nav className={`ach-nav-links ${menuOpen ? 'open' : ''}`}>
-          <NavLink to="/projetos/achadinhos" end onClick={() => setMenuOpen(false)}>
+          <NavLink to="/projetos/achadinhos" end onClick={handleNavClick}>
             Home
           </NavLink>
-          <NavLink to="/projetos/achadinhos/produtos" onClick={() => setMenuOpen(false)}>
+          <NavLink to="/projetos/achadinhos/produtos" onClick={handleNavClick}>
             Produtos
           </NavLink>
           <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="ach-nav-whatsapp">
