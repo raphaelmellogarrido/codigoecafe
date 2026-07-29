@@ -14,25 +14,55 @@ import {
   query,
   serverTimestamp,
   updateDoc,
+  where,
 } from 'firebase/firestore';
 import { HiArrowLeft, HiOutlinePencil, HiOutlinePlus, HiOutlineStar, HiOutlineTrash, HiStar } from 'react-icons/hi';
 import { API_BASE } from '../../../lib/apiBase';
 import { auth, db } from './firebaseClient';
 import { useAuth } from './context/AuthContext';
 import { formatPrice } from './format';
+import { slugify } from './slug';
 
-const EMPTY_FORM = { nome: '', preco: '', link: '', descricao: '' };
+const EMPTY_FORM = { nome: '', preco: '', link: '', descricao: '', slug: '' };
+
+async function slugIsTaken(slug, excludeId) {
+  const q = query(collection(db, 'produtos'), where('slug', '==', slug));
+  const snap = await getDocs(q);
+  return snap.docs.some((d) => d.id !== excludeId);
+}
 
 function ProductForm({ initial, onCancel, onSaved }) {
   const [form, setForm] = useState(
     initial
-      ? { nome: initial.nome, preco: initial.preco, link: initial.link, descricao: initial.descricao || '' }
+      ? {
+          nome: initial.nome,
+          preco: initial.preco,
+          link: initial.link,
+          descricao: initial.descricao || '',
+          slug: initial.slug || '',
+        }
       : EMPTY_FORM
   );
+  // Enquanto o utilizador não mexer manualmente no campo do link, ele
+  // acompanha o nome automaticamente (como o "permalink" do WordPress).
+  const [slugTouched, setSlugTouched] = useState(!!initial?.slug);
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(initial?.fotoUrl || null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
+
+  function handleNomeChange(value) {
+    setForm((f) => ({ ...f, nome: value, slug: slugTouched ? f.slug : slugify(value) }));
+  }
+
+  function handleSlugChange(value) {
+    setSlugTouched(true);
+    setForm((f) => ({ ...f, slug: value }));
+  }
+
+  function handleSlugBlur() {
+    setForm((f) => ({ ...f, slug: slugify(f.slug) }));
+  }
 
   function handleFileChange(e) {
     const selected = e.target.files?.[0] || null;
@@ -65,8 +95,20 @@ function ProductForm({ initial, onCancel, onSaved }) {
       return;
     }
 
+    const slug = slugify(form.slug);
+    if (!slug) {
+      setError('Escolhe um link para o produto (ex.: sapato-de-cetim).');
+      return;
+    }
+
     setSaving(true);
     try {
+      if (await slugIsTaken(slug, initial?.id)) {
+        setError(`O link "${slug}" já está em uso por outro produto. Escolhe outro.`);
+        setSaving(false);
+        return;
+      }
+
       let fotoUrl = initial?.fotoUrl || '';
       if (file) fotoUrl = await uploadPhoto();
 
@@ -75,6 +117,7 @@ function ProductForm({ initial, onCancel, onSaved }) {
         preco: Number(form.preco),
         link: form.link.trim(),
         descricao: form.descricao.trim(),
+        slug,
         fotoUrl,
       };
 
@@ -102,9 +145,22 @@ function ProductForm({ initial, onCancel, onSaved }) {
           <input
             className="ach-input"
             value={form.nome}
-            onChange={(e) => setForm({ ...form, nome: e.target.value })}
+            onChange={(e) => handleNomeChange(e.target.value)}
             required
           />
+        </label>
+
+        <label className="ach-field">
+          Link do produto
+          <input
+            className="ach-input"
+            value={form.slug}
+            onChange={(e) => handleSlugChange(e.target.value)}
+            onBlur={handleSlugBlur}
+            placeholder="ex.: sapato-de-cetim"
+            required
+          />
+          <span className="ach-field-hint">codigoecafe.com/projetos/achadinhos/produtos/{slugify(form.slug) || '...'}</span>
         </label>
 
         <label className="ach-field">
@@ -243,6 +299,7 @@ export default function AchadinhosAdmin() {
               <div className="ach-admin-info">
                 <strong>{product.nome}</strong>
                 <span>{formatPrice(product.preco)}</span>
+                {product.slug && <span className="ach-admin-slug">/produtos/{product.slug}</span>}
               </div>
               <div className="ach-admin-actions">
                 <button

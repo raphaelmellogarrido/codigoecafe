@@ -26,6 +26,7 @@ import ClinicaDentista from "./pages/projects/ClinicaDentista/ClinicaDentista";
 import Achadinhos from "./pages/projects/Achadinhos/Achadinhos";
 import AchadinhosHome from "./pages/projects/Achadinhos/AchadinhosHome";
 import AchadinhosProducts from "./pages/projects/Achadinhos/AchadinhosProducts";
+import AchadinhosProductDetail from "./pages/projects/Achadinhos/AchadinhosProductDetail";
 import AchadinhosLogin from "./pages/projects/Achadinhos/AchadinhosLogin";
 import AchadinhosAdmin from "./pages/projects/Achadinhos/AchadinhosAdmin";
 import Blog from "./pages/Blog/Blog";
@@ -116,6 +117,7 @@ export default function App() {
       <Route path="/projetos/achadinhos" element={<Achadinhos />}>
         <Route index element={<AchadinhosHome />} />
         <Route path="produtos" element={<AchadinhosProducts />} />
+        <Route path="produtos/:slug" element={<AchadinhosProductDetail />} />
         <Route path="admin" element={<AchadinhosLogin />} />
         <Route path="admin/painel" element={<AchadinhosAdmin />} />
       </Route>
