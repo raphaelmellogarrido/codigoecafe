@@ -50,6 +50,14 @@
   font-size: 0.8rem;
   text-decoration: none;
   white-space: nowrap;
+  flex-shrink: 0;
+}
+/* O reset global (svg { max-width: 100% }) colapsa a largura do ícone
+   dentro deste flex — força um tamanho fixo para evitar o bug. */
+.dc-back-link svg {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
 }
 .dc-back-link:hover {
   color: var(--dc-accent);
