@@ -17,6 +17,8 @@
   --ach-container: 1180px;
 
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: #ffffff;
   color: var(--ach-ink);
   font-family:
@@ -599,6 +601,7 @@
 
 /* ===== Footer ===== */
 .ach-footer-pro {
+  margin-top: auto;
   background: var(--ach-ink);
   color: #fff;
 }
