@@ -540,12 +540,22 @@
   font-weight: 700;
   margin: 0;
   line-height: 1.3;
+  /* Reserva sempre altura de 3 linhas, tenha o nome 1, 2 ou 3 linhas —
+     assim o preço/botão ficam alinhados na mesma posição em todos os cards. */
+  min-height: calc(0.95rem * 1.3 * 3);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .ach-card-desc {
   font-size: 0.82rem;
   color: var(--ach-muted);
   margin: 0;
+  line-height: 1.5;
+  /* Mesma lógica do nome: reserva sempre altura de 2 linhas. */
+  min-height: calc(0.82rem * 1.5 * 2);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
