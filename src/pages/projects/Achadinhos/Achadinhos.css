@@ -480,11 +480,22 @@
   position: relative;
   width: 100%;
   max-width: 260px;
-  aspect-ratio: 1 / 1;
   margin: 0 auto;
   background: var(--ach-bg-soft);
+  overflow: hidden;
 }
-.ach-card-photo img {
+/* Técnica do "padding-top" para forçar quadrado 1:1 — mais confiável em
+   telas pequenas do que aspect-ratio, que às vezes ficava inconsistente
+   dependendo das proporções da foto (bug observado no mobile). */
+.ach-card-photo::before {
+  content: '';
+  display: block;
+  padding-top: 100%;
+}
+.ach-card-photo img,
+.ach-card-photo-placeholder {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -494,8 +505,6 @@
   transform: scale(1.05);
 }
 .ach-card-photo-placeholder {
-  width: 100%;
-  height: 100%;
   background: linear-gradient(135deg, #f4f4f5 0%, #e4e4e7 100%);
 }
 
