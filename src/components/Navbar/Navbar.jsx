@@ -20,8 +20,17 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
+    // Só lê window.scrollY dentro de requestAnimationFrame — sem isto, o
+    // evento "scroll" dispara dezenas de vezes por segundo e cada leitura
+    // corre o risco de forçar um reflow síncrono no meio do scroll.
+    let ticking = false;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 50);
+        ticking = false;
+      });
     };
     window.addEventListener("scroll", handleScroll);
     handleScroll();

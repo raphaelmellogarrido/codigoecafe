@@ -166,7 +166,18 @@ export default function ClinicaDentista() {
   const formRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40);
+    // rAF evita ler window.scrollY em todos os disparos do evento "scroll"
+    // (que pode ser dezenas de vezes por segundo), reduzindo o risco de
+    // forçar um reflow síncrono.
+    let ticking = false;
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 40);
+        ticking = false;
+      });
+    };
     window.addEventListener("scroll", handleScroll);
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
