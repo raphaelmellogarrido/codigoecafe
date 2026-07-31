@@ -91,7 +91,22 @@ export default function App() {
       debug: false, //
     };
 
-    ReactPixel.init(PIXEL_ID, null, options);
+    // O script do Facebook (fbevents.js) não precisa de carregar imediatamente —
+    // adiar para depois do "load" tira-o do caminho crítico da primeira
+    // renderização, sem atrasar o registo do PageView em si.
+    function initPixel() {
+      ReactPixel.init(PIXEL_ID, null, options);
+      // Regista a visita inicial aqui (não no efeito abaixo, que corre
+      // antes do init terminar e não teria efeito nenhum).
+      ReactPixel.pageView();
+    }
+
+    if (document.readyState === "complete") {
+      initPixel();
+    } else {
+      window.addEventListener("load", initPixel, { once: true });
+      return () => window.removeEventListener("load", initPixel);
+    }
   }, []);
 
   useEffect(() => {
