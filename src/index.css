@@ -387,3 +387,9 @@ ol {
     --section-padding: 3.5rem 0;
   }
 }
+
+/* Fallback do React.lazy() enquanto o chunk da rota descarrega */
+.route-loading {
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
