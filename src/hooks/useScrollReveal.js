@@ -42,8 +42,19 @@ export default function useScrollReveal(options = {}) {
 
     observer.observe(element);
 
-    // Cleanup: remove o observer quando o componente desmonta
-    return () => observer.disconnect();
+    // Rede de segurança: nalguns casos raros (browser específico, o elemento
+    // já estar no viewport de forma pouco usual, etc.) o IntersectionObserver
+    // pode não disparar. Sem isto, o conteúdo ficaria invisível para sempre —
+    // ao fim de 2s revela-se na mesma, só sem a animação de entrada.
+    const fallback = setTimeout(() => {
+      element.classList.add('visible');
+    }, 2000);
+
+    // Cleanup: remove o observer e o temporizador quando o componente desmonta
+    return () => {
+      observer.disconnect();
+      clearTimeout(fallback);
+    };
   }, [options.threshold, options.rootMargin, options.once]);
 
   return ref;

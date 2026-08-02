@@ -6,20 +6,29 @@
 //  - Cards flutuantes decorativos com ícones de tech
 //  - Mesh gradient animado no fundo (via CSS)
 
-import { FaReact, FaNodeJs, FaJs, FaCode, FaHtml5, FaCss3Alt } from 'react-icons/fa';
-import { HiArrowRight, HiPlay } from 'react-icons/hi';
-import './Hero.css';
+import { FaReact, FaNodeJs, FaJs, FaCode, FaHtml5, FaCss3Alt } from "react-icons/fa";
+import { HiArrowRight, HiPlay } from "react-icons/hi";
+import useScrollReveal from "../../hooks/useScrollReveal";
+import "./Hero.css";
 
 export default function Hero() {
+  // Um ref por elemento — sem isto, a classe "reveal" nunca recebe o
+  // "visible" que o CSS precisa para tirar o opacity:0 (ver useScrollReveal.js).
+  const labelRef = useScrollReveal();
+  const titleRef = useScrollReveal();
+  const subtitleRef = useScrollReveal();
+  const descriptionRef = useScrollReveal();
+  const buttonsRef = useScrollReveal();
+
   // Scroll suave para a secção de contacto
   const scrollToContact = (e) => {
     e.preventDefault();
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
   const scrollToPortfolio = (e) => {
     e.preventDefault();
-    document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -31,23 +40,28 @@ export default function Hero() {
       </div>
 
       <div className="container hero-content">
-        <span className="section-label reveal">⚡ Full Stack Studio</span>
+        <span ref={labelRef} className="section-label reveal">
+          ⚡ Full Stack Studio
+        </span>
 
-        <h1 className="hero-title reveal reveal-delay-1">
-          Somos <span className="gradient-text">Código e Café</span>.
+        <h1 ref={titleRef} className="hero-title reveal reveal-delay-1">
+          <span className="gradient-text">Código e Café</span>
         </h1>
 
-        <h2 className="hero-subtitle reveal reveal-delay-2">
+        <h2 ref={subtitleRef} className="hero-subtitle reveal reveal-delay-2">
           Desenvolvimento Full Stack focado em criar experiências digitais incríveis.
         </h2>
 
-        <p className="hero-description reveal reveal-delay-3">
-          Transformamos ideias e designs em aplicações web modernas, rápidas e totalmente
-          responsivas. Cada linha de código é uma linha de café — feita com paixão e precisão.
+        <p ref={descriptionRef} className="hero-description reveal reveal-delay-3">
+          Transformamos ideias e designs em aplicações web modernas, rápidas e totalmente responsivas. Cada linha de código é uma linha de café — feita com paixão e precisão.
         </p>
 
-        <div className="hero-buttons reveal reveal-delay-4">
-          <a href="#contact" className="btn-primary" onClick={scrollToContact}>
+        <div ref={buttonsRef} className="hero-buttons reveal reveal-delay-4">
+          {/* <a href="#contact" className="btn-primary" onClick={scrollToContact}>
+            <span>Vamos Conversar?</span>
+            <HiArrowRight />
+          </a> */}
+          <a href="https://wa.me/+351913247176" className="btn-primary" target="blank">
             <span>Vamos Conversar?</span>
             <HiArrowRight />
           </a>
