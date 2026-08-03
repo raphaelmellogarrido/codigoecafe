@@ -488,7 +488,7 @@
    telas pequenas do que aspect-ratio, que às vezes ficava inconsistente
    dependendo das proporções da foto (bug observado no mobile). */
 .ach-card-photo::before {
-  content: '';
+  content: "";
   display: block;
   padding-top: 100%;
 }
@@ -586,7 +586,8 @@
 }
 
 .ach-buy-btn {
-  background: var(--ach-ink);
+  /* background: var(--ach-ink); */
+  background-color: rgb(247, 123, 143);
   color: #fff;
   text-decoration: none;
   font-size: 0.82rem;
