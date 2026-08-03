@@ -3,14 +3,14 @@
 // O número começa em 0 e anima até ao valor final quando entra no viewport.
 // Usa useRef + useEffect + requestAnimationFrame + IntersectionObserver.
 
-import { useEffect, useRef, useState } from 'react';
-import './Stats.css';
+import { useEffect, useRef, useState } from "react";
+import "./Stats.css";
 
 const stats = [
-  { value: 50, suffix: '+', label: 'Projetos Entregues' },
-  { value: 30, suffix: '+', label: 'Clientes Satisfeitos' },
-  { value: 5, suffix: '+', label: 'Anos de Experiência' },
-  { value: 100, suffix: '%', label: 'Satisfação' },
+  { value: 9, suffix: "", label: "Projetos Entregues" },
+  { value: 9, suffix: "", label: "Clientes Satisfeitos" },
+  { value: 10, suffix: "+", label: "Anos de Experiência" },
+  { value: 100, suffix: "%", label: "Satisfação" },
 ];
 
 function Counter({ end, suffix }) {
@@ -43,7 +43,7 @@ function Counter({ end, suffix }) {
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.5 },
     );
 
     observer.observe(node);

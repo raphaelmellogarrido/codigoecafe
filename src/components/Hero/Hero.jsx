@@ -72,7 +72,7 @@ export default function Hero() {
       </div>
 
       {/* Cards decorativos flutuantes com ícones de tech */}
-      <div className="hero-floating" aria-hidden="true">
+      {/* <div className="hero-floating" aria-hidden="true">
         <div className="floating-card floating-card-1">
           <FaReact />
         </div>
@@ -91,7 +91,7 @@ export default function Hero() {
         <div className="floating-card floating-card-6">
           <FaCss3Alt />
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }
