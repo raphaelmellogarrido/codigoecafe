@@ -78,8 +78,11 @@ export default function Navbar() {
   return (
     <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="navbar-container container">
+        {/* <a href="#home" className="navbar-logo" onClick={(e) => handleLinkClick(e, "#home")}> */}
         <a href="#home" className="navbar-logo" onClick={(e) => handleLinkClick(e, "#home")}>
-          <FaCoffee className="logo-icon" />
+          {/* <FaCoffee className="logo-icon" /> */}
+
+          <img src="./logo.png" alt="" className="logo-icon" />
           <span>
             Código e <span className="gradient-text">Café</span>
           </span>
