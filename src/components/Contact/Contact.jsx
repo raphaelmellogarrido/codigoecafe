@@ -23,60 +23,28 @@ export default function Contact() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (isSubmitting) return; // trava extra, por segurança
-
-  //   setIsSubmitting(true);
-
-  //   const formData = new FormData();
-  //   formData.append("name", form.name);
-  //   formData.append("email", form.email);
-  //   formData.append("subject", form.subject);
-  //   formData.append("message", form.message);
-
-  //   try {
-  //     const response = await fetch("/contact.php", {
-  //       method: "POST",
-  //       body: formData,
-  //     });
-
-  //     const text = await response.text();
-  //     const data = text ? JSON.parse(text) : { success: false };
-
-  //     if (data.success) {
-  //       setSent(true);
-  //       setError(false);
-  //       setForm({ name: "", email: "", subject: "", message: "" });
-  //       setTimeout(() => setSent(false), 4000);
-  //     } else {
-  //       setError(true);
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //     setError(true);
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isSubmitting) return; // trava extra, por segurança
 
     setIsSubmitting(true);
-    setError(false);
+
+    const formData = new FormData();
+    formData.append("name", form.name);
+    formData.append("email", form.email);
+    formData.append("subject", form.subject);
+    formData.append("message", form.message);
 
     try {
-      const response = await fetch("https://n8n.itdesodorante.com.br/webhook-test/3aeb349b-e2ea-41c9-a9e7-261d59a2bbe1", {
+      const response = await fetch("/contact.php", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
+        body: formData,
       });
 
-      if (response.ok) {
+      const text = await response.text();
+      const data = text ? JSON.parse(text) : { success: false };
+
+      if (data.success) {
         setSent(true);
         setError(false);
         setForm({ name: "", email: "", subject: "", message: "" });
