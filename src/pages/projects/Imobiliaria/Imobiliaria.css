@@ -1001,6 +1001,15 @@
 .im-filters-clear {
   margin-top: 0.25rem;
 }
+.im-filters-actions {
+  display: contents;
+}
+/* Escondido por padrão — só faz sentido quando os filtros ocupam o ecrã
+   inteiro (< 900px, ver media query abaixo); no desktop os resultados ao
+   lado já se atualizam sozinhos, um botão "aplicar" seria redundante. */
+.im-filters-apply {
+  display: none;
+}
 
 .im-empty-state {
   text-align: center;
@@ -1734,10 +1743,22 @@
     display: block;
     padding-left: 30px;
   }
-  .im-nav-whatsapp {
+  /* Precisa de mais especificidade do que ".im-nav-links a" (acima), senão o
+     "display: block" genérico ganha e quebra o layout do ícone + texto. */
+  .im-nav-links a.im-nav-whatsapp {
+    /* display: flex;
     margin-top: 0.5rem;
     justify-content: center;
     width: 150px;
+    padding-left: 1.2rem; */
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alinha o conteúdo à esquerda */
+    padding-left: 1.5rem; /* Empurra o ícone e o texto para a direita DENTRO do botão */
+    gap: 0.5rem; /* Espaço entre o ícone e o texto */
+    width: 165px; /* O botão ajusta ao tamanho do texto sem quebrar */
+    white-space: nowrap; /* Garante que o "Contacte-nos" não dobre de linha */
   }
   .im-nav-toggle {
     display: block;
@@ -1789,6 +1810,36 @@
     font-size: 1.3rem;
     cursor: pointer;
     color: var(--im-ink);
+  }
+
+  /* Rodapé fixo dentro do painel de filtros em ecrã inteiro — cola ao fundo
+     do drawer (que tem scroll próprio) em vez de rolar junto com os campos,
+     para o botão "Aplicar filtros" estar sempre visível. */
+  .im-filters-actions {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 0.5rem -1.5rem -1.5rem;
+    padding: 1rem 1.5rem calc(1rem + env(safe-area-inset-bottom, 0px));
+    background: var(--im-bg-soft);
+    border-top: 1px solid var(--im-border);
+  }
+  .im-filters-apply {
+    display: block;
+    width: 100%;
+    background: var(--im-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--im-radius-sm);
+    padding: 0.85rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+  .im-filters-apply:hover {
+    background: var(--im-primary-dark);
   }
 }
 

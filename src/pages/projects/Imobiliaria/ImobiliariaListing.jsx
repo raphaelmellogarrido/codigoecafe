@@ -263,9 +263,16 @@ export default function ImobiliariaListing() {
             </select>
           </div>
 
-          <button className="im-btn-outline im-filters-clear" onClick={limparFiltros}>
-            Limpar filtros
-          </button>
+          <div className="im-filters-actions">
+            <button className="im-btn-outline im-filters-clear" onClick={limparFiltros}>
+              Limpar filtros
+            </button>
+            {/* Só aparece em ecrãs pequenos (filtros em ecrã inteiro) — nos
+                grandes os resultados já se atualizam sozinhos ao lado. */}
+            <button type="button" className="im-filters-apply" onClick={() => setFiltersOpen(false)}>
+              Aplicar filtros ({filtered.length})
+            </button>
+          </div>
         </aside>
 
         <main className="im-listing-results">
