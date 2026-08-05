@@ -26,7 +26,7 @@ export default function TrackingScreen() {
     return (
       <div className="dl-empty">
         <p>Ainda não fizeste nenhum pedido.</p>
-        <Link to="/projetos/app-delivery" className="dl-primary-button">Ver restaurantes</Link>
+        <Link to="/app-delivery" className="dl-primary-button">Ver restaurantes</Link>
       </div>
     );
   }

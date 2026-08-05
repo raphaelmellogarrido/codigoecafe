@@ -31,7 +31,7 @@ export default function AchadinhosHome() {
           </h1>
           <p>Produtos selecionados a dedo — clica, compra e recebe em casa. Sem enrolação.</p>
           <div className="ach-hero-actions">
-            <Link to="/projetos/achadinhos/produtos" className="ach-btn-primary">
+            <Link to="/achadinhos/produtos" className="ach-btn-primary">
               Ver todos os produtos <HiArrowRight />
             </Link>
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="ach-btn-whatsapp">
@@ -59,7 +59,7 @@ export default function AchadinhosHome() {
 
         {!loading && !error && destaques.length === 0 && (
           <p className="ach-status">
-            Ainda não há destaques marcados. <Link to="/projetos/achadinhos/produtos">Ver todos os produtos</Link>
+            Ainda não há destaques marcados. <Link to="/achadinhos/produtos">Ver todos os produtos</Link>
           </p>
         )}
 

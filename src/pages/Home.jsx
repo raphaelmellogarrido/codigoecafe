@@ -50,7 +50,7 @@ const projects = [
     tags: ["React", "D3.js", "Node.js"],
     gradient: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=75",
-    path: "/projetos/dashboard-analytics",
+    path: "/dashboard-analytics",
   },
   {
     name: "E-commerce Platform",
@@ -58,7 +58,7 @@ const projects = [
     tags: ["React", "Node.js", "SQLite"],
     gradient: "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)",
     image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=900&q=75",
-    path: "/projetos/ecommerce-platform",
+    path: "/ecommerce-platform",
   },
   {
     name: "App de Delivery",
@@ -66,7 +66,7 @@ const projects = [
     tags: ["React", "React Router", "Leaflet"],
     gradient: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
     image: "https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?auto=format&fit=crop&w=900&q=75",
-    path: "/projetos/app-delivery",
+    path: "/app-delivery",
   },
   {
     name: "Sistema de Gestão",
@@ -74,7 +74,7 @@ const projects = [
     tags: ["React", "Node.js", "SQLite"],
     gradient: "linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)",
     image: "https://images.unsplash.com/photo-1758876202468-5ffe0ee61f07?auto=format&fit=crop&w=900&q=75",
-    path: "/projetos/sistema-gestao",
+    path: "/sistema-gestao",
   },
   {
     name: "Landing Page SaaS",
@@ -82,7 +82,7 @@ const projects = [
     tags: ["React", "Tailwind", "Framer Motion"],
     gradient: "linear-gradient(135deg, #ec4899 0%, #be185d 100%)",
     image: "https://images.unsplash.com/photo-1768293336571-c48f8765a82d?auto=format&fit=crop&w=900&q=75",
-    path: "/projetos/landing-page-saas",
+    path: "/landing-page-saas",
   },
   {
     name: "Portfolio Criativo",
@@ -90,7 +90,7 @@ const projects = [
     tags: ["Three.js", "GSAP", "React"],
     gradient: "linear-gradient(135deg, #06b6d4 0%, #0e7490 100%)",
     image: "https://images.unsplash.com/photo-1768729797971-472ce92e7a71?auto=format&fit=crop&w=900&q=75",
-    path: "/projetos/portfolio-criativo",
+    path: "/portfolio-criativo",
   },
   {
     name: "Clínica Odontológica",
@@ -98,7 +98,7 @@ const projects = [
     tags: ["React", "CSS", "UI/UX"],
     gradient: "linear-gradient(135deg, #0d9488 0%, #0f766e 100%)",
     image: "https://images.unsplash.com/photo-1662837625421-5fd8ed6131a0?auto=format&fit=crop&w=900&q=75",
-    path: "/projetos/clinica-dentista",
+    path: "/clinica-dentista",
   },
   {
     name: "Achadinhos",
@@ -106,7 +106,23 @@ const projects = [
     tags: ["React", "Firebase", "Cloudflare R2"],
     gradient: "linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)",
     image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=75",
-    path: "/projetos/achadinhos",
+    path: "/achadinhos",
+  },
+  {
+    name: "Clínica Veterinária",
+    description: "Landing page elegante para clínica veterinária, com galeria, equipa e contacto direto por WhatsApp.",
+    tags: ["React", "CSS", "UI/UX"],
+    gradient: "linear-gradient(135deg, #2f6f52 0%, #234f3b 100%)",
+    image: "https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=900&q=75",
+    path: "/veterinaria",
+  },
+  {
+    name: "Imobiliária Domus",
+    description: "Site de imobiliária com painel administrativo — catálogo de imóveis com galeria de fotos, filtros por cidade/distância/preço e contacto direto por WhatsApp.",
+    tags: ["React", "Firebase", "Leaflet"],
+    gradient: "linear-gradient(135deg, #a9832f 0%, #1c1a17 100%)",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=75",
+    path: "/imobiliaria",
   },
 ];
 

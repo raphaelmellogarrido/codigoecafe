@@ -20,7 +20,7 @@ export default function CheckoutPage() {
     return (
       <div className="ep-empty">
         <p>Precisas de iniciar sessão para finalizar a compra.</p>
-        <Link to="/projetos/ecommerce-platform/entrar" className="ep-primary-button">
+        <Link to="/ecommerce-platform/entrar" className="ep-primary-button">
           Entrar ou criar conta
         </Link>
       </div>
@@ -33,7 +33,7 @@ export default function CheckoutPage() {
         <p className="ep-success-icon">✓</p>
         <h2>Pagamento simulado aprovado!</h2>
         <p>Encomenda #{confirmedOrder.id} — {formatPrice(confirmedOrder.totalCents)}</p>
-        <Link to="/projetos/ecommerce-platform/pedidos" className="ep-primary-button">
+        <Link to="/ecommerce-platform/pedidos" className="ep-primary-button">
           Ver os meus pedidos
         </Link>
       </div>
@@ -44,7 +44,7 @@ export default function CheckoutPage() {
     return (
       <div className="ep-empty">
         <p>O teu carrinho está vazio.</p>
-        <Link to="/projetos/ecommerce-platform" className="ep-primary-button">
+        <Link to="/ecommerce-platform" className="ep-primary-button">
           Ver produtos
         </Link>
       </div>

@@ -18,20 +18,20 @@ function NavBar() {
         <HiArrowLeft /> Voltar ao portfólio
       </Link>
 
-      <Link to="/projetos/ecommerce-platform" className="ep-logo">
+      <Link to="/ecommerce-platform" className="ep-logo">
         Nimbus<span className="ep-logo-accent">Store</span>
       </Link>
 
       <div className="ep-nav-links">
-        <NavLink to="/projetos/ecommerce-platform" end className="ep-nav-link">
+        <NavLink to="/ecommerce-platform" end className="ep-nav-link">
           Loja
         </NavLink>
         {user && (
-          <NavLink to="/projetos/ecommerce-platform/pedidos" className="ep-nav-link">
+          <NavLink to="/ecommerce-platform/pedidos" className="ep-nav-link">
             Pedidos
           </NavLink>
         )}
-        <NavLink to="/projetos/ecommerce-platform/carrinho" className="ep-cart-link">
+        <NavLink to="/ecommerce-platform/carrinho" className="ep-cart-link">
           <HiOutlineShoppingBag />
           {itemCount > 0 && <span className="ep-cart-badge">{itemCount}</span>}
         </NavLink>
@@ -40,7 +40,7 @@ function NavBar() {
             Sair ({user.name.split(' ')[0]})
           </button>
         ) : (
-          <NavLink to="/projetos/ecommerce-platform/entrar" className="ep-auth-button">
+          <NavLink to="/ecommerce-platform/entrar" className="ep-auth-button">
             Entrar
           </NavLink>
         )}

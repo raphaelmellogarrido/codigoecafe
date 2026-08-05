@@ -4,7 +4,7 @@ import { HiStar } from 'react-icons/hi';
 import { formatPrice } from './format';
 
 export function ProductCard({ product }) {
-  const href = `/projetos/achadinhos/produtos/${product.slug || product.id}`;
+  const href = `/achadinhos/produtos/${product.slug || product.id}`;
 
   return (
     <article className="ach-card">

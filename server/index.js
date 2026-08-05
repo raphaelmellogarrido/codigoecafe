@@ -13,6 +13,7 @@ import { ordersRouter } from "./routes/orders.js";
 import { clientsRouter } from "./routes/clients.js";
 import { tasksRouter } from "./routes/tasks.js";
 import { achadinhosRouter } from "./routes/achadinhos.js";
+import { imobiliariaRouter } from "./routes/imobiliaria.js";
 
 const app = express();
 // Serviços como o Render atribuem a porta via variável de ambiente — não pode ser fixa.
@@ -29,6 +30,7 @@ app.use("/api/orders", ordersRouter);
 app.use("/api/clients", clientsRouter);
 app.use("/api/tasks", tasksRouter);
 app.use("/api/achadinhos", achadinhosRouter);
+app.use("/api/imobiliaria", imobiliariaRouter);
 
 // Gera uma série de 30 dias com um "random walk" (parece receita real, com altos e baixos)
 function generateRevenueSeries(days = 30) {

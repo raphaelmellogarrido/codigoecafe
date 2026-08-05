@@ -15,14 +15,14 @@ export default function CartScreen() {
     return (
       <div className="dl-empty">
         <p>O teu carrinho está vazio.</p>
-        <Link to="/projetos/app-delivery" className="dl-primary-button">Ver restaurantes</Link>
+        <Link to="/app-delivery" className="dl-primary-button">Ver restaurantes</Link>
       </div>
     );
   }
 
   function handleConfirm() {
     placeOrder(restaurant);
-    navigate('/projetos/app-delivery/pedido');
+    navigate('/app-delivery/pedido');
   }
 
   return (

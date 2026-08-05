@@ -15,7 +15,7 @@ export default function AuthPage() {
   const [loading, setLoading] = useState(false);
 
   if (user) {
-    return <Navigate to="/projetos/ecommerce-platform" replace />;
+    return <Navigate to="/ecommerce-platform" replace />;
   }
 
   function handleChange(e) {
@@ -32,7 +32,7 @@ export default function AuthPage() {
       } else {
         await register(form.name, form.email, form.password);
       }
-      navigate('/projetos/ecommerce-platform');
+      navigate('/ecommerce-platform');
     } catch (err) {
       setError(err.message);
     } finally {

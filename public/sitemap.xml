@@ -7,52 +7,64 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://codigoecafe.com/projetos/landing-page-saas</loc>
+    <loc>https://codigoecafe.com/landing-page-saas</loc>
     <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://codigoecafe.com/projetos/portfolio-criativo</loc>
+    <loc>https://codigoecafe.com/portfolio-criativo</loc>
     <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://codigoecafe.com/projetos/dashboard-analytics</loc>
+    <loc>https://codigoecafe.com/dashboard-analytics</loc>
     <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://codigoecafe.com/projetos/ecommerce-platform</loc>
+    <loc>https://codigoecafe.com/ecommerce-platform</loc>
     <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://codigoecafe.com/projetos/app-delivery</loc>
+    <loc>https://codigoecafe.com/app-delivery</loc>
     <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://codigoecafe.com/projetos/sistema-gestao</loc>
+    <loc>https://codigoecafe.com/sistema-gestao</loc>
     <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://codigoecafe.com/projetos/clinica-dentista</loc>
+    <loc>https://codigoecafe.com/clinica-dentista</loc>
     <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://codigoecafe.com/projetos/achadinhos</loc>
+    <loc>https://codigoecafe.com/achadinhos</loc>
     <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://codigoecafe.com/imobiliaria</loc>
+    <lastmod>2026-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://codigoecafe.com/imobiliaria/imoveis</loc>
+    <lastmod>2026-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://codigoecafe.com/blog</loc>

@@ -10,6 +10,13 @@
   RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
   RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
+  # As rotas de projeto deixaram de ter o prefixo /projetos/ (agora vivem
+  # direto na raiz, ex.: /achadinhos). Isto redireciona quem ainda tiver o
+  # link antigo guardado (ex.: dentistas com o link da clínica) para o novo,
+  # em vez de dar 404 — não mexe em "/projetos" sozinho (sem nada a seguir),
+  # que continua a ser o atalho para a secção de Portfólio.
+  RewriteRule ^projetos/(.+)$ /$1 [R=301,L]
+
   # Não reescreve pedidos a ficheiros ou pastas que existem de verdade
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d

@@ -6,14 +6,14 @@ específica (React, Node.js, bases de dados, integrações de terceiros).
 
 ## Projetos
 
-- [Dashboard Analytics](https://codigoecafe.com/projetos/dashboard-analytics): painel administrativo com gráficos em tempo real (React, D3.js, Node.js/Express)
-- [E-commerce Platform](https://codigoecafe.com/projetos/ecommerce-platform): loja online com autenticação, carrinho e checkout (React, Node.js, SQLite)
-- [App de Delivery](https://codigoecafe.com/projetos/app-delivery): aplicação de entregas com mapa interativo (React, React Router, Leaflet)
-- [Sistema de Gestão](https://codigoecafe.com/projetos/sistema-gestao): CRM interno com quadro Kanban (React, Node.js, SQLite)
-- [Landing Page SaaS](https://codigoecafe.com/projetos/landing-page-saas): landing page de alta conversão (React, Tailwind CSS, Framer Motion)
-- [Portfolio Criativo](https://codigoecafe.com/projetos/portfolio-criativo): site interativo com animações 3D (Three.js, GSAP, React)
-- [Clínica Odontológica](https://codigoecafe.com/projetos/clinica-dentista): landing page para clínica dentária (React)
-- [Achadinhos](https://codigoecafe.com/projetos/achadinhos): loja com catálogo de produtos (React, Firebase)
+- [Dashboard Analytics](https://codigoecafe.com/dashboard-analytics): painel administrativo com gráficos em tempo real (React, D3.js, Node.js/Express)
+- [E-commerce Platform](https://codigoecafe.com/ecommerce-platform): loja online com autenticação, carrinho e checkout (React, Node.js, SQLite)
+- [App de Delivery](https://codigoecafe.com/app-delivery): aplicação de entregas com mapa interativo (React, React Router, Leaflet)
+- [Sistema de Gestão](https://codigoecafe.com/sistema-gestao): CRM interno com quadro Kanban (React, Node.js, SQLite)
+- [Landing Page SaaS](https://codigoecafe.com/landing-page-saas): landing page de alta conversão (React, Tailwind CSS, Framer Motion)
+- [Portfolio Criativo](https://codigoecafe.com/portfolio-criativo): site interativo com animações 3D (Three.js, GSAP, React)
+- [Clínica Odontológica](https://codigoecafe.com/clinica-dentista): landing page para clínica dentária (React)
+- [Achadinhos](https://codigoecafe.com/achadinhos): loja com catálogo de produtos (React, Firebase)
 - [Blog](https://codigoecafe.com/blog): artigos sobre desenvolvimento web (React, PocketBase)
 
 ## Contacto

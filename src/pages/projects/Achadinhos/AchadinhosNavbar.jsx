@@ -43,15 +43,15 @@ export default function AchadinhosNavbar() {
   return (
     <header className={`ach-nav ${scrolled ? 'ach-nav-scrolled' : ''} ${menuOpen ? 'ach-nav-menu-open' : ''}`}>
       <div className="ach-nav-inner">
-        <NavLink to="/projetos/achadinhos" className="ach-nav-logo" onClick={handleNavClick}>
+        <NavLink to="/achadinhos" className="ach-nav-logo" onClick={handleNavClick}>
           <HiOutlineShoppingBag /> Achadinhos
         </NavLink>
 
         <nav className={`ach-nav-links ${menuOpen ? 'open' : ''}`}>
-          <NavLink to="/projetos/achadinhos" end onClick={handleNavClick}>
+          <NavLink to="/achadinhos" end onClick={handleNavClick}>
             Home
           </NavLink>
-          <NavLink to="/projetos/achadinhos/produtos" onClick={handleNavClick}>
+          <NavLink to="/achadinhos/produtos" onClick={handleNavClick}>
             Produtos
           </NavLink>
           <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="ach-nav-whatsapp">

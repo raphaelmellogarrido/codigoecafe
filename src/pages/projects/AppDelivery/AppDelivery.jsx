@@ -12,17 +12,17 @@ function BottomNav() {
   const { itemCount } = useCart();
   return (
     <nav className="dl-bottom-nav">
-      <NavLink to="/projetos/app-delivery" end className="dl-nav-item">
+      <NavLink to="/app-delivery" end className="dl-nav-item">
         <HiHome /> Início
       </NavLink>
-      <NavLink to="/projetos/app-delivery/carrinho" className="dl-nav-item">
+      <NavLink to="/app-delivery/carrinho" className="dl-nav-item">
         <span className="dl-nav-icon-wrap">
           <HiOutlineShoppingBag />
           {itemCount > 0 && <span className="dl-nav-badge">{itemCount}</span>}
         </span>
         Carrinho
       </NavLink>
-      <NavLink to="/projetos/app-delivery/pedido" className="dl-nav-item">
+      <NavLink to="/app-delivery/pedido" className="dl-nav-item">
         <HiOutlineLocationMarker /> Pedido
       </NavLink>
     </nav>

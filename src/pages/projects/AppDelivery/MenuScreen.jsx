@@ -18,7 +18,7 @@ export default function MenuScreen() {
     return (
       <div className="dl-empty">
         <p>Restaurante não encontrado.</p>
-        <Link to="/projetos/app-delivery" className="dl-primary-button">Voltar</Link>
+        <Link to="/app-delivery" className="dl-primary-button">Voltar</Link>
       </div>
     );
   }

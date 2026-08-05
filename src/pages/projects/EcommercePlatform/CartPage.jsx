@@ -12,7 +12,7 @@ export default function CartPage() {
     return (
       <div className="ep-empty">
         <p>O teu carrinho está vazio.</p>
-        <Link to="/projetos/ecommerce-platform" className="ep-primary-button">
+        <Link to="/ecommerce-platform" className="ep-primary-button">
           Ver produtos
         </Link>
       </div>
@@ -62,7 +62,7 @@ export default function CartPage() {
         <strong>{formatPrice(totalCents)}</strong>
       </div>
 
-      <Link to="/projetos/ecommerce-platform/finalizar" className="ep-primary-button">
+      <Link to="/ecommerce-platform/finalizar" className="ep-primary-button">
         Finalizar compra
       </Link>
     </div>

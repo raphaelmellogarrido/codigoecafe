@@ -17,13 +17,13 @@ export default function SistemaGestao() {
           Gest<span className="sg-logo-accent">Pro</span>
         </div>
         <nav className="sg-nav">
-          <NavLink to="/projetos/sistema-gestao" end className="sg-nav-link">
+          <NavLink to="/sistema-gestao" end className="sg-nav-link">
             <HiViewGrid /> Visão geral
           </NavLink>
-          <NavLink to="/projetos/sistema-gestao/clientes" className="sg-nav-link">
+          <NavLink to="/sistema-gestao/clientes" className="sg-nav-link">
             <HiUsers /> Clientes
           </NavLink>
-          <NavLink to="/projetos/sistema-gestao/tarefas" className="sg-nav-link">
+          <NavLink to="/sistema-gestao/tarefas" className="sg-nav-link">
             <HiClipboardList /> Tarefas
           </NavLink>
         </nav>

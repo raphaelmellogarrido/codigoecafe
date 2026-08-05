@@ -160,7 +160,7 @@ function ProductForm({ initial, onCancel, onSaved }) {
             placeholder="ex.: sapato-de-cetim"
             required
           />
-          <span className="ach-field-hint">codigoecafe.com/projetos/achadinhos/produtos/{slugify(form.slug) || '...'}</span>
+          <span className="ach-field-hint">codigoecafe.com/achadinhos/produtos/{slugify(form.slug) || '...'}</span>
         </label>
 
         <label className="ach-field">
@@ -239,7 +239,7 @@ export default function AchadinhosAdmin() {
   }, [user]);
 
   if (loading) return <p className="ach-status">A carregar...</p>;
-  if (!user) return <Navigate to="/projetos/achadinhos/admin" replace />;
+  if (!user) return <Navigate to="/achadinhos/admin" replace />;
 
   async function handleDelete(product) {
     if (!window.confirm(`Excluir "${product.nome}"? Esta ação não pode ser desfeita.`)) return;
@@ -270,7 +270,7 @@ export default function AchadinhosAdmin() {
   return (
     <div className="ach-page ach-admin">
       <header className="ach-admin-header">
-        <Link to="/projetos/achadinhos/produtos" className="ach-back">
+        <Link to="/achadinhos/produtos" className="ach-back">
           <HiArrowLeft /> Ver catálogo
         </Link>
         <h1>Painel Achadinhos</h1>

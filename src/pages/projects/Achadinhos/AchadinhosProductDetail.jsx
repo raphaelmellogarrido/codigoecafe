@@ -54,7 +54,7 @@ export default function AchadinhosProductDetail() {
       <AchadinhosNavbar />
 
       <main className="ach-detail-main">
-        <Link to="/projetos/achadinhos/produtos" className="ach-back">
+        <Link to="/achadinhos/produtos" className="ach-back">
           <HiArrowLeft /> Voltar aos produtos
         </Link>
 

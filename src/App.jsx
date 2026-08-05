@@ -35,6 +35,18 @@ const TasksPage = lazy(() => import("./pages/projects/SistemaGestao/TasksPage"))
 
 const ClinicaDentista = lazy(() => import("./pages/projects/ClinicaDentista/ClinicaDentista"));
 
+// Fora do prefixo /projetos de propósito: acessível diretamente em
+// codigoecafe.com/veterinaria, a pedido.
+const Veterinaria = lazy(() => import("./pages/projects/Veterinaria/Veterinaria"));
+
+// Também fora do prefixo /projetos, a pedido: codigoecafe.com/imobiliaria.
+const Imobiliaria = lazy(() => import("./pages/projects/Imobiliaria/Imobiliaria"));
+const ImobiliariaHome = lazy(() => import("./pages/projects/Imobiliaria/ImobiliariaHome"));
+const ImobiliariaListing = lazy(() => import("./pages/projects/Imobiliaria/ImobiliariaListing"));
+const ImobiliariaPropertyDetail = lazy(() => import("./pages/projects/Imobiliaria/ImobiliariaPropertyDetail"));
+const ImobiliariaLogin = lazy(() => import("./pages/projects/Imobiliaria/ImobiliariaLogin"));
+const ImobiliariaAdmin = lazy(() => import("./pages/projects/Imobiliaria/ImobiliariaAdmin"));
+
 const Achadinhos = lazy(() => import("./pages/projects/Achadinhos/Achadinhos"));
 const AchadinhosHome = lazy(() => import("./pages/projects/Achadinhos/AchadinhosHome"));
 const AchadinhosProducts = lazy(() => import("./pages/projects/Achadinhos/AchadinhosProducts"));
@@ -120,11 +132,11 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/projetos" element={<ProjetosRedirect />} />
-          <Route path="/projetos/landing-page-saas" element={<LandingPageSaaS />} />
-          <Route path="/projetos/portfolio-criativo" element={<PortfolioCriativo />} />
-          <Route path="/projetos/dashboard-analytics" element={<DashboardAnalytics />} />
+          <Route path="/landing-page-saas" element={<LandingPageSaaS />} />
+          <Route path="/portfolio-criativo" element={<PortfolioCriativo />} />
+          <Route path="/dashboard-analytics" element={<DashboardAnalytics />} />
 
-          <Route path="/projetos/ecommerce-platform" element={<EcommercePlatform />}>
+          <Route path="/ecommerce-platform" element={<EcommercePlatform />}>
             <Route index element={<ShopPage />} />
             <Route path="carrinho" element={<CartPage />} />
             <Route path="finalizar" element={<CheckoutPage />} />
@@ -132,22 +144,32 @@ export default function App() {
             <Route path="entrar" element={<AuthPage />} />
           </Route>
 
-          <Route path="/projetos/app-delivery" element={<AppDelivery />}>
+          <Route path="/app-delivery" element={<AppDelivery />}>
             <Route index element={<HomeScreen />} />
             <Route path="restaurantes/:id" element={<MenuScreen />} />
             <Route path="carrinho" element={<CartScreen />} />
             <Route path="pedido" element={<TrackingScreen />} />
           </Route>
 
-          <Route path="/projetos/sistema-gestao" element={<SistemaGestao />}>
+          <Route path="/sistema-gestao" element={<SistemaGestao />}>
             <Route index element={<OverviewPage />} />
             <Route path="clientes" element={<ClientsPage />} />
             <Route path="tarefas" element={<TasksPage />} />
           </Route>
 
-          <Route path="/projetos/clinica-dentista" element={<ClinicaDentista />} />
+          <Route path="/clinica-dentista" element={<ClinicaDentista />} />
 
-          <Route path="/projetos/achadinhos" element={<Achadinhos />}>
+          <Route path="/veterinaria" element={<Veterinaria />} />
+
+          <Route path="/imobiliaria" element={<Imobiliaria />}>
+            <Route index element={<ImobiliariaHome />} />
+            <Route path="imoveis" element={<ImobiliariaListing />} />
+            <Route path="imoveis/:slug" element={<ImobiliariaPropertyDetail />} />
+            <Route path="admin" element={<ImobiliariaLogin />} />
+            <Route path="admin/painel" element={<ImobiliariaAdmin />} />
+          </Route>
+
+          <Route path="/achadinhos" element={<Achadinhos />}>
             <Route index element={<AchadinhosHome />} />
             <Route path="produtos" element={<AchadinhosProducts />} />
             <Route path="produtos/:slug" element={<AchadinhosProductDetail />} />
