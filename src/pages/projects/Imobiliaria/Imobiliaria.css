@@ -1,7 +1,7 @@
 /* Fraunces: serif quente para títulos — o mesmo recurso "elegante" usado na
    Veterinária, aqui com paleta dourada/carvão em vez de verde, para dar a
    sensação premium típica de sites de imobiliária. */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap");
 
 .im-page {
   --im-primary: #a9832f;
@@ -22,7 +22,10 @@
 
   background: #ffffff;
   color: var(--im-ink);
-  font-family: 'Inter', -apple-system, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    sans-serif;
   overflow-x: hidden;
   position: relative;
 }
@@ -36,7 +39,7 @@
 .im-page h2,
 .im-nav-logo,
 .im-footer-brand .im-nav-logo {
-  font-family: 'Fraunces', 'Inter', serif;
+  font-family: "Fraunces", "Inter", serif;
 }
 
 /* ===== Nav ===== */
@@ -47,7 +50,9 @@
   background: rgba(251, 249, 245, 0.88);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid transparent;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
 }
 .im-nav-scrolled {
   border-bottom-color: var(--im-border);
@@ -111,7 +116,9 @@
   border-radius: 999px;
   font-weight: 700 !important;
   font-size: 0.85rem !important;
-  transition: background 0.2s, transform 0.2s;
+  transition:
+    background 0.2s,
+    transform 0.2s;
   white-space: nowrap;
 }
 .im-nav-whatsapp:hover {
@@ -142,9 +149,13 @@
   font-size: 0.92rem;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s, color 0.2s, border-color 0.2s;
+  transition:
+    background 0.2s,
+    transform 0.2s,
+    color 0.2s,
+    border-color 0.2s;
   white-space: nowrap;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   border: none;
 }
 .im-btn-whatsapp {
@@ -238,7 +249,7 @@
   padding: 0.4rem 1rem;
   border-radius: 999px;
   margin-bottom: 1.25rem;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .im-hero-content h1 {
@@ -281,7 +292,9 @@
   font-weight: 700;
   color: var(--im-muted);
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 .im-search-tab.active {
   background: var(--im-ink);
@@ -339,7 +352,7 @@
   gap: 0.4rem;
 }
 .im-stat-value {
-  font-family: 'Fraunces', serif;
+  font-family: "Fraunces", serif;
   font-size: 2rem;
   font-weight: 600;
   color: var(--im-primary-light);
@@ -364,7 +377,7 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin-bottom: 0.75rem;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .im-section-header {
@@ -437,7 +450,7 @@
 .im-value-card h3 {
   font-size: 1.02rem;
   font-weight: 700;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 .im-value-card p {
   margin-top: 0.2rem;
@@ -458,7 +471,9 @@
   border: 1px solid var(--im-border);
   border-radius: var(--im-radius-md);
   overflow: hidden;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
   display: flex;
   flex-direction: column;
 }
@@ -556,7 +571,7 @@
   color: var(--im-primary-dark);
   font-weight: 800;
   font-size: 1.05rem;
-  font-family: 'Fraunces', serif;
+  font-family: "Fraunces", serif;
 }
 .im-card-name-link {
   text-decoration: none;
@@ -650,7 +665,7 @@
   position: absolute;
   top: 1rem;
   right: 1.25rem;
-  font-family: 'Fraunces', serif;
+  font-family: "Fraunces", serif;
   font-size: 1.4rem;
   color: var(--im-border);
   font-weight: 700;
@@ -670,7 +685,7 @@
 .im-step-card h3 {
   font-size: 1.02rem;
   font-weight: 700;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 .im-step-card p {
   margin-top: 0.4rem;
@@ -736,7 +751,7 @@
   text-align: center;
 }
 .im-cta-final h2 {
-  font-family: 'Fraunces', serif;
+  font-family: "Fraunces", serif;
   font-size: clamp(1.7rem, 3vw, 2.3rem);
   font-weight: 600;
 }
@@ -807,7 +822,9 @@
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 .im-footer-socials a:hover {
   background: var(--im-primary);
@@ -856,13 +873,19 @@
 }
 @keyframes im-whatsapp-pulse {
   0% {
-    box-shadow: 0 12px 30px -8px rgba(37, 211, 102, 0.6), 0 0 0 0 rgba(37, 211, 102, 0.45);
+    box-shadow:
+      0 12px 30px -8px rgba(37, 211, 102, 0.6),
+      0 0 0 0 rgba(37, 211, 102, 0.45);
   }
   70% {
-    box-shadow: 0 12px 30px -8px rgba(37, 211, 102, 0.6), 0 0 0 14px rgba(37, 211, 102, 0);
+    box-shadow:
+      0 12px 30px -8px rgba(37, 211, 102, 0.6),
+      0 0 0 14px rgba(37, 211, 102, 0);
   }
   100% {
-    box-shadow: 0 12px 30px -8px rgba(37, 211, 102, 0.6), 0 0 0 0 rgba(37, 211, 102, 0);
+    box-shadow:
+      0 12px 30px -8px rgba(37, 211, 102, 0.6),
+      0 0 0 0 rgba(37, 211, 102, 0);
   }
 }
 
@@ -965,7 +988,10 @@
   font-weight: 600;
   cursor: pointer;
   color: var(--im-ink);
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
 }
 .im-chip.active {
   background: var(--im-ink);
@@ -1237,7 +1263,9 @@
   border-radius: 12px;
   padding: 0.65rem;
   flex-wrap: wrap;
-  transition: box-shadow 0.2s, border-color 0.2s;
+  transition:
+    box-shadow 0.2s,
+    border-color 0.2s;
 }
 .im-admin-row:hover {
   box-shadow: var(--im-shadow-sm);
@@ -1510,7 +1538,9 @@
   cursor: pointer;
   background: var(--im-bg-soft);
   opacity: 0.7;
-  transition: opacity 0.2s, border-color 0.2s;
+  transition:
+    opacity 0.2s,
+    border-color 0.2s;
 }
 .im-gallery-thumb img {
   width: 100%;
@@ -1625,7 +1655,7 @@
   align-items: flex-start;
 }
 .im-detail-price {
-  font-family: 'Fraunces', serif;
+  font-family: "Fraunces", serif;
   font-size: 1.9rem;
   font-weight: 700;
   color: var(--im-primary-dark);
@@ -1687,7 +1717,9 @@
     border-bottom: 1px solid var(--im-border);
     transform: translateY(-150%);
     opacity: 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      opacity 0.3s ease;
     max-height: calc(100vh - 68px);
     overflow-y: auto;
   }
@@ -1700,10 +1732,12 @@
     padding: 0.75rem 0;
     border-bottom: 1px solid var(--im-border);
     display: block;
+    padding-left: 30px;
   }
   .im-nav-whatsapp {
     margin-top: 0.5rem;
     justify-content: center;
+    width: 150px;
   }
   .im-nav-toggle {
     display: block;
