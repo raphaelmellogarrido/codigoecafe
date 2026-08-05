@@ -174,7 +174,11 @@ export default function ImobiliariaHome() {
     e.preventDefault();
     const params = new URLSearchParams();
     if (negocio !== 'todos') params.set('negocio', negocio);
+    // Manda a cidade quando escolhida; se só o distrito foi escolhido (sem
+    // cidade específica), manda o distrito — a Listagem sabe filtrar pelos
+    // dois casos.
     if (cidade) params.set('cidade', cidade);
+    else if (distrito) params.set('distrito', distrito);
     navigate(`/imobiliaria/imoveis${params.toString() ? `?${params}` : ''}`);
   }
 

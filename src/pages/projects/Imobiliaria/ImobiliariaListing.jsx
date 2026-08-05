@@ -38,9 +38,10 @@ export default function ImobiliariaListing() {
   const [searchParams] = useSearchParams();
 
   const cidadeInicial = searchParams.get('cidade') || '';
+  const distritoInicial = searchParams.get('distrito') || '';
 
   const [negocio, setNegocio] = useState(searchParams.get('negocio') || 'todos');
-  const [distrito, setDistrito] = useState(() => findCity(cidadeInicial)?.district || '');
+  const [distrito, setDistrito] = useState(() => findCity(cidadeInicial)?.district || distritoInicial);
   const [cidade, setCidade] = useState(cidadeInicial);
   const [raio, setRaio] = useState(25);
   const [precoMin, setPrecoMin] = useState('');
@@ -50,13 +51,18 @@ export default function ImobiliariaListing() {
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   // Se a Home enviar novos parâmetros (o utilizador voltou e pesquisou de
-  // novo), refletir aqui também.
+  // novo), refletir aqui também. Cidade tem prioridade sobre distrito (uma
+  // pesquisa nova substitui a anterior por completo).
   useEffect(() => {
     if (searchParams.get('negocio')) setNegocio(searchParams.get('negocio'));
     const novaCidade = searchParams.get('cidade');
+    const novoDistrito = searchParams.get('distrito');
     if (novaCidade) {
       setCidade(novaCidade);
       setDistrito(findCity(novaCidade)?.district || '');
+    } else if (novoDistrito) {
+      setDistrito(novoDistrito);
+      setCidade('');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
@@ -91,10 +97,18 @@ export default function ImobiliariaListing() {
     }
 
     if (cidade) {
+      // Cidade específica escolhida: filtra por raio de distância a partir
+      // dela (pode incluir imóveis de outra cidade/distrito, se estiverem
+      // perto o suficiente — é o comportamento esperado do "raio de X km").
       const ref = findCity(cidade);
       if (ref) {
         list = list.filter((p) => distanceKm(p.lat, p.lng, ref.lat, ref.lng) <= raio);
       }
+    } else if (distrito) {
+      // Só o distrito foi escolhido (sem cidade): filtra por correspondência
+      // exata do distrito guardado no imóvel, sem raio (não há um "centro"
+      // único para calcular distância a um distrito inteiro).
+      list = list.filter((p) => p.distrito === distrito);
     }
 
     if (precoMin) {
@@ -122,7 +136,7 @@ export default function ImobiliariaListing() {
     }
 
     return list;
-  }, [properties, negocio, cidade, raio, precoMin, precoMax, tipologias, ordenar]);
+  }, [properties, negocio, distrito, cidade, raio, precoMin, precoMax, tipologias, ordenar]);
 
   return (
     <div className="im-page">

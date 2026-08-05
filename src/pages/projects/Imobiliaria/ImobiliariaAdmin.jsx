@@ -2,7 +2,7 @@
 // Painel administrativo: lista, cria, edita e apaga imóveis do catálogo.
 // Rota protegida — redireciona para o login se não houver sessão.
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import {
   addDoc,
@@ -85,6 +85,15 @@ function PropertyForm({ initial, onCancel, onSaved }) {
   const [saving, setSaving] = useState(false);
   const [uploadStep, setUploadStep] = useState(null);
   const [error, setError] = useState(null);
+
+  // Esc fecha o formulário, como qualquer modal.
+  useEffect(() => {
+    function onKeyDown(e) {
+      if (e.key === 'Escape') onCancel();
+    }
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [onCancel]);
 
   function handleNomeChange(value) {
     setForm((f) => ({ ...f, nome: value, slug: slugTouched ? f.slug : slugify(value) }));
@@ -448,6 +457,9 @@ export default function ImobiliariaAdmin() {
   const [loadingImoveis, setLoadingImoveis] = useState(true);
   const [editingImovel, setEditingImovel] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [filtroTipo, setFiltroTipo] = useState('todos');
+  const [filtroDistrito, setFiltroDistrito] = useState('');
+  const [filtroCidade, setFiltroCidade] = useState('');
 
   async function loadImoveis() {
     setLoadingImoveis(true);
@@ -460,6 +472,34 @@ export default function ImobiliariaAdmin() {
   useEffect(() => {
     if (user) loadImoveis();
   }, [user]);
+
+  // Separar por venda/arrendamento e por cidade só no que já está carregado
+  // — a lista do admin costuma ser pequena, não vale a pena outra query.
+  const imoveisFiltrados = useMemo(() => {
+    let list = imoveis;
+    if (filtroTipo !== 'todos') {
+      list = list.filter((i) => i.tipo === filtroTipo || i.tipo === 'ambos');
+    }
+    if (filtroCidade) {
+      list = list.filter((i) => i.cidade === filtroCidade);
+    } else if (filtroDistrito) {
+      list = list.filter((i) => i.distrito === filtroDistrito);
+    }
+    return list;
+  }, [imoveis, filtroTipo, filtroDistrito, filtroCidade]);
+
+  const filtrosAtivos = filtroTipo !== 'todos' || !!filtroDistrito;
+
+  function handleFiltroDistritoChange(value) {
+    setFiltroDistrito(value);
+    setFiltroCidade('');
+  }
+
+  function limparFiltrosAdmin() {
+    setFiltroTipo('todos');
+    setFiltroDistrito('');
+    setFiltroCidade('');
+  }
 
   if (loading) return <p className="im-status">A carregar...</p>;
   if (!user) return <Navigate to="/imobiliaria/admin" replace />;
@@ -508,20 +548,77 @@ export default function ImobiliariaAdmin() {
         </button>
       </div>
 
+      <div className="im-admin-filters">
+        <div className="im-admin-filter-tabs">
+          {[
+            { value: 'todos', label: 'Todos' },
+            { value: 'venda', label: 'Venda' },
+            { value: 'arrendamento', label: 'Arrendamento' },
+          ].map((tab) => (
+            <button
+              key={tab.value}
+              type="button"
+              className={`im-search-tab ${filtroTipo === tab.value ? 'active' : ''}`}
+              onClick={() => setFiltroTipo(tab.value)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        <select className="im-input" value={filtroDistrito} onChange={(e) => handleFiltroDistritoChange(e.target.value)}>
+          <option value="">Todos os distritos</option>
+          {PORTUGAL_DISTRICTS.map((d) => (
+            <option key={d} value={d}>
+              {d}
+            </option>
+          ))}
+        </select>
+
+        <select
+          className="im-input"
+          value={filtroCidade}
+          onChange={(e) => setFiltroCidade(e.target.value)}
+          disabled={!filtroDistrito}
+        >
+          <option value="">{filtroDistrito ? 'Todas as cidades' : 'Escolhe primeiro o distrito'}</option>
+          {citiesInDistrict(filtroDistrito).map((c) => (
+            <option key={c.city} value={c.city}>
+              {c.city}
+            </option>
+          ))}
+        </select>
+
+        {filtrosAtivos && (
+          <button type="button" className="im-btn-outline im-admin-filters-clear" onClick={limparFiltrosAdmin}>
+            Limpar filtros
+          </button>
+        )}
+      </div>
+
       {loadingImoveis && <p className="im-status">A carregar imóveis...</p>}
 
       {!loadingImoveis && imoveis.length === 0 && <p className="im-status">Nenhum imóvel cadastrado ainda.</p>}
 
-      {!loadingImoveis && imoveis.length > 0 && (
+      {!loadingImoveis && imoveis.length > 0 && imoveisFiltrados.length === 0 && (
+        <p className="im-status">
+          Nenhum imóvel corresponde a estes filtros.{' '}
+          <button type="button" className="im-link-btn" onClick={limparFiltrosAdmin}>
+            Limpar filtros
+          </button>
+        </p>
+      )}
+
+      {!loadingImoveis && imoveisFiltrados.length > 0 && (
         <ul className="im-admin-list">
-          {imoveis.map((imovel) => (
+          {imoveisFiltrados.map((imovel) => (
             <li key={imovel.id} className="im-admin-row">
               <div className="im-admin-thumb">
                 {imovel.fotos?.[0] ? <img src={imovel.fotos[0]} alt={imovel.nome} /> : null}
               </div>
               <div className="im-admin-info">
                 <strong>{imovel.nome}</strong>
-                <span className={`im-card-tag im-tag-${imovel.tipo}`}>{tipoLabel(imovel.tipo)}</span>
+                <span className={`im-badge-chip im-tag-${imovel.tipo}`}>{tipoLabel(imovel.tipo)}</span>
                 <span>{formatListingPrice(imovel)}</span>
                 <span className="im-admin-city">{imovel.cidade}</span>
                 {imovel.slug && <span className="im-admin-slug">/imoveis/{imovel.slug}</span>}

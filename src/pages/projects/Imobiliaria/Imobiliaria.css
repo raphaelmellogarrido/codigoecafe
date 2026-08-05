@@ -490,10 +490,12 @@
   background: linear-gradient(135deg, var(--im-bg-soft), var(--im-border));
 }
 
-.im-card-tag {
-  position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
+/* Chip de tipo de negócio (Venda/Arrendamento/Ambos) — versão "solta", para
+   usar dentro de listas/linhas de texto (ex.: painel admin). ".im-card-tag"
+   (abaixo) é a mesma coisa, mas fixada no canto da foto do card. */
+.im-badge-chip {
+  display: inline-flex;
+  align-items: center;
   padding: 0.3rem 0.7rem;
   border-radius: 999px;
   font-size: 0.72rem;
@@ -514,10 +516,24 @@
   color: #fff;
 }
 
+.im-card-tag {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
 .im-card-badge {
   position: absolute;
   top: 0.75rem;
   right: 0.75rem;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
@@ -1171,6 +1187,40 @@
 .im-add-btn:hover {
   background: var(--im-primary-dark);
 }
+
+.im-admin-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0 1.25rem 1.25rem;
+}
+.im-admin-filter-tabs {
+  display: flex;
+  gap: 0.3rem;
+  background: var(--im-bg-soft);
+  border-radius: 999px;
+  padding: 0.25rem;
+}
+.im-admin-filters .im-input {
+  width: auto;
+  min-width: 160px;
+}
+.im-admin-filters-clear {
+  padding: 0.55rem 1rem;
+}
+.im-link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--im-primary-dark);
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+}
+
 .im-admin-list {
   list-style: none;
   margin: 0;
