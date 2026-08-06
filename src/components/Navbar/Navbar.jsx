@@ -1,5 +1,6 @@
 // src/components/Navbar/Navbar.jsx
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { FaCoffee } from "react-icons/fa";
@@ -56,6 +57,18 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    // Trava o scroll do body enquanto o menu mobile está aberto. Além de
+    // ser o comportamento esperado (não dá pra rolar a página "por trás"
+    // do menu), isto evita o bug de renderização em que o backdrop-filter
+    // do menu fixed some/fica transparente quando a página rola com o
+    // menu aberto.
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   // FUNÇÃO ATUALIZADA: Scroll + Rastreamento do Meta Pixel
   const handleLinkClick = (e, href) => {
     e.preventDefault();
@@ -75,6 +88,18 @@ export default function Navbar() {
     });
   };
 
+  const menuLinks = (
+    <>
+      {links.map((link) => (
+        <li key={link.href}>
+          <a href={link.href} onClick={(e) => handleLinkClick(e, link.href)} className={activeSection === link.href.slice(1) ? "active" : ""}>
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </>
+  );
+
   return (
     <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="navbar-container container">
@@ -88,20 +113,26 @@ export default function Navbar() {
           </span>
         </a>
 
-        <ul className={`navbar-menu ${menuOpen ? "open" : ""}`}>
-          {links.map((link) => (
-            <li key={link.href}>
-              <a href={link.href} onClick={(e) => handleLinkClick(e, link.href)} className={activeSection === link.href.slice(1) ? "active" : ""}>
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+        {/* Menu do desktop: fica dentro do fluxo normal do navbar. Some via
+            CSS (display:none) no mobile — nesse caso quem aparece é o
+            overlay portado abaixo. */}
+        <ul className="navbar-menu">{menuLinks}</ul>
 
         <button className="navbar-toggle" onClick={() => setMenuOpen((v) => !v)} aria-label="Abrir menu">
           {menuOpen ? <HiX /> : <HiMenuAlt3 />}
         </button>
       </div>
+
+      {/* Menu mobile renderizado via portal direto no <body>, fora da
+          .navbar (que já é position:fixed). Um elemento fixed dentro de
+          outro fixed + backdrop-filter é um bug conhecido de renderização
+          no Chromium: o filho pode não pintar o próprio fundo/blur ao ser
+          reaberto com a página já rolada, ficando transparente. Tirando-o
+          da árvore da .navbar esse problema deixa de existir. */}
+      {createPortal(
+        <ul className={`mobile-menu-overlay ${menuOpen ? "open" : ""}`}>{menuLinks}</ul>,
+        document.body,
+      )}
     </nav>
   );
 }

@@ -52,7 +52,8 @@
   gap: 2rem;
 }
 
-.navbar-menu a {
+.navbar-menu a,
+.mobile-menu-overlay a {
   position: relative;
   color: var(--text-secondary);
   font-weight: 500;
@@ -62,11 +63,14 @@
 }
 
 .navbar-menu a:hover,
-.navbar-menu a.active {
+.navbar-menu a.active,
+.mobile-menu-overlay a:hover,
+.mobile-menu-overlay a.active {
   color: var(--accent-light);
 }
 
-.navbar-menu a::after {
+.navbar-menu a::after,
+.mobile-menu-overlay a::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -80,7 +84,9 @@
 }
 
 .navbar-menu a:hover::after,
-.navbar-menu a.active::after {
+.navbar-menu a.active::after,
+.mobile-menu-overlay a:hover::after,
+.mobile-menu-overlay a.active::after {
   transform: scaleX(1);
 }
 
@@ -97,7 +103,23 @@
     display: block;
   }
 
+  /* O menu inline do desktop some no mobile — quem aparece é o
+     .mobile-menu-overlay, renderizado via portal direto no <body>. */
   .navbar-menu {
+    display: none;
+  }
+}
+
+/* Overlay do menu mobile. Vive fora da .navbar (portal para o <body>),
+   então nunca fica "fixed dentro de fixed" — era isso que causava o fundo
+   ficar transparente ao abrir o menu com a página já rolada. */
+.mobile-menu-overlay {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-overlay {
+    display: flex;
     position: fixed;
     inset: var(--navbar-height) 0 0 0;
     background: rgba(5, 8, 22, 0.98);
@@ -108,15 +130,18 @@
     align-items: center;
     padding-top: 3rem;
     gap: 2rem;
-    transform: translateX(100%);
+    transform: translate3d(100%, 0, 0);
     transition: transform 0.3s ease;
+    z-index: 100;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
   }
 
-  .navbar-menu.open {
-    transform: translateX(0);
+  .mobile-menu-overlay.open {
+    transform: translate3d(0, 0, 0);
   }
 
-  .navbar-menu a {
+  .mobile-menu-overlay a {
     font-size: 1.2rem;
   }
 }
