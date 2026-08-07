@@ -7,6 +7,7 @@
 
 import { FaGithub, FaLinkedin, FaInstagram, FaTwitter, FaFacebookF, FaWhatsapp, FaTiktok } from "react-icons/fa";
 import { FaCoffee } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import "./Footer.css";
 
 const socials = [
@@ -51,6 +52,9 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <p>© 2026 Código e Café. Todos os direitos reservados.</p>
+          <Link to="/politica-de-privacidade" className="footer-privacy-link">
+            Política de Privacidade
+          </Link>
           <p className="footer-credit">
             Feito com <FaCoffee className="coffee-icon" /> e React.
           </p>

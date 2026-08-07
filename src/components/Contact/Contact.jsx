@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane, FaCheckCircle } from "react-icons/fa";
 import { HiMail } from "react-icons/hi";
+import ReactPixel from "react-facebook-pixel";
 import "./Contact.css";
 
 export default function Contact() {
@@ -49,6 +50,9 @@ export default function Contact() {
         setError(false);
         setForm({ name: "", email: "", subject: "", message: "" });
         setTimeout(() => setSent(false), 4000);
+        // Evento padrão da Meta (não um trackCustom): fica elegível pra
+        // otimização de campanha por conversão e pra Custom Audiences de leads.
+        ReactPixel.track("Lead", { content_name: "Formulário de Contacto" });
       } else {
         setError(true);
       }

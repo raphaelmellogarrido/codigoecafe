@@ -6,10 +6,11 @@
 // visitante entra nela, em vez de tudo (Three.js, D3, PocketBase, etc.)
 // ir junto no primeiro carregamento da Home.
 
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import ReactPixel from "react-facebook-pixel";
 import Home from "./pages/Home";
+import CookieConsent from "./components/CookieConsent/CookieConsent";
 
 const LandingPageSaaS = lazy(() => import("./pages/projects/LandingPageSaaS/LandingPageSaaS"));
 const PortfolioCriativo = lazy(() => import("./pages/projects/PortfolioCriativo/PortfolioCriativo"));
@@ -34,6 +35,8 @@ const ClientsPage = lazy(() => import("./pages/projects/SistemaGestao/ClientsPag
 const TasksPage = lazy(() => import("./pages/projects/SistemaGestao/TasksPage"));
 
 const ClinicaDentista = lazy(() => import("./pages/projects/ClinicaDentista/ClinicaDentista"));
+
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 
 // Fora do prefixo /projetos de propósito: acessível diretamente em
 // codigoecafe.com/veterinaria, a pedido.
@@ -96,6 +99,7 @@ function RouteLoading() {
 
 export default function App() {
   const PIXEL_ID = "901860909646939";
+  const location = useLocation();
 
   useEffect(() => {
     const options = {
@@ -121,13 +125,28 @@ export default function App() {
     }
   }, []);
 
+  // A visita inicial já é registada acima, dentro de initPixel() (só depois
+  // do "load"). Este efeito cuida das trocas de rota seguintes — por isso
+  // ignora a própria primeira execução (senão duplicava o PageView inicial).
+  // BUG anterior: a dependência era `[location]` sem o hook useLocation()
+  // importado, ou seja, resolvia para o `window.location` global — cuja
+  // referência nunca muda numa navegação SPA (pushState só altera as
+  // propriedades do mesmo objeto). Resultado: o efeito nunca reexecutava e
+  // o PageView só era enviado uma vez por sessão, mesmo navegando entre
+  // várias páginas/rotas.
+  const isFirstPageView = useRef(true);
   useEffect(() => {
+    if (isFirstPageView.current) {
+      isFirstPageView.current = false;
+      return;
+    }
     ReactPixel.pageView();
-  }, [location]);
+  }, [location.pathname]);
 
   return (
     <>
       <ScrollToTop />
+      <CookieConsent />
       <Suspense fallback={<RouteLoading />}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -159,6 +178,8 @@ export default function App() {
 
           <Route path="/clinica-dentista" element={<ClinicaDentista />} />
 
+          <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
+
           <Route path="/veterinaria" element={<Veterinaria />} />
 
           <Route path="/imobiliaria" element={<Imobiliaria />}>
@@ -177,14 +198,14 @@ export default function App() {
             <Route path="admin/painel" element={<AchadinhosAdmin />} />
           </Route>
 
-          <Route path="/blog" element={<Blog />}>
+          {/* <Route path="/blog" element={<Blog />}>
             <Route index element={<BlogListPage />} />
             <Route path="entrar" element={<BlogLoginPage />} />
             <Route path="admin" element={<BlogAdminPage />} />
             <Route path="admin/novo" element={<BlogEditorPage />} />
             <Route path="admin/editar/:id" element={<BlogEditorPage />} />
             <Route path=":slug" element={<BlogPostPage />} />
-          </Route>
+          </Route> */}
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
