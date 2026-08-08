@@ -107,7 +107,7 @@ export default function Navbar() {
         <a href="#home" className="navbar-logo" onClick={(e) => handleLinkClick(e, "#home")}>
           {/* <FaCoffee className="logo-icon" /> */}
 
-          <img src="./logo.png" alt="" className="logo-icon" />
+          <img src="./logo.png" alt="Código e Café" className="logo-icon" />
           <span>
             Código e <span className="gradient-text">Café</span>
           </span>
