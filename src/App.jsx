@@ -99,6 +99,7 @@ function RouteLoading() {
 
 export default function App() {
   const PIXEL_ID = "901860909646939";
+  const GA_MEASUREMENT_ID = "G-C6CVX093SH";
   const location = useLocation();
 
   useEffect(() => {
@@ -117,11 +118,41 @@ export default function App() {
       ReactPixel.pageView();
     }
 
+    // Mesma lógica do Pixel: o gtag.js (Google Analytics) também é adiado
+    // para depois do "load", para não competir pelo caminho crítico da
+    // primeira renderização.
+    function initGA() {
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+      document.head.appendChild(script);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+      window.gtag = gtag;
+      gtag("js", new Date());
+      // send_page_view:false porque o pageview (inicial e os seguintes) é
+      // enviado manualmente logo a seguir e no efeito de troca de rota
+      // abaixo, sincronizado com o React Router — sem isto, o pageview
+      // inicial seria contado 2x.
+      gtag("config", GA_MEASUREMENT_ID, { send_page_view: false });
+      gtag("event", "page_view", {
+        page_path: location.pathname + location.search,
+      });
+    }
+
     if (document.readyState === "complete") {
       initPixel();
+      initGA();
     } else {
-      window.addEventListener("load", initPixel, { once: true });
-      return () => window.removeEventListener("load", initPixel);
+      const initAll = () => {
+        initPixel();
+        initGA();
+      };
+      window.addEventListener("load", initAll, { once: true });
+      return () => window.removeEventListener("load", initAll);
     }
   }, []);
 
@@ -141,6 +172,14 @@ export default function App() {
       return;
     }
     ReactPixel.pageView();
+    // window.gtag só existe depois do "load" (ver initGA acima) — em troca
+    // de rota muito rápida, antes do load disparar, esta chamada é ignorada
+    // (o gtag ainda vai capturar a página em que o visitante ficar depois).
+    if (window.gtag) {
+      window.gtag("event", "page_view", {
+        page_path: location.pathname + location.search,
+      });
+    }
   }, [location.pathname]);
 
   return (
