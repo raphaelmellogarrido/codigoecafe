@@ -42,6 +42,9 @@ const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 // codigoecafe.com/veterinaria, a pedido.
 const Veterinaria = lazy(() => import("./pages/projects/Veterinaria/Veterinaria"));
 
+// Também fora do prefixo /projetos, a pedido: codigoecafe.com/gym.
+const ApexKinetic = lazy(() => import("./pages/projects/ApexKinetic/ApexKinetic"));
+
 // Também fora do prefixo /projetos, a pedido: codigoecafe.com/imobiliaria.
 const Imobiliaria = lazy(() => import("./pages/projects/Imobiliaria/Imobiliaria"));
 const ImobiliariaHome = lazy(() => import("./pages/projects/Imobiliaria/ImobiliariaHome"));
@@ -220,6 +223,8 @@ export default function App() {
           <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
 
           <Route path="/veterinaria" element={<Veterinaria />} />
+
+          <Route path="/gym" element={<ApexKinetic />} />
 
           <Route path="/imobiliaria" element={<Imobiliaria />}>
             <Route index element={<ImobiliariaHome />} />

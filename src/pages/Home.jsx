@@ -124,6 +124,14 @@ const projects = [
     image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=75",
     path: "/imobiliaria",
   },
+  {
+    name: "Apex Kinetic Club",
+    description: "Landing page de alta conversão para um clube de fitness, com grelha bento, planos e horários interativos.",
+    tags: ["React", "CSS", "UI/UX"],
+    gradient: "linear-gradient(135deg, #ccff00 0%, #7a9900 100%)",
+    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=75",
+    path: "/gym",
+  },
 ];
 
 // Dados dos testemunhos
