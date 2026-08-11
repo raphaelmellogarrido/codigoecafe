@@ -90,6 +90,46 @@
   transform: scaleX(1);
 }
 
+/* ===== Botão WhatsApp do menu ===== */
+.navbar-whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #19d35d;
+  color: #fff !important;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1;
+  white-space: nowrap;
+  transition: var(--transition);
+}
+
+.navbar-whatsapp-btn svg {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* Sobrepõe as regras genéricas de link do menu (sublinhado, cor de hover)
+   já que este é um botão sólido, não um link de texto. */
+.navbar-menu a.navbar-whatsapp-btn,
+.mobile-menu-overlay a.navbar-whatsapp-btn {
+  padding: 0.55rem 1.1rem;
+}
+
+.navbar-menu a.navbar-whatsapp-btn::after,
+.mobile-menu-overlay a.navbar-whatsapp-btn::after {
+  content: none;
+}
+
+.navbar-menu a.navbar-whatsapp-btn:hover,
+.mobile-menu-overlay a.navbar-whatsapp-btn:hover {
+  background: #1ebe5b;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
 .navbar-toggle {
   display: none;
   font-size: 1.8rem;
@@ -143,5 +183,12 @@
 
   .mobile-menu-overlay a {
     font-size: 1.2rem;
+  }
+
+  /* O botão de WhatsApp mantém o tamanho de pill em vez de herdar o
+     font-size maior dos links de texto do overlay mobile. */
+  .mobile-menu-overlay a.navbar-whatsapp-btn {
+    font-size: 1rem;
+    margin-top: 0.5rem;
   }
 }

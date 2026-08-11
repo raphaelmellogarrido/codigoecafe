@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
-import { FaCoffee } from "react-icons/fa";
+import { FaCoffee, FaWhatsapp } from "react-icons/fa";
 import ReactPixel from "react-facebook-pixel";
 import "./Navbar.css";
 
@@ -14,6 +14,8 @@ const links = [
   { href: "#stats", label: "Sobre" },
   { href: "#contact", label: "Contacto" },
 ];
+
+const WHATSAPP_URL = "https://wa.me/351913247176";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -88,6 +90,13 @@ export default function Navbar() {
     });
   };
 
+  const handleWhatsappClick = () => {
+    setMenuOpen(false);
+    ReactPixel.trackCustom("CliqueWhatsappMenu", {
+      posicao: "Header Principal",
+    });
+  };
+
   const menuLinks = (
     <>
       {links.map((link) => (
@@ -97,6 +106,19 @@ export default function Navbar() {
           </a>
         </li>
       ))}
+      <li className="navbar-whatsapp-item">
+        <a
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="navbar-whatsapp-btn"
+          aria-label="Falar no WhatsApp"
+          onClick={handleWhatsappClick}
+        >
+          <FaWhatsapp />
+          WhatsApp
+        </a>
+      </li>
     </>
   );
 
