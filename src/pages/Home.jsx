@@ -44,38 +44,38 @@ const services = [
 
 // Dados dos projetos do portfólio
 const projects = [
-  {
-    name: "Dashboard Analytics",
-    description: "Painel administrativo com gráficos em tempo real e relatórios personalizáveis.",
-    tags: ["React", "D3.js", "Node.js"],
-    gradient: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=75",
-    path: "/dashboard-analytics",
-  },
-  {
-    name: "E-commerce Platform",
-    description: "Loja online completa com pagamentos, gestão de stock e área de cliente.",
-    tags: ["React", "Node.js", "SQLite"],
-    gradient: "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)",
-    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=900&q=75",
-    path: "/ecommerce-platform",
-  },
-  {
-    name: "App de Delivery",
-    description: "Aplicação de entregas em tempo real com tracking e pagamentos.",
-    tags: ["React", "React Router", "Leaflet"],
-    gradient: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
-    image: "https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?auto=format&fit=crop&w=900&q=75",
-    path: "/app-delivery",
-  },
-  {
-    name: "Sistema de Gestão",
-    description: "ERP personalizado para automatizar processos internos da empresa.",
-    tags: ["React", "Node.js", "SQLite"],
-    gradient: "linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)",
-    image: "https://images.unsplash.com/photo-1758876202468-5ffe0ee61f07?auto=format&fit=crop&w=900&q=75",
-    path: "/sistema-gestao",
-  },
+  // {
+  //   name: "Dashboard Analytics",
+  //   description: "Painel administrativo com gráficos em tempo real e relatórios personalizáveis.",
+  //   tags: ["React", "D3.js", "Node.js"],
+  //   gradient: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+  //   image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=75",
+  //   path: "/dashboard-analytics",
+  // },
+  // {
+  //   name: "E-commerce Platform",
+  //   description: "Loja online completa com pagamentos, gestão de stock e área de cliente.",
+  //   tags: ["React", "Node.js", "SQLite"],
+  //   gradient: "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)",
+  //   image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=900&q=75",
+  //   path: "/ecommerce-platform",
+  // },
+  // {
+  //   name: "App de Delivery",
+  //   description: "Aplicação de entregas em tempo real com tracking e pagamentos.",
+  //   tags: ["React", "React Router", "Leaflet"],
+  //   gradient: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
+  //   image: "https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?auto=format&fit=crop&w=900&q=75",
+  //   path: "/app-delivery",
+  // },
+  // {
+  //   name: "Sistema de Gestão",
+  //   description: "ERP personalizado para automatizar processos internos da empresa.",
+  //   tags: ["React", "Node.js", "SQLite"],
+  //   gradient: "linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)",
+  //   image: "https://images.unsplash.com/photo-1758876202468-5ffe0ee61f07?auto=format&fit=crop&w=900&q=75",
+  //   path: "/sistema-gestao",
+  // },
   {
     name: "Landing Page SaaS",
     description: "Landing page de alta conversão para startup de tecnologia.",
@@ -168,7 +168,7 @@ export default function Home() {
   useEffect(() => {
     if (location.state?.scrollTo && !hasScrolledRef.current) {
       hasScrolledRef.current = true;
-      document.getElementById(location.state.scrollTo)?.scrollIntoView({ behavior: 'instant' });
+      document.getElementById(location.state.scrollTo)?.scrollIntoView({ behavior: "instant" });
       // Limpa o state para não rolar de novo se o utilizador voltar com o botão do navegador
       navigate(location.pathname, { replace: true, state: {} });
     }
