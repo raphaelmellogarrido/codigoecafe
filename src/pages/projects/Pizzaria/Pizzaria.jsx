@@ -7,10 +7,12 @@ import { CartProvider, useCart } from './CartContext.jsx';
 import PizzariaNavbar from './PizzariaNavbar.jsx';
 import PizzaCard from './PizzaCard.jsx';
 import DrinkModal from './DrinkModal.jsx';
+import CartDrawer from './CartDrawer.jsx';
 import { PIZZAS } from './menuData.js';
 
 function PizzariaContent() {
   const { items } = useCart();
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const [showDrinkModal, setShowDrinkModal] = useState(false);
   const [drinkPromptShown, setDrinkPromptShown] = useState(false);
 
@@ -19,14 +21,14 @@ function PizzariaContent() {
     if (!drinkPromptShown && hasPizza) {
       setShowDrinkModal(true);
     } else {
-      // Task 7 replaces this branch with "open the cart drawer".
+      setIsCartOpen(true);
     }
   }
 
   function handleDrinkModalClose() {
     setShowDrinkModal(false);
     setDrinkPromptShown(true);
-    // Task 7 replaces this with "open the cart drawer".
+    setIsCartOpen(true);
   }
 
   return (
@@ -41,6 +43,7 @@ function PizzariaContent() {
         </div>
       </section>
       <DrinkModal isOpen={showDrinkModal} onClose={handleDrinkModalClose} />
+      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </div>
   );
 }
