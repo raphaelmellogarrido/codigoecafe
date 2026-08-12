@@ -124,13 +124,19 @@ function DrinkCartItem({ item }) {
 }
 
 export default function CartDrawer({ isOpen, onClose }) {
-  const { items, cartTotal } = useCart();
+  const { items, cartTotal, clearCart } = useCart();
 
   if (!isOpen) return null;
 
   function handleCheckout() {
     const url = buildWhatsappUrl(items);
     window.open(url, '_blank', 'noopener,noreferrer');
+  }
+
+  function handleClearCart() {
+    if (window.confirm('Tem certeza que deseja esvaziar o carrinho?')) {
+      clearCart();
+    }
   }
 
   return (
@@ -164,6 +170,14 @@ export default function CartDrawer({ isOpen, onClose }) {
             disabled={items.length === 0}
           >
             Fazer pedido
+          </button>
+          <button
+            type="button"
+            className="pz-button pz-button-secondary pz-button-block"
+            onClick={handleClearCart}
+            disabled={items.length === 0}
+          >
+            Esvaziar carrinho
           </button>
         </div>
       </aside>

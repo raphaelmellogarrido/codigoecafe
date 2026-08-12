@@ -4,7 +4,7 @@
 // só dentro do carrinho (CartDrawer).
 
 import { useState } from 'react';
-import { PIZZAS, SIZES } from './menuData.js';
+import { PIZZAS, SIZES, getPizzaById } from './menuData.js';
 import { getPizzaItemUnitPrice, formatBRL } from './pricing.js';
 import { useCart } from './CartContext.jsx';
 
@@ -16,7 +16,7 @@ export default function PizzaCard({ pizza }) {
   const [quantity, setQuantity] = useState(1);
   const [justAdded, setJustAdded] = useState(false);
 
-  const otherPizzas = PIZZAS.filter((p) => p.id !== pizza.id);
+  const otherPizzas = PIZZAS.filter((p) => p.id !== pizza.id && p.category === pizza.category);
 
   const previewItem = {
     type: 'pizza',
@@ -51,7 +51,17 @@ export default function PizzaCard({ pizza }) {
 
   return (
     <article className="pz-card">
-      <img className="pz-card-image" src={pizza.image} alt={pizza.name} loading="lazy" />
+      {hasSecondHalf && secondPizzaId ? (
+        <div className="pz-card-image pz-card-image-split">
+          <div className="pz-card-image-half" style={{ backgroundImage: `url(${pizza.image})` }} />
+          <div
+            className="pz-card-image-half"
+            style={{ backgroundImage: `url(${getPizzaById(secondPizzaId).image})` }}
+          />
+        </div>
+      ) : (
+        <img className="pz-card-image" src={pizza.image} alt={pizza.name} loading="lazy" />
+      )}
       <div className="pz-card-body">
         <div className="pz-card-header">
           <h3 className="pz-card-name">{pizza.name}</h3>

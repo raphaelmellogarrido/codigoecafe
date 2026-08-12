@@ -52,7 +52,9 @@ export function buildOrderMessage(items) {
   return lines.join('\n');
 }
 
-export function buildWhatsappUrl(items, phoneNumber = '351913247176') {
+export const WHATSAPP_NUMBER = '351913247176';
+
+export function buildWhatsappUrl(items, phoneNumber = WHATSAPP_NUMBER) {
   const message = buildOrderMessage(items);
   return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 }

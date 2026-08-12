@@ -77,6 +77,14 @@ const projects = [
   //   path: "/sistema-gestao",
   // },
   {
+    name: "Pizzaria Mello's",
+    description: "Cardápio de pizzaria com pedidos direto pelo WhatsApp — meio a meio visual, carrinho completo e cardápio por abas (salgadas, doces e bebidas).",
+    tags: ["React", "Context API", "UI/UX"],
+    gradient: "linear-gradient(135deg, #c1440e 0%, #9c3609 100%)",
+    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=75",
+    path: "/pizzaria",
+  },
+  {
     name: "Landing Page SaaS",
     description: "Landing page de alta conversão para startup de tecnologia.",
     tags: ["React", "Tailwind", "Framer Motion"],
