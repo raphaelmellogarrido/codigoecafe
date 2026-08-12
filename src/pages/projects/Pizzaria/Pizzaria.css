@@ -1,0 +1,458 @@
+/* src/pages/projects/Pizzaria/Pizzaria.css */
+/* Estilos da Pizzaria Mello's — mobile-first, paleta terracota inspirada em
+   buddhapizza.com. Breakpoints: tablet a partir de 640px, desktop a partir
+   de 1024px. */
+
+.pz-page {
+  --pz-primary: #c1440e;
+  --pz-primary-dark: #9c3609;
+  --pz-cream: #fff8f0;
+  --pz-text: #2b1a12;
+  --pz-muted: #7a6a5f;
+  --pz-border: #e8d9c8;
+
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: var(--pz-text);
+  background: var(--pz-cream);
+  min-height: 100vh;
+}
+
+.pz-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--pz-cream);
+  border-bottom: 1px solid var(--pz-border);
+}
+
+.pz-navbar-brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--pz-primary-dark);
+}
+
+.pz-cart-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--pz-primary);
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.pz-cart-badge {
+  position: absolute;
+  top: -0.25rem;
+  right: -0.25rem;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 0.3rem;
+  border-radius: 999px;
+  background: var(--pz-text);
+  color: #fff;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pz-hero {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+}
+
+.pz-hero-overlay {
+  width: 100%;
+  padding: 2rem 1.25rem;
+  background: linear-gradient(0deg, rgba(20, 10, 5, 0.75), rgba(20, 10, 5, 0.35));
+  color: #fff;
+}
+
+.pz-hero-overlay h1 {
+  font-size: 2rem;
+  margin: 0 0 0.5rem;
+}
+
+.pz-hero-overlay p {
+  margin: 0 0 1.25rem;
+  max-width: 32rem;
+}
+
+.pz-menu {
+  padding: 2.5rem 1.25rem;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.pz-menu h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--pz-primary-dark);
+}
+
+.pz-menu-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.pz-card {
+  background: #fff;
+  border: 1px solid var(--pz-border);
+  border-radius: 1rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.pz-card-image {
+  width: 100%;
+  height: 12rem;
+  object-fit: cover;
+}
+
+.pz-card-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.pz-card-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.pz-card-name {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.pz-card-price {
+  font-weight: 700;
+  color: var(--pz-primary-dark);
+  white-space: nowrap;
+}
+
+.pz-card-ingredients {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--pz-muted);
+}
+
+.pz-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.pz-field select,
+.pz-add-ingredient select {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--pz-border);
+  font-size: 0.9rem;
+}
+
+.pz-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.pz-quantity {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.pz-quantity button {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  border: 1px solid var(--pz-border);
+  background: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.pz-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1.25rem;
+  border-radius: 999px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.pz-button:active {
+  transform: scale(0.98);
+}
+
+.pz-button-primary {
+  background: var(--pz-primary);
+  color: #fff;
+}
+
+.pz-button-primary:hover {
+  background: var(--pz-primary-dark);
+}
+
+.pz-button-secondary {
+  background: var(--pz-cream);
+  color: var(--pz-primary-dark);
+  border: 1px solid var(--pz-primary);
+}
+
+.pz-button-block {
+  width: 100%;
+}
+
+.pz-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pz-link-button {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: var(--pz-primary-dark);
+  text-decoration: underline;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.pz-remove-button {
+  border: none;
+  background: none;
+  color: var(--pz-muted);
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0.25rem;
+}
+
+.pz-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 10, 5, 0.55);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 40;
+}
+
+.pz-modal {
+  background: #fff;
+  width: 100%;
+  max-width: 32rem;
+  max-height: 85vh;
+  overflow-y: auto;
+  border-radius: 1rem 1rem 0 0;
+  padding: 1.5rem 1.25rem;
+}
+
+.pz-drink-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.pz-drink-row {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto auto;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.pz-drink-row img {
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.pz-drink-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 0.85rem;
+}
+
+.pz-drink-name {
+  font-weight: 600;
+}
+
+.pz-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 10, 5, 0.55);
+  display: flex;
+  justify-content: flex-end;
+  z-index: 30;
+}
+
+.pz-drawer {
+  background: #fff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  overflow-y: auto;
+}
+
+.pz-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.pz-cart-empty {
+  color: var(--pz-muted);
+}
+
+.pz-cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+}
+
+.pz-cart-item {
+  border: 1px solid var(--pz-border);
+  border-radius: 0.75rem;
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pz-cart-item-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.pz-cart-item-size {
+  font-size: 0.8rem;
+  color: var(--pz-muted);
+}
+
+.pz-cart-item-total {
+  font-weight: 700;
+  align-self: flex-end;
+}
+
+.pz-ingredient-editors {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: var(--pz-cream);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+}
+
+.pz-ingredient-list {
+  list-style: none;
+  margin: 0.4rem 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.pz-ingredient-list button {
+  border: 1px solid var(--pz-border);
+  background: #fff;
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.pz-ingredient-removed button {
+  text-decoration: line-through;
+  color: var(--pz-muted);
+}
+
+.pz-ingredient-added button {
+  border-color: var(--pz-primary);
+  color: var(--pz-primary-dark);
+}
+
+.pz-add-ingredient {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.pz-drawer-footer {
+  border-top: 1px solid var(--pz-border);
+  padding-top: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pz-cart-total {
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+@media (min-width: 640px) {
+  .pz-menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pz-drawer {
+    width: 26rem;
+    height: 100vh;
+  }
+
+  .pz-modal {
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .pz-modal-overlay {
+    align-items: center;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pz-menu-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .pz-hero-overlay h1 {
+    font-size: 3rem;
+  }
+}

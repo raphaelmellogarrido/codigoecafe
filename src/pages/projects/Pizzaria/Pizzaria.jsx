@@ -8,7 +8,8 @@ import PizzariaNavbar from './PizzariaNavbar.jsx';
 import PizzaCard from './PizzaCard.jsx';
 import DrinkModal from './DrinkModal.jsx';
 import CartDrawer from './CartDrawer.jsx';
-import { PIZZAS } from './menuData.js';
+import { PIZZAS, HERO_IMAGE } from './menuData.js';
+import './Pizzaria.css';
 
 function PizzariaContent() {
   const { items } = useCart();
@@ -34,6 +35,15 @@ function PizzariaContent() {
   return (
     <div className="pz-page">
       <PizzariaNavbar onCartClick={handleCartClick} />
+
+      <section className="pz-hero" style={{ backgroundImage: `url(${HERO_IMAGE})` }}>
+        <div className="pz-hero-overlay">
+          <h1>Pizzaria Mello's</h1>
+          <p>Pizza artesanal feita na hora, pedida em segundos pelo WhatsApp.</p>
+          <a href="#pz-menu" className="pz-button pz-button-primary">Ver cardápio</a>
+        </div>
+      </section>
+
       <section id="pz-menu" className="pz-menu">
         <h2>Nosso cardápio</h2>
         <div className="pz-menu-grid">
@@ -42,6 +52,7 @@ function PizzariaContent() {
           ))}
         </div>
       </section>
+
       <DrinkModal isOpen={showDrinkModal} onClose={handleDrinkModalClose} />
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </div>
