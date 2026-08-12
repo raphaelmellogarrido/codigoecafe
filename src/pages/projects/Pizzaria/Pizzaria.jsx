@@ -1,6 +1,6 @@
 // src/pages/projects/Pizzaria/Pizzaria.jsx
-// Página principal da Pizzaria Mello's: hero, grid de sabores, e orquestra
-// carrinho / modal de bebida. (Hero e grid completos chegam nas próximas tasks.)
+// Página principal da Pizzaria Mello's: hero, cardápio grid, providers,
+// carrinho (drawer) e modal de bebida.
 
 import { useState } from 'react';
 import { CartProvider, useCart } from './CartContext.jsx';
