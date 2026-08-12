@@ -45,6 +45,9 @@ const Veterinaria = lazy(() => import("./pages/projects/Veterinaria/Veterinaria"
 // Também fora do prefixo /projetos, a pedido: codigoecafe.com/gym.
 const ApexKinetic = lazy(() => import("./pages/projects/ApexKinetic/ApexKinetic"));
 
+// Também fora do prefixo /projetos, a pedido: codigoecafe.com/pizzaria.
+const Pizzaria = lazy(() => import("./pages/projects/Pizzaria/Pizzaria"));
+
 // Também fora do prefixo /projetos, a pedido: codigoecafe.com/imobiliaria.
 const Imobiliaria = lazy(() => import("./pages/projects/Imobiliaria/Imobiliaria"));
 const ImobiliariaHome = lazy(() => import("./pages/projects/Imobiliaria/ImobiliariaHome"));
@@ -225,6 +228,8 @@ export default function App() {
           <Route path="/veterinaria" element={<Veterinaria />} />
 
           <Route path="/gym" element={<ApexKinetic />} />
+
+          <Route path="/pizzaria" element={<Pizzaria />} />
 
           <Route path="/imobiliaria" element={<Imobiliaria />}>
             <Route index element={<ImobiliariaHome />} />
