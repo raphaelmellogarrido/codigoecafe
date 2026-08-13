@@ -1,6 +1,6 @@
 // src/pages/projects/FazTudo/FazTudoFooter.jsx
 
-import { BUSINESS_NAME, SERVICE_AREA_LABEL, SERVICE_AREA_RADIUS_KM } from './constants';
+import { BUSINESS_NAME, SERVICE_AREA_LABEL, SERVICE_AREA_RADIUS_KM, WHATSAPP_NUMBER } from './constants';
 
 export default function FazTudoFooter() {
   return (
@@ -10,7 +10,11 @@ export default function FazTudoFooter() {
         <p className="ft-footer-text">
           Atendemos num raio de {SERVICE_AREA_RADIUS_KM}km a partir de {SERVICE_AREA_LABEL}.
         </p>
-        <p className="ft-footer-text">WhatsApp: +351 913 247 176</p>
+        <p className="ft-footer-text">WhatsApp: +{WHATSAPP_NUMBER}</p>
+        <p className="ft-footer-note">
+          Protótipo de portfólio — parte do site{' '}
+          <a href="http://www.codigoecafe.com">Código e Café</a>.
+        </p>
       </div>
     </footer>
   );

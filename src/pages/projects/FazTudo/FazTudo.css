@@ -92,6 +92,16 @@
   margin: 0.25rem 0;
 }
 
+.ft-footer-note {
+  color: var(--ft-muted);
+  font-size: 0.85rem;
+  margin-top: 1rem;
+}
+
+.ft-footer-note a {
+  color: var(--ft-accent);
+}
+
 /* Floating WhatsApp button */
 
 .ft-whatsapp-float {
@@ -230,7 +240,6 @@
   overflow: hidden;
   border-radius: 0.75rem;
   border: 1px solid var(--ft-border);
-  touch-action: none;
   user-select: none;
 }
 
@@ -258,6 +267,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  touch-action: none;
 }
 
 .ft-ba-handle-arrows {
