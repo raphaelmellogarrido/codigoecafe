@@ -57,10 +57,9 @@ const ImobiliariaLogin = lazy(() => import("./pages/projects/Imobiliaria/Imobili
 const ImobiliariaAdmin = lazy(() => import("./pages/projects/Imobiliaria/ImobiliariaAdmin"));
 
 // Também fora do prefixo /projetos, a pedido: codigoecafe.com/faz-tudo.
+// Página única (hero, serviços, área de atendimento e depoimentos são
+// seções da mesma FazTudo.jsx, não rotas separadas).
 const FazTudo = lazy(() => import("./pages/projects/FazTudo/FazTudo"));
-const FazTudoHome = lazy(() => import("./pages/projects/FazTudo/FazTudoHome"));
-const FazTudoOrcamento = lazy(() => import("./pages/projects/FazTudo/FazTudoOrcamento"));
-const FazTudoAreaAtendimento = lazy(() => import("./pages/projects/FazTudo/FazTudoAreaAtendimento"));
 
 const Achadinhos = lazy(() => import("./pages/projects/Achadinhos/Achadinhos"));
 const AchadinhosHome = lazy(() => import("./pages/projects/Achadinhos/AchadinhosHome"));
@@ -245,11 +244,7 @@ export default function App() {
             <Route path="admin/painel" element={<ImobiliariaAdmin />} />
           </Route>
 
-          <Route path="/faz-tudo" element={<FazTudo />}>
-            <Route index element={<FazTudoHome />} />
-            <Route path="orcamento" element={<FazTudoOrcamento />} />
-            <Route path="area-atendimento" element={<FazTudoAreaAtendimento />} />
-          </Route>
+          <Route path="/faz-tudo" element={<FazTudo />} />
 
           <Route path="/achadinhos" element={<Achadinhos />}>
             <Route index element={<AchadinhosHome />} />

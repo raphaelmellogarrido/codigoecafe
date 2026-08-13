@@ -1,26 +1,39 @@
 // src/pages/projects/FazTudo/FazTudoHome.jsx
-// Home: hero com CTA para a calculadora, galeria antes/depois e depoimentos.
+// Página única do projeto: hero, serviços (seleção + orçamento via
+// WhatsApp), área de atendimento e depoimentos (carrossel).
 
-import { Link } from 'react-router-dom';
-import { FaStar, FaRegStar } from 'react-icons/fa6';
-import BeforeAfterSlider from './BeforeAfterSlider';
-import { GALLERY_ITEMS } from './galleryData';
-import { TESTIMONIALS } from './testimonialsData';
-
-function RatingStars({ rating }) {
-  return (
-    <div className="ft-rating" aria-label={`Avaliação: ${rating} de 5 estrelas`}>
-      {[1, 2, 3, 4, 5].map((value) =>
-        value <= rating ? <FaStar key={value} /> : <FaRegStar key={value} />
-      )}
-    </div>
-  );
-}
+import { useState } from 'react';
+import ServiceAreaMap from './ServiceAreaMap';
+import TestimonialsCarousel from './TestimonialsCarousel';
+import { SERVICES } from './servicesData';
+import { SERVICE_AREA_CENTER, SERVICE_AREA_LABEL, SERVICE_AREA_RADIUS_KM } from './constants';
+import { buildQuoteMessage, buildWhatsappUrl } from './whatsapp';
 
 export default function FazTudoHome() {
+  const [selectedIds, setSelectedIds] = useState(() => new Set());
+
+  function toggleService(id) {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  }
+
+  const selectedNames = SERVICES.filter((service) => selectedIds.has(service.id)).map((service) =>
+    service.name.toLowerCase()
+  );
+  const hasSelection = selectedNames.length > 0;
+  const whatsappHref = hasSelection ? buildWhatsappUrl(buildQuoteMessage(selectedNames)) : undefined;
+
   return (
     <>
       <section
+        id="inicio"
         className="ft-hero section"
         style={{
           backgroundImage:
@@ -34,41 +47,77 @@ export default function FazTudoHome() {
             Torneiras, pintura, móveis, elétrica e muito mais — escolha os serviços que precisa e
             receba um orçamento rápido pelo WhatsApp.
           </p>
-          <Link to="/faz-tudo/orcamento" className="ft-hero-cta">
-            Montar meu orçamento
-          </Link>
-        </div>
-      </section>
-
-      <section className="ft-gallery section">
-        <div className="container">
-          <h2 className="ft-section-title">Antes e depois</h2>
-          <div className="ft-gallery-grid">
-            {GALLERY_ITEMS.map((item) => (
-              <div key={item.id}>
-                <BeforeAfterSlider beforeImage={item.beforeImage} afterImage={item.afterImage} />
-                <p className="ft-gallery-item-title">{item.title}</p>
-              </div>
-            ))}
+          <div className="ft-hero-actions">
+            <a href="#servicos" className="ft-hero-cta">
+              Faça um orçamento
+            </a>
+            <a href="#servicos" className="ft-hero-cta ft-hero-cta-outline">
+              Nossos serviços
+            </a>
           </div>
         </div>
       </section>
 
-      <section className="ft-testimonials section">
+      <section id="servicos" className="ft-services section">
+        <div className="container">
+          <h2 className="ft-section-title">Nossos serviços</h2>
+          <p className="ft-section-subtitle">
+            Selecione os serviços que precisa e receba um orçamento rápido pelo WhatsApp.
+          </p>
+
+          <div className="ft-services-grid" role="group" aria-label="Serviços disponíveis">
+            {SERVICES.map((service) => {
+              const isSelected = selectedIds.has(service.id);
+              const Icon = service.icon;
+              return (
+                <button
+                  key={service.id}
+                  type="button"
+                  className={`ft-service-card${isSelected ? ' ft-service-card-selected' : ''}`}
+                  aria-pressed={isSelected}
+                  onClick={() => toggleService(service.id)}
+                >
+                  <Icon className="ft-service-card-icon" aria-hidden="true" />
+                  <span>{service.name}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`ft-orcamento-submit${hasSelection ? '' : ' ft-orcamento-submit-disabled'}`}
+            aria-disabled={!hasSelection}
+            onClick={(event) => {
+              if (!hasSelection) event.preventDefault();
+            }}
+          >
+            Pedir orçamento{hasSelection ? ` (${selectedNames.length})` : ''}
+          </a>
+        </div>
+      </section>
+
+      <section id="atendimento" className="ft-area section">
+        <div className="container">
+          <h2 className="ft-section-title">Área de atendimento</h2>
+          <p className="ft-area-text">
+            Atendemos num raio de {SERVICE_AREA_RADIUS_KM}km a partir de {SERVICE_AREA_LABEL}. Fora
+            dessa área, fale connosco pelo WhatsApp para confirmar disponibilidade.
+          </p>
+          <ServiceAreaMap
+            center={SERVICE_AREA_CENTER}
+            radiusKm={SERVICE_AREA_RADIUS_KM}
+            label={SERVICE_AREA_LABEL}
+          />
+        </div>
+      </section>
+
+      <section id="depoimentos" className="ft-testimonials section">
         <div className="container">
           <h2 className="ft-section-title">O que dizem os clientes</h2>
-          <div className="ft-testimonials-grid">
-            {TESTIMONIALS.map((testimonial) => (
-              <div key={testimonial.id} className="ft-testimonial-card">
-                <img src={testimonial.photo} alt={testimonial.name} className="ft-testimonial-photo" />
-                <div>
-                  <p className="ft-testimonial-name">{testimonial.name}</p>
-                  <RatingStars rating={testimonial.rating} />
-                  <p className="ft-testimonial-text">{testimonial.text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <TestimonialsCarousel />
         </div>
       </section>
     </>
