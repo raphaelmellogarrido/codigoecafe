@@ -56,6 +56,12 @@ const ImobiliariaPropertyDetail = lazy(() => import("./pages/projects/Imobiliari
 const ImobiliariaLogin = lazy(() => import("./pages/projects/Imobiliaria/ImobiliariaLogin"));
 const ImobiliariaAdmin = lazy(() => import("./pages/projects/Imobiliaria/ImobiliariaAdmin"));
 
+// Também fora do prefixo /projetos, a pedido: codigoecafe.com/faz-tudo.
+const FazTudo = lazy(() => import("./pages/projects/FazTudo/FazTudo"));
+const FazTudoHome = lazy(() => import("./pages/projects/FazTudo/FazTudoHome"));
+const FazTudoOrcamento = lazy(() => import("./pages/projects/FazTudo/FazTudoOrcamento"));
+const FazTudoAreaAtendimento = lazy(() => import("./pages/projects/FazTudo/FazTudoAreaAtendimento"));
+
 const Achadinhos = lazy(() => import("./pages/projects/Achadinhos/Achadinhos"));
 const AchadinhosHome = lazy(() => import("./pages/projects/Achadinhos/AchadinhosHome"));
 const AchadinhosProducts = lazy(() => import("./pages/projects/Achadinhos/AchadinhosProducts"));
@@ -237,6 +243,12 @@ export default function App() {
             <Route path="imoveis/:slug" element={<ImobiliariaPropertyDetail />} />
             <Route path="admin" element={<ImobiliariaLogin />} />
             <Route path="admin/painel" element={<ImobiliariaAdmin />} />
+          </Route>
+
+          <Route path="/faz-tudo" element={<FazTudo />}>
+            <Route index element={<FazTudoHome />} />
+            <Route path="orcamento" element={<FazTudoOrcamento />} />
+            <Route path="area-atendimento" element={<FazTudoAreaAtendimento />} />
           </Route>
 
           <Route path="/achadinhos" element={<Achadinhos />}>

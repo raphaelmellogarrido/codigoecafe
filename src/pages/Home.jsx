@@ -140,6 +140,14 @@ const projects = [
     image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=75",
     path: "/gym",
   },
+  {
+    name: "Faz Tudo",
+    description: "Site de portfólio para prestador de serviços residenciais, com calculadora de orçamento por WhatsApp, galeria interativa de antes/depois e mapa de área de atendimento.",
+    tags: ["React", "Leaflet", "UI/UX"],
+    gradient: "linear-gradient(135deg, #ff7a1a 0%, #1c1611 100%)",
+    image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=900&q=75",
+    path: "/faz-tudo",
+  },
 ];
 
 // Dados dos testemunhos

@@ -1,0 +1,448 @@
+/* src/pages/projects/FazTudo/FazTudo.css */
+/* Estilos do projeto Faz Tudo — tema escuro premium com acento laranja,
+   inspirado em smithhandymanservice.com. Mobile-first: breakpoints em 640px
+   (tablet) e 1024px (desktop). Prefixo de classes: .ft- */
+
+.ft-page {
+  --ft-bg: #14100d;
+  --ft-bg-alt: #1c1611;
+  --ft-card: rgba(255, 255, 255, 0.04);
+  --ft-border: rgba(255, 255, 255, 0.1);
+  --ft-text: #f3ede6;
+  --ft-muted: #b3a99e;
+  --ft-accent: #ff7a1a;
+  --ft-accent-dark: #e8630a;
+
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: var(--ft-text);
+  background: var(--ft-bg);
+  min-height: 100vh;
+}
+
+.ft-page .container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.ft-page .section {
+  padding: 3rem 0;
+}
+
+/* Navbar */
+
+.ft-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(20, 16, 13, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--ft-border);
+}
+
+.ft-navbar-brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ft-text);
+  text-decoration: none;
+}
+
+.ft-navbar-links {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.ft-navbar-link {
+  color: var(--ft-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.ft-navbar-link:hover,
+.ft-navbar-link-active {
+  color: var(--ft-accent);
+}
+
+/* Footer */
+
+.ft-footer {
+  border-top: 1px solid var(--ft-border);
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.ft-footer-brand {
+  display: block;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.ft-footer-text {
+  color: var(--ft-muted);
+  font-size: 0.9rem;
+  margin: 0.25rem 0;
+}
+
+.ft-footer-note {
+  color: var(--ft-muted);
+  font-size: 0.85rem;
+  margin-top: 1rem;
+}
+
+.ft-footer-note a {
+  color: var(--ft-accent);
+}
+
+/* Floating WhatsApp button */
+
+.ft-whatsapp-float {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #25d366;
+  color: #0b1a10;
+  font-weight: 700;
+  font-size: 0.85rem;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease;
+}
+
+.ft-whatsapp-float:hover {
+  transform: translateY(-2px);
+}
+
+.ft-whatsapp-float-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .ft-whatsapp-float span {
+    display: none;
+  }
+  .ft-whatsapp-float {
+    padding: 0.75rem;
+  }
+}
+
+/* Calculadora de orçamento */
+
+.ft-orcamento-title {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.ft-orcamento-subtitle {
+  color: var(--ft-muted);
+  margin-bottom: 1.5rem;
+}
+
+.ft-services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.ft-service-card {
+  text-align: left;
+  padding: 0.9rem 1.1rem;
+  background: var(--ft-card);
+  border: 1px solid var(--ft-border);
+  border-radius: 0.75rem;
+  color: var(--ft-text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.ft-service-card:hover {
+  border-color: var(--ft-accent);
+}
+
+.ft-service-card-selected {
+  background: rgba(255, 122, 26, 0.15);
+  border-color: var(--ft-accent);
+  color: var(--ft-accent);
+}
+
+.ft-orcamento-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 1.75rem;
+  background: var(--ft-accent);
+  color: #1c1611;
+  font-weight: 700;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.ft-orcamento-submit:hover {
+  background: var(--ft-accent-dark);
+  transform: translateY(-2px);
+}
+
+.ft-orcamento-submit-disabled {
+  background: var(--ft-card);
+  color: var(--ft-muted);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+@media (min-width: 640px) {
+  .ft-services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .ft-services-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Galeria antes/depois */
+
+.ft-gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.ft-gallery-item-title {
+  margin: 0.75rem 0 0.25rem;
+  font-weight: 700;
+}
+
+.ft-ba-slider {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: 1px solid var(--ft-border);
+  user-select: none;
+}
+
+.ft-ba-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ft-ba-image-after-wrap {
+  position: absolute;
+  inset: 0;
+}
+
+.ft-ba-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--ft-accent);
+  transform: translateX(-50%);
+  cursor: ew-resize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+}
+
+.ft-ba-handle-arrows {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--ft-accent);
+  color: #1c1611;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.ft-ba-badge {
+  position: absolute;
+  top: 0.5rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.55);
+  color: var(--ft-text);
+}
+
+.ft-ba-badge-before {
+  right: 0.5rem;
+}
+
+.ft-ba-badge-after {
+  left: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .ft-gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Hero */
+
+.ft-hero {
+  padding: 5rem 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.ft-hero-label {
+  display: inline-block;
+  color: var(--ft-accent);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  margin-bottom: 0.75rem;
+}
+
+.ft-hero-title {
+  font-size: 2.25rem;
+  line-height: 1.15;
+  margin: 0 0 1rem;
+  max-width: 32rem;
+}
+
+.ft-hero-subtitle {
+  color: var(--ft-muted);
+  max-width: 32rem;
+  margin-bottom: 1.75rem;
+}
+
+.ft-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.9rem 1.75rem;
+  background: var(--ft-accent);
+  color: #1c1611;
+  font-weight: 700;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.ft-hero-cta:hover {
+  background: var(--ft-accent-dark);
+  transform: translateY(-2px);
+}
+
+/* Título de secção (reutilizado por galeria, depoimentos, área de atendimento) */
+
+.ft-section-title {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Depoimentos */
+
+.ft-testimonials-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.ft-testimonial-card {
+  display: flex;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--ft-card);
+  border: 1px solid var(--ft-border);
+  border-radius: 0.75rem;
+}
+
+.ft-testimonial-photo {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.ft-testimonial-name {
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+}
+
+.ft-rating {
+  display: flex;
+  gap: 0.15rem;
+  color: var(--ft-accent);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.ft-testimonial-text {
+  color: var(--ft-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .ft-testimonials-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .ft-hero-title {
+    font-size: 3rem;
+  }
+}
+
+/* Área de atendimento */
+
+.ft-area-text {
+  color: var(--ft-muted);
+  max-width: 40rem;
+  margin-bottom: 1.5rem;
+}
+
+.ft-map {
+  width: 100%;
+  height: 320px;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid var(--ft-border);
+}
+
+.ft-map-pin {
+  background: var(--ft-accent);
+  border-radius: 50%;
+  border: 2px solid #1c1611;
+}
+
+@media (min-width: 1024px) {
+  .ft-map {
+    height: 420px;
+  }
+}
