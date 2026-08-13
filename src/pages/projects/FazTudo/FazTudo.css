@@ -1,0 +1,132 @@
+/* src/pages/projects/FazTudo/FazTudo.css */
+/* Estilos do projeto Faz Tudo — tema escuro premium com acento laranja,
+   inspirado em smithhandymanservice.com. Mobile-first: breakpoints em 640px
+   (tablet) e 1024px (desktop). Prefixo de classes: .ft- */
+
+.ft-page {
+  --ft-bg: #14100d;
+  --ft-bg-alt: #1c1611;
+  --ft-card: rgba(255, 255, 255, 0.04);
+  --ft-border: rgba(255, 255, 255, 0.1);
+  --ft-text: #f3ede6;
+  --ft-muted: #b3a99e;
+  --ft-accent: #ff7a1a;
+  --ft-accent-dark: #e8630a;
+
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: var(--ft-text);
+  background: var(--ft-bg);
+  min-height: 100vh;
+}
+
+.ft-page .container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.ft-page .section {
+  padding: 3rem 0;
+}
+
+/* Navbar */
+
+.ft-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(20, 16, 13, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--ft-border);
+}
+
+.ft-navbar-brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ft-text);
+  text-decoration: none;
+}
+
+.ft-navbar-links {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.ft-navbar-link {
+  color: var(--ft-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.ft-navbar-link:hover,
+.ft-navbar-link-active {
+  color: var(--ft-accent);
+}
+
+/* Footer */
+
+.ft-footer {
+  border-top: 1px solid var(--ft-border);
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.ft-footer-brand {
+  display: block;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.ft-footer-text {
+  color: var(--ft-muted);
+  font-size: 0.9rem;
+  margin: 0.25rem 0;
+}
+
+/* Floating WhatsApp button */
+
+.ft-whatsapp-float {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #25d366;
+  color: #0b1a10;
+  font-weight: 700;
+  font-size: 0.85rem;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease;
+}
+
+.ft-whatsapp-float:hover {
+  transform: translateY(-2px);
+}
+
+.ft-whatsapp-float-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .ft-whatsapp-float span {
+    display: none;
+  }
+  .ft-whatsapp-float {
+    padding: 0.75rem;
+  }
+}
