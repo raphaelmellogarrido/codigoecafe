@@ -285,11 +285,11 @@
 }
 
 .ft-ba-badge-before {
-  left: 0.5rem;
+  right: 0.5rem;
 }
 
 .ft-ba-badge-after {
-  right: 0.5rem;
+  left: 0.5rem;
 }
 
 @media (min-width: 640px) {
