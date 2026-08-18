@@ -58,7 +58,9 @@
 .st-marquee-track {
   display: flex;
   width: max-content;
-  animation: st-marquee-scroll 22s linear infinite;
+  /* Duração maior porque cada metade agora tem mais itens repetidos (ver
+     MARQUEE_ITEMS no navbar) — mantém a mesma velocidade de leitura. */
+  animation: st-marquee-scroll 80s linear infinite;
 }
 
 .st-marquee-content {

@@ -19,6 +19,11 @@ const NAV_LINKS = [
   { href: '#faq', label: 'FAQ' },
 ];
 
+// A lista de avisos é curta — repetida algumas vezes dentro de cada metade do
+// marquee pra garantir que a largura do conteúdo nunca fique menor que a da
+// tela (senão sobra um vão vazio antes do loop reiniciar, em telas largas).
+const MARQUEE_ITEMS = Array.from({ length: 4 }, () => ANNOUNCEMENTS).flat();
+
 export default function StudioTattooNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const whatsappHref = buildWhatsappUrl(buildBookingMessage());
@@ -27,18 +32,20 @@ export default function StudioTattooNavbar() {
     <header className="st-navbar">
       <div className="st-marquee" aria-label="Avisos">
         {/* Conteúdo duplicado 2x para o loop de rolagem ficar contínuo, sem
-            salto — mesma técnica do tema de referência (marquee CSS puro). */}
+            salto — mesma técnica do tema de referência (marquee CSS puro).
+            Cada metade repete os avisos (MARQUEE_ITEMS) o bastante pra cobrir
+            telas largas sem deixar vão vazio no meio do ciclo. */}
         <div className="st-marquee-track">
           <div className="st-marquee-content">
-            {ANNOUNCEMENTS.map((text) => (
-              <span key={text} className="st-marquee-item">
+            {MARQUEE_ITEMS.map((text, index) => (
+              <span key={`${text}-${index}`} className="st-marquee-item">
                 {text}
               </span>
             ))}
           </div>
           <div className="st-marquee-content" aria-hidden="true">
-            {ANNOUNCEMENTS.map((text) => (
-              <span key={text} className="st-marquee-item">
+            {MARQUEE_ITEMS.map((text, index) => (
+              <span key={`${text}-${index}`} className="st-marquee-item">
                 {text}
               </span>
             ))}
