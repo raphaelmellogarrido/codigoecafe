@@ -61,6 +61,11 @@ const ImobiliariaAdmin = lazy(() => import("./pages/projects/Imobiliaria/Imobili
 // seções da mesma FazTudo.jsx, não rotas separadas).
 const FazTudo = lazy(() => import("./pages/projects/FazTudo/FazTudo"));
 
+// Também fora do prefixo /projetos: codigoecafe.com/tattoo. Página única
+// (hero, galeria, equipa, depoimentos, FAQ e contacto são seções da mesma
+// StudioTattoo.jsx, não rotas separadas).
+const StudioTattoo = lazy(() => import("./pages/projects/StudioTattoo/StudioTattoo"));
+
 const Achadinhos = lazy(() => import("./pages/projects/Achadinhos/Achadinhos"));
 const AchadinhosHome = lazy(() => import("./pages/projects/Achadinhos/AchadinhosHome"));
 const AchadinhosProducts = lazy(() => import("./pages/projects/Achadinhos/AchadinhosProducts"));
@@ -245,6 +250,8 @@ export default function App() {
           </Route>
 
           <Route path="/faz-tudo" element={<FazTudo />} />
+
+          <Route path="/tattoo" element={<StudioTattoo />} />
 
           <Route path="/achadinhos" element={<Achadinhos />}>
             <Route index element={<AchadinhosHome />} />

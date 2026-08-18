@@ -148,6 +148,14 @@ const projects = [
     image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=900&q=75",
     path: "/faz-tudo",
   },
+  {
+    name: "Studio Tattoo",
+    description: "Site de portfólio para estúdio de tatuagem, com galeria filtrável por estilo, perfis dos tatuadores e agendamento direto pelo WhatsApp.",
+    tags: ["React", "UI/UX"],
+    gradient: "linear-gradient(135deg, #d92626 0%, #18181c 100%)",
+    image: "https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?auto=format&fit=crop&w=900&q=75",
+    path: "/tattoo",
+  },
 ];
 
 // Dados dos testemunhos
