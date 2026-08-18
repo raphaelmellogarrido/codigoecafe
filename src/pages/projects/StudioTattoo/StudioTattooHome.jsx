@@ -1,9 +1,10 @@
 // src/pages/projects/StudioTattoo/StudioTattooHome.jsx
-// Página única do projeto: hero, galeria filtrável, equipa, depoimentos, FAQ
-// e contacto/agendamento.
+// Página única do projeto: hero, galeria filtrável, equipa, orçamento,
+// depoimentos, FAQ e contacto/agendamento.
 
 import { useState } from 'react';
 import { FaWhatsapp } from 'react-icons/fa6';
+import StudioTattooQuote from './StudioTattooQuote';
 import TestimonialsCarousel from './TestimonialsCarousel';
 import { TATTOO_STYLES } from './stylesData';
 import { GALLERY_ITEMS } from './galleryData';
@@ -127,6 +128,8 @@ export default function StudioTattooHome() {
           </div>
         </div>
       </section>
+
+      <StudioTattooQuote />
 
       <section id="depoimentos" className="st-testimonials section">
         <div className="container">

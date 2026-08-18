@@ -559,6 +559,170 @@
   }
 }
 
+/* Orçamento */
+
+.st-quote-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  padding: 2rem;
+  background: linear-gradient(155deg, var(--st-card) 0%, rgba(28, 223, 188, 0.06) 100%);
+  border: 1px solid var(--st-border);
+  border-radius: 1rem;
+}
+
+.st-quote-fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.st-quote-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.st-quote-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--st-accent);
+  font-family: var(--st-font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Select nativo, mas com aparência 100% customizada: sem seta do navegador,
+   fundo escuro, seta própria desenhada em SVG, destaque turquesa no foco. */
+.st-quote-select {
+  appearance: none;
+  width: 100%;
+  padding: 0.85rem 2.75rem 0.85rem 1rem;
+  background-color: var(--st-bg-alt);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%231cdfbc' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  border: 1px solid var(--st-border);
+  border-radius: 0.6rem;
+  color: var(--st-text);
+  font-family: var(--st-font-body);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.st-quote-select:hover {
+  border-color: var(--st-accent);
+}
+
+.st-quote-select:focus-visible {
+  outline: none;
+  border-color: var(--st-accent);
+  box-shadow: 0 0 0 3px rgba(28, 223, 188, 0.2);
+}
+
+.st-quote-select option {
+  background: var(--st-bg-alt);
+  color: var(--st-text);
+}
+
+.st-quote-custom-cm {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  background: var(--st-bg-alt);
+  border: 1px solid var(--st-border);
+  border-radius: 0.6rem;
+}
+
+.st-quote-cm-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  color: var(--st-text);
+  font-family: var(--st-font-body);
+  font-size: 0.95rem;
+}
+
+.st-quote-cm-input:focus {
+  outline: none;
+}
+
+.st-quote-cm-input::placeholder {
+  color: var(--st-muted);
+}
+
+.st-quote-cm-suffix {
+  color: var(--st-muted);
+  font-family: var(--st-font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+}
+
+.st-quote-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  align-self: flex-start;
+  padding: 1rem 2rem;
+  background: var(--st-accent);
+  color: #0d0d0d;
+  font-family: var(--st-font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.st-quote-submit:hover {
+  background: var(--st-accent-dark);
+  transform: translateY(-2px);
+}
+
+.st-quote-submit-disabled {
+  background: var(--st-border);
+  color: var(--st-muted);
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none;
+}
+
+@media (min-width: 640px) {
+  .st-quote-fields {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .st-quote-panel {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 1.5rem;
+  }
+
+  .st-quote-fields {
+    flex: 1;
+  }
+
+  .st-quote-submit {
+    align-self: flex-end;
+    white-space: nowrap;
+  }
+}
+
 /* Depoimentos */
 
 .st-carousel {
