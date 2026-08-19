@@ -156,6 +156,14 @@ const projects = [
     image: "https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?auto=format&fit=crop&w=900&q=75",
     path: "/tattoo",
   },
+  {
+    name: "BragaRenova",
+    description: "Site de portfólio para empresa de remodelações em Braga, com formulário de orçamento via WhatsApp, comparador de antes/depois e portfólio de projetos.",
+    tags: ["React", "UI/UX"],
+    gradient: "linear-gradient(135deg, #c2a572 0%, #211f1c 100%)",
+    image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=900&q=75",
+    path: "/remodelacao",
+  },
 ];
 
 // Dados dos testemunhos
