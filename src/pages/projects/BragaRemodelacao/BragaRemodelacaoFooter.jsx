@@ -5,6 +5,7 @@ import { FaFacebook, FaInstagram, FaWhatsapp } from 'react-icons/fa6';
 import { BUSINESS_NAME, BUSINESS_TAGLINE, SOCIAL_LINKS, WHATSAPP_NUMBER_DISPLAY } from './constants';
 import { SERVICES } from './servicesData';
 import { buildBookingMessage, buildWhatsappUrl } from './whatsapp';
+import { scrollToSection } from './scrollToSection';
 
 export default function BragaRemodelacaoFooter() {
   const whatsappHref = buildWhatsappUrl(buildBookingMessage());
@@ -24,11 +25,11 @@ export default function BragaRemodelacaoFooter() {
         <div className="brm-footer-col">
           <h3 className="brm-footer-heading">Links Rápidos</h3>
           <ul className="brm-footer-list">
-            <li><a href="#inicio">Início</a></li>
-            <li><a href="#sobre">Sobre Nós</a></li>
-            <li><a href="#servicos">Serviços</a></li>
-            <li><a href="#projetos">Projetos</a></li>
-            <li><a href="#orcamento">Contactos</a></li>
+            <li><a href="#inicio" onClick={(event) => scrollToSection(event, 'inicio')}>Início</a></li>
+            <li><a href="#sobre" onClick={(event) => scrollToSection(event, 'sobre')}>Sobre Nós</a></li>
+            <li><a href="#servicos" onClick={(event) => scrollToSection(event, 'servicos')}>Serviços</a></li>
+            <li><a href="#projetos" onClick={(event) => scrollToSection(event, 'projetos')}>Projetos</a></li>
+            <li><a href="#orcamento" onClick={(event) => scrollToSection(event, 'orcamento')}>Contactos</a></li>
           </ul>
         </div>
 

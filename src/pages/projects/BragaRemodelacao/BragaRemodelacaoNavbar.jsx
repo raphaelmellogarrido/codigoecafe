@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { FaBars, FaFacebook, FaInstagram, FaWhatsapp, FaXmark } from 'react-icons/fa6';
 import { BUSINESS_NAME, SOCIAL_LINKS, WHATSAPP_NUMBER_DISPLAY } from './constants';
 import { buildBookingMessage, buildWhatsappUrl } from './whatsapp';
+import { scrollToSection } from './scrollToSection';
 
 const NAV_LINKS = [
   { href: '#inicio', label: 'Início' },
@@ -23,6 +24,11 @@ export default function BragaRemodelacaoNavbar() {
 
   function closeMenu() {
     setMenuOpen(false);
+  }
+
+  function handleNavClick(event, id) {
+    closeMenu();
+    scrollToSection(event, id);
   }
 
   return (
@@ -46,7 +52,7 @@ export default function BragaRemodelacaoNavbar() {
 
       <div className="brm-navbar-row">
         <div className="container brm-navbar-row-inner">
-          <a href="#inicio" className="brm-navbar-brand" onClick={closeMenu}>
+          <a href="#inicio" className="brm-navbar-brand" onClick={(event) => handleNavClick(event, 'inicio')}>
             {BUSINESS_NAME}
           </a>
 
@@ -62,11 +68,20 @@ export default function BragaRemodelacaoNavbar() {
 
           <nav className={`brm-navbar-links${menuOpen ? ' brm-navbar-links-open' : ''}`}>
             {NAV_LINKS.map((link) => (
-              <a key={link.href} href={link.href} className="brm-navbar-link" onClick={closeMenu}>
+              <a
+                key={link.href}
+                href={link.href}
+                className="brm-navbar-link"
+                onClick={(event) => handleNavClick(event, link.href.slice(1))}
+              >
                 {link.label}
               </a>
             ))}
-            <a href="#orcamento" className="brm-btn brm-btn-primary brm-navbar-cta" onClick={closeMenu}>
+            <a
+              href="#orcamento"
+              className="brm-btn brm-btn-primary brm-navbar-cta"
+              onClick={(event) => handleNavClick(event, 'orcamento')}
+            >
               Pedir Orçamento
             </a>
           </nav>

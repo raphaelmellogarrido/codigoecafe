@@ -177,8 +177,13 @@
 }
 
 .brm-navbar-row {
+  /* Sem backdrop-filter aqui de propósito: essa propriedade faz este
+     elemento virar o "containing block" dos descendentes position:fixed
+     (spec CSS) — e o painel do menu mobile (.brm-navbar-links, mais abaixo)
+     é fixed. Com o blur, o inset:0 do painel passava a resolver contra a
+     caixa (rasa) da navbar-row em vez do viewport inteiro, cortando o menu
+     a poucos px de altura e deixando o hero aparecer por baixo dele. */
   background: rgba(247, 243, 236, 0.95);
-  backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--brm-border);
 }
 

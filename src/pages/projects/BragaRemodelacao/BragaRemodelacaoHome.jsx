@@ -16,6 +16,7 @@ import { WHY_CHOOSE_US } from './whyChooseUsData';
 import { PROCESS_STEPS } from './processData';
 import { TESTIMONIALS } from './testimonialsData';
 import QuoteForm from './QuoteForm';
+import { scrollToSection } from './scrollToSection';
 
 const WHY_ICON_MAP = {
   FaFileInvoiceDollar,
@@ -65,10 +66,18 @@ export default function BragaRemodelacaoHome() {
             seu dia a dia. Remodelações em Braga e arredores.
           </p>
           <div className="brm-hero-actions">
-            <a href="#orcamento" className="brm-btn brm-btn-primary">
+            <a
+              href="#orcamento"
+              className="brm-btn brm-btn-primary"
+              onClick={(event) => scrollToSection(event, 'orcamento')}
+            >
               Pedir Orçamento Gratuito
             </a>
-            <a href="#projetos" className="brm-btn brm-btn-outline">
+            <a
+              href="#projetos"
+              className="brm-btn brm-btn-outline"
+              onClick={(event) => scrollToSection(event, 'projetos')}
+            >
               Ver Projetos
             </a>
           </div>
@@ -113,7 +122,11 @@ export default function BragaRemodelacaoHome() {
               <li>Orçamento claro, sem custos escondidos</li>
               <li>Equipa própria, sem subcontratação às cegas</li>
             </ul>
-            <a href="#servicos" className="brm-btn brm-btn-primary">
+            <a
+              href="#servicos"
+              className="brm-btn brm-btn-primary"
+              onClick={(event) => scrollToSection(event, 'servicos')}
+            >
               Conhecer os Serviços
             </a>
           </div>
@@ -258,7 +271,11 @@ export default function BragaRemodelacaoHome() {
         <div className="container brm-cta-inner">
           <h2 className="brm-cta-title">Está a pensar remodelar a sua casa?</h2>
           <p className="brm-cta-subtitle">Conte-nos o seu projeto e receba um orçamento sem compromisso.</p>
-          <a href="#orcamento" className="brm-btn brm-btn-primary">
+          <a
+            href="#orcamento"
+            className="brm-btn brm-btn-primary"
+            onClick={(event) => scrollToSection(event, 'orcamento')}
+          >
             Pedir Orçamento
           </a>
         </div>
