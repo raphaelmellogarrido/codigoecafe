@@ -9,6 +9,8 @@ import { BUSINESS_NAME } from './constants';
 import { STATS } from './statsData';
 import { SERVICES } from './servicesData';
 import { PROJECTS } from './projectsData';
+import BeforeAfterSlider from './BeforeAfterSlider';
+import { BEFORE_AFTER_SETS } from './beforeAfterData';
 import QuoteForm from './QuoteForm';
 
 const HERO_IMAGE =
@@ -151,6 +153,26 @@ export default function BragaRemodelacaoHome() {
               </figure>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section id="antes-depois" className="brm-before-after section">
+        <div className="container">
+          <span className="brm-eyebrow">Transformações</span>
+          <h2 className="brm-section-title">Veja a transformação</h2>
+          <p className="brm-section-subtitle">
+            Cada espaço tem potencial. Veja como transformamos ambientes antigos em espaços
+            modernos e funcionais.
+          </p>
+          <div className="brm-ba-grid">
+            {BEFORE_AFTER_SETS.map((set) => (
+              <div key={set.id}>
+                <BeforeAfterSlider beforeImage={set.before} afterImage={set.after} />
+                <p className="brm-ba-title">{set.title}</p>
+              </div>
+            ))}
+          </div>
+          <p className="brm-ba-disclaimer">Imagens ilustrativas.</p>
         </div>
       </section>
 
