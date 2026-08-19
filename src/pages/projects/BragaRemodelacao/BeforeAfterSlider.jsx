@@ -2,8 +2,7 @@
 // Slider de comparação antes/depois: a imagem "depois" fica por cima,
 // recortada com clip-path até a posição X do handle. Arrastar o handle
 // (pointer events) ou usar as setas do teclado (handle é focável,
-// role=slider) move o recorte. Sem dependências externas — mesma técnica já
-// usada em FazTudo/BeforeAfterSlider.jsx.
+// role=slider) move o recorte. Sem dependências externas.
 
 import { useCallback, useRef, useState } from 'react';
 

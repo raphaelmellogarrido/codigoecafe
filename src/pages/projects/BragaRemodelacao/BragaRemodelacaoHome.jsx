@@ -35,9 +35,11 @@ const CTA_IMAGE =
 
 export default function BragaRemodelacaoHome() {
   const [selectedServiceId, setSelectedServiceId] = useState(null);
+  const [selectionKey, setSelectionKey] = useState(0);
 
   function handleSelectService(serviceId) {
     setSelectedServiceId(serviceId);
+    setSelectionKey((key) => key + 1);
     document.getElementById('orcamento')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
@@ -136,6 +138,7 @@ export default function BragaRemodelacaoHome() {
                   <button
                     type="button"
                     className="brm-service-link"
+                    aria-label={`Saber mais sobre ${service.title}`}
                     onClick={() => handleSelectService(service.id)}
                   >
                     Saber mais →
@@ -261,7 +264,7 @@ export default function BragaRemodelacaoHome() {
         </div>
       </section>
 
-      <QuoteForm preselectedType={selectedServiceId} />
+      <QuoteForm preselectedType={selectedServiceId} selectionKey={selectionKey} />
     </>
   );
 }

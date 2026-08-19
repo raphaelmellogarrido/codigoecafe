@@ -28,13 +28,13 @@
   scroll-behavior: smooth;
 }
 
-.brm-page .container {
+:where(.brm-page) .container {
   max-width: 1120px;
   margin: 0 auto;
   padding: 0 1.25rem;
 }
 
-.brm-page .section {
+:where(.brm-page) .section {
   padding: 4rem 0;
   scroll-margin-top: 6rem;
 }

@@ -30,14 +30,19 @@ const START_OPTIONS = [
 
 const INITIAL_FORM = { nome: '', telefone: '', email: '', localidade: '', tipo: '', inicio: '', mensagem: '' };
 
-export default function QuoteForm({ preselectedType }) {
+export default function QuoteForm({ preselectedType, selectionKey }) {
   const [form, setForm] = useState(INITIAL_FORM);
 
+  // selectionKey is not read directly — it's a second dependency purely so
+  // this effect re-fires even when the user clicks the same service twice
+  // in a row (setting selectedServiceId to an identical primitive value
+  // would otherwise make React bail out of the re-render, and this effect
+  // would never re-run to re-sync the dropdown).
   useEffect(() => {
     if (preselectedType) {
       setForm((prev) => ({ ...prev, tipo: preselectedType }));
     }
-  }, [preselectedType]);
+  }, [preselectedType, selectionKey]);
 
   function handleChange(event) {
     const { name, value } = event.target;

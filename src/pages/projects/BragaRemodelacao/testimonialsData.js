@@ -25,6 +25,6 @@ export const TESTIMONIALS = [
     name: 'Fernando Costa',
     projectType: 'Remodelação de Casa de Banho',
     rating: 4,
-    text: 'Bom acabamento e equipa cuidadosa com o resto da casa durante a obra. Only demorou um pouco mais do que o previsto na fase de canalização.',
+    text: 'Bom acabamento e equipa cuidadosa com o resto da casa durante a obra. Só demorou um pouco mais do que o previsto na fase de canalização.',
   },
 ];
