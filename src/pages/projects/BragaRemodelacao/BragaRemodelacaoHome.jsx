@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { BUSINESS_NAME } from './constants';
 import { STATS } from './statsData';
 import { SERVICES } from './servicesData';
+import { PROJECTS } from './projectsData';
 import QuoteForm from './QuoteForm';
 
 const HERO_IMAGE =
@@ -126,6 +127,28 @@ export default function BragaRemodelacaoHome() {
                   </button>
                 </div>
               </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="projetos" className="brm-projects section">
+        <div className="container">
+          <span className="brm-eyebrow">Portfólio</span>
+          <h2 className="brm-section-title">Projetos recentes</h2>
+          <p className="brm-section-subtitle">
+            Alguns exemplos do tipo de trabalho que fazemos em Braga e arredores.
+          </p>
+          <div className="brm-projects-grid">
+            {PROJECTS.map((project) => (
+              <figure key={project.id} className="brm-project-card">
+                <img src={project.image} alt={`${project.title} — ${project.location}`} loading="lazy" />
+                <figcaption className="brm-project-overlay">
+                  <span className="brm-project-type">{project.type}</span>
+                  <span className="brm-project-title">{project.title}</span>
+                  <span className="brm-project-location">{project.location}</span>
+                </figcaption>
+              </figure>
             ))}
           </div>
         </div>
