@@ -4,10 +4,15 @@
 // porquê-escolher-nos + processo (Task 9), depoimentos + CTA (Task 10) e o
 // formulário de orçamento (Task 5).
 
+import { BUSINESS_NAME } from './constants';
 import { STATS } from './statsData';
 
 const HERO_IMAGE =
   'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1600&q=75';
+const ABOUT_MAIN_IMAGE =
+  'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=900&q=75';
+const ABOUT_INSET_IMAGE =
+  'https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=500&q=75';
 
 export default function BragaRemodelacaoHome() {
   return (
@@ -50,6 +55,40 @@ export default function BragaRemodelacaoHome() {
               <span className="brm-stat-label">{stat.label}</span>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section id="sobre" className="brm-about section">
+        <div className="container brm-about-grid">
+          <div className="brm-about-media">
+            <img
+              src={ABOUT_MAIN_IMAGE}
+              alt="Interior de apartamento remodelado, luminoso e moderno"
+              className="brm-about-image-main"
+              loading="lazy"
+            />
+            <img
+              src={ABOUT_INSET_IMAGE}
+              alt="Mãos a desenhar uma planta de remodelação"
+              className="brm-about-image-inset"
+              loading="lazy"
+            />
+          </div>
+          <div className="brm-about-content">
+            <span className="brm-eyebrow">Sobre a {BUSINESS_NAME}</span>
+            <h2 className="brm-section-title">Remodelamos espaços. Melhoramos a forma como vive.</h2>
+            <p className="brm-about-text">
+              Acompanhamos o seu projeto do planeamento à execução — um único ponto de contacto,
+              do primeiro esboço à limpeza final da obra.
+            </p>
+            <ul className="brm-about-list">
+              <li>Orçamento claro, sem custos escondidos</li>
+              <li>Equipa própria, sem subcontratação às cegas</li>
+            </ul>
+            <a href="#servicos" className="brm-btn brm-btn-primary">
+              Conhecer os Serviços
+            </a>
+          </div>
         </div>
       </section>
     </>
