@@ -6,6 +6,7 @@
 
 import { BUSINESS_NAME } from './constants';
 import { STATS } from './statsData';
+import QuoteForm from './QuoteForm';
 
 const HERO_IMAGE =
   'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1600&q=75';
@@ -91,6 +92,8 @@ export default function BragaRemodelacaoHome() {
           </div>
         </div>
       </section>
+
+      <QuoteForm preselectedType={null} />
     </>
   );
 }

@@ -588,3 +588,87 @@
     box-shadow: 0 16px 32px rgba(32, 30, 26, 0.18);
   }
 }
+
+/* Formulário de orçamento */
+
+.brm-quote {
+  background: var(--brm-surface);
+  border-top: 1px solid var(--brm-border);
+  border-bottom: 1px solid var(--brm-border);
+}
+
+.brm-quote-intro {
+  text-align: center;
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+.brm-quote-intro .brm-section-subtitle {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.brm-quote-form {
+  max-width: 42rem;
+  margin: 2.5rem auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.brm-form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.1rem;
+}
+
+.brm-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--brm-text);
+}
+
+.brm-field input,
+.brm-field select,
+.brm-field textarea {
+  font-family: var(--brm-font-body);
+  font-size: 0.95rem;
+  font-weight: 400;
+  padding: 0.75rem 0.9rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--brm-border);
+  background: var(--brm-bg);
+  color: var(--brm-text);
+}
+
+.brm-field input:focus,
+.brm-field select:focus,
+.brm-field textarea:focus {
+  outline: 2px solid var(--brm-accent);
+  outline-offset: 1px;
+}
+
+.brm-field textarea {
+  resize: vertical;
+}
+
+.brm-quote-submit {
+  align-self: center;
+  margin-top: 0.5rem;
+}
+
+.brm-quote-note {
+  text-align: center;
+  color: var(--brm-muted);
+  font-size: 0.8rem;
+  margin: 0.25rem 0 0;
+}
+
+@media (min-width: 640px) {
+  .brm-form-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
