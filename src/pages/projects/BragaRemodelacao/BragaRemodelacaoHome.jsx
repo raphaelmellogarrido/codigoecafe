@@ -5,13 +5,23 @@
 // formulário de orçamento (Task 5).
 
 import { useState } from 'react';
+import { FaCalendarCheck, FaFileInvoiceDollar, FaUserTie, FaUsersGear } from 'react-icons/fa6';
 import { BUSINESS_NAME } from './constants';
 import { STATS } from './statsData';
 import { SERVICES } from './servicesData';
 import { PROJECTS } from './projectsData';
 import BeforeAfterSlider from './BeforeAfterSlider';
 import { BEFORE_AFTER_SETS } from './beforeAfterData';
+import { WHY_CHOOSE_US } from './whyChooseUsData';
+import { PROCESS_STEPS } from './processData';
 import QuoteForm from './QuoteForm';
+
+const WHY_ICON_MAP = {
+  FaFileInvoiceDollar,
+  FaUserTie,
+  FaCalendarCheck,
+  FaUsersGear,
+};
 
 const HERO_IMAGE =
   'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1600&q=75';
@@ -173,6 +183,41 @@ export default function BragaRemodelacaoHome() {
             ))}
           </div>
           <p className="brm-ba-disclaimer">Imagens ilustrativas.</p>
+        </div>
+      </section>
+
+      <section id="porque-escolher" className="brm-why section">
+        <div className="container">
+          <span className="brm-eyebrow">Porquê escolher-nos</span>
+          <h2 className="brm-section-title">O que nos diferencia</h2>
+          <div className="brm-why-grid">
+            {WHY_CHOOSE_US.map((item) => {
+              const Icon = WHY_ICON_MAP[item.icon] ?? FaFileInvoiceDollar;
+              return (
+                <div key={item.id} className="brm-card brm-why-card">
+                  <Icon className="brm-why-icon" aria-hidden="true" />
+                  <h3 className="brm-why-title">{item.title}</h3>
+                  <p className="brm-why-description">{item.description}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section id="processo" className="brm-process section">
+        <div className="container">
+          <span className="brm-eyebrow">Como trabalhamos</span>
+          <h2 className="brm-section-title">O nosso processo</h2>
+          <div className="brm-process-grid">
+            {PROCESS_STEPS.map((step) => (
+              <div key={step.number} className="brm-process-step">
+                <span className="brm-process-number">{step.number}</span>
+                <h3 className="brm-process-title">{step.title}</h3>
+                <p className="brm-process-description">{step.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

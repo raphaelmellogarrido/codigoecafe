@@ -897,3 +897,84 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* Porquê escolher-nos */
+
+.brm-why-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.brm-why-card {
+  padding: 1.75rem;
+}
+
+.brm-why-icon {
+  font-size: 1.5rem;
+  color: var(--brm-accent);
+  margin-bottom: 0.9rem;
+}
+
+.brm-why-title {
+  font-family: var(--brm-font-display);
+  font-size: 1.05rem;
+  margin: 0 0 0.4rem;
+}
+
+.brm-why-description {
+  color: var(--brm-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Processo */
+
+.brm-process {
+  background: var(--brm-bg-dark);
+  color: var(--brm-text-inverse);
+}
+
+.brm-process .brm-section-subtitle {
+  color: var(--brm-muted-inverse);
+}
+
+.brm-process-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.brm-process-number {
+  display: block;
+  font-family: var(--brm-font-display);
+  font-weight: 800;
+  font-size: 2.5rem;
+  color: var(--brm-accent);
+  margin-bottom: 0.5rem;
+}
+
+.brm-process-title {
+  font-family: var(--brm-font-display);
+  font-size: 1.1rem;
+  margin: 0 0 0.4rem;
+}
+
+.brm-process-description {
+  color: var(--brm-muted-inverse);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .brm-why-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .brm-why-grid,
+  .brm-process-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
