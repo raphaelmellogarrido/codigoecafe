@@ -935,10 +935,6 @@
   color: var(--brm-text-inverse);
 }
 
-.brm-process .brm-section-subtitle {
-  color: var(--brm-muted-inverse);
-}
-
 .brm-process-grid {
   display: grid;
   grid-template-columns: 1fr;
