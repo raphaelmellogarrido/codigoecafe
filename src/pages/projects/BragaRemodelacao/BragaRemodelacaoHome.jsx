@@ -4,8 +4,10 @@
 // porquê-escolher-nos + processo (Task 9), depoimentos + CTA (Task 10) e o
 // formulário de orçamento (Task 5).
 
+import { useState } from 'react';
 import { BUSINESS_NAME } from './constants';
 import { STATS } from './statsData';
+import { SERVICES } from './servicesData';
 import QuoteForm from './QuoteForm';
 
 const HERO_IMAGE =
@@ -16,6 +18,13 @@ const ABOUT_INSET_IMAGE =
   'https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=500&q=75';
 
 export default function BragaRemodelacaoHome() {
+  const [selectedServiceId, setSelectedServiceId] = useState(null);
+
+  function handleSelectService(serviceId) {
+    setSelectedServiceId(serviceId);
+    document.getElementById('orcamento')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
   return (
     <>
       <section
@@ -93,7 +102,36 @@ export default function BragaRemodelacaoHome() {
         </div>
       </section>
 
-      <QuoteForm preselectedType={null} />
+      <section id="servicos" className="brm-services section">
+        <div className="container">
+          <span className="brm-eyebrow">O que fazemos</span>
+          <h2 className="brm-section-title">Os nossos serviços de remodelação</h2>
+          <p className="brm-section-subtitle">
+            Da primeira ideia ao último acabamento — escolha o serviço que precisa e peça já o seu
+            orçamento.
+          </p>
+          <div className="brm-services-grid">
+            {SERVICES.map((service) => (
+              <article key={service.id} className="brm-card brm-service-card">
+                <img src={service.image} alt={service.title} className="brm-service-image" loading="lazy" />
+                <div className="brm-service-body">
+                  <h3 className="brm-service-title">{service.title}</h3>
+                  <p className="brm-service-description">{service.description}</p>
+                  <button
+                    type="button"
+                    className="brm-service-link"
+                    onClick={() => handleSelectService(service.id)}
+                  >
+                    Saber mais →
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <QuoteForm preselectedType={selectedServiceId} />
     </>
   );
 }

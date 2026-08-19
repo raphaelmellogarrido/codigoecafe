@@ -672,3 +672,60 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* Serviços */
+
+.brm-services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.brm-service-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.brm-service-body {
+  padding: 1.5rem;
+}
+
+.brm-service-title {
+  font-family: var(--brm-font-display);
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem;
+}
+
+.brm-service-description {
+  color: var(--brm-muted);
+  font-size: 0.9rem;
+  margin: 0 0 1rem;
+}
+
+.brm-service-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--brm-accent);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.brm-service-link:hover {
+  color: var(--brm-accent-dark);
+}
+
+@media (min-width: 640px) {
+  .brm-services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .brm-services-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
