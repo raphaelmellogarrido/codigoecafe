@@ -5,7 +5,7 @@
 // formulário de orçamento (Task 5).
 
 import { useState } from 'react';
-import { FaCalendarCheck, FaFileInvoiceDollar, FaUserTie, FaUsersGear } from 'react-icons/fa6';
+import { FaCalendarCheck, FaFileInvoiceDollar, FaUserTie, FaUsersGear, FaRegStar, FaStar } from 'react-icons/fa6';
 import { BUSINESS_NAME } from './constants';
 import { STATS } from './statsData';
 import { SERVICES } from './servicesData';
@@ -14,6 +14,7 @@ import BeforeAfterSlider from './BeforeAfterSlider';
 import { BEFORE_AFTER_SETS } from './beforeAfterData';
 import { WHY_CHOOSE_US } from './whyChooseUsData';
 import { PROCESS_STEPS } from './processData';
+import { TESTIMONIALS } from './testimonialsData';
 import QuoteForm from './QuoteForm';
 
 const WHY_ICON_MAP = {
@@ -29,6 +30,8 @@ const ABOUT_MAIN_IMAGE =
   'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=900&q=75';
 const ABOUT_INSET_IMAGE =
   'https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=500&q=75';
+const CTA_IMAGE =
+  'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=75';
 
 export default function BragaRemodelacaoHome() {
   const [selectedServiceId, setSelectedServiceId] = useState(null);
@@ -218,6 +221,43 @@ export default function BragaRemodelacaoHome() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section id="depoimentos" className="brm-testimonials section">
+        <div className="container">
+          <span className="brm-eyebrow">Depoimentos</span>
+          <h2 className="brm-section-title">O que dizem os nossos clientes</h2>
+          <div className="brm-testimonials-grid">
+            {TESTIMONIALS.map((testimonial) => (
+              <div key={testimonial.id} className="brm-card brm-testimonial-card">
+                <div className="brm-testimonial-rating" aria-label={`Avaliação: ${testimonial.rating} de 5`}>
+                  {[1, 2, 3, 4, 5].map((value) =>
+                    value <= testimonial.rating ? <FaStar key={value} /> : <FaRegStar key={value} />
+                  )}
+                </div>
+                <p className="brm-testimonial-text">&ldquo;{testimonial.text}&rdquo;</p>
+                <p className="brm-testimonial-name">{testimonial.name}</p>
+                <span className="brm-testimonial-project">{testimonial.projectType}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="brm-cta section"
+        style={{
+          backgroundImage:
+            `linear-gradient(180deg, rgba(22,21,19,0.55) 0%, rgba(22,21,19,0.88) 100%), url('${CTA_IMAGE}')`,
+        }}
+      >
+        <div className="container brm-cta-inner">
+          <h2 className="brm-cta-title">Está a pensar remodelar a sua casa?</h2>
+          <p className="brm-cta-subtitle">Conte-nos o seu projeto e receba um orçamento sem compromisso.</p>
+          <a href="#orcamento" className="brm-btn brm-btn-primary">
+            Pedir Orçamento
+          </a>
         </div>
       </section>
 

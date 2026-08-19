@@ -974,3 +974,79 @@
     grid-template-columns: repeat(4, 1fr);
   }
 }
+
+/* Depoimentos */
+
+.brm-testimonials-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.brm-testimonial-card {
+  padding: 1.75rem;
+}
+
+.brm-testimonial-rating {
+  display: flex;
+  gap: 0.15rem;
+  color: var(--brm-accent);
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.brm-testimonial-text {
+  color: var(--brm-text);
+  font-size: 0.95rem;
+  margin: 0 0 1rem;
+  line-height: 1.5;
+}
+
+.brm-testimonial-name {
+  font-weight: 700;
+  margin: 0;
+}
+
+.brm-testimonial-project {
+  color: var(--brm-muted);
+  font-size: 0.8rem;
+}
+
+/* CTA cheia */
+
+.brm-cta {
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  padding: 5rem 0;
+}
+
+.brm-cta-title {
+  font-family: var(--brm-font-display);
+  font-weight: 800;
+  font-size: 2rem;
+  color: var(--brm-text-inverse);
+  margin: 0 0 0.75rem;
+}
+
+.brm-cta-subtitle {
+  color: var(--brm-muted-inverse);
+  max-width: 34rem;
+  margin: 0 auto 1.75rem;
+}
+
+@media (min-width: 640px) {
+  .brm-testimonials-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .brm-testimonials-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .brm-cta-title {
+    font-size: 2.5rem;
+  }
+}
