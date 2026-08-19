@@ -1,0 +1,418 @@
+/* src/pages/projects/BragaRemodelacao/BragaRemodelacao.css */
+/* Estilos do projeto BragaRenova — tema inspirado no template Elementor
+   "Horen" (antracite + creme + acento dourado/bege), sem clonar os HEX
+   exatos. Mobile-first: breakpoints em 640px (tablet) e 1024px (desktop).
+   Prefixo de classes: .brm- */
+
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap");
+
+.brm-page {
+  --brm-bg: #f7f3ec;
+  --brm-surface: #fffdf8;
+  --brm-bg-dark: #161513;
+  --brm-text: #201e1a;
+  --brm-text-inverse: #f5f1e7;
+  --brm-muted: #6b6459;
+  --brm-muted-inverse: #b8ae9c;
+  --brm-accent: #b6934f;
+  --brm-accent-dark: #96793d;
+  --brm-border: rgba(32, 30, 26, 0.12);
+  --brm-border-inverse: rgba(245, 241, 231, 0.14);
+  --brm-font-display: "Manrope", "Segoe UI", sans-serif;
+  --brm-font-body: "Inter", "Segoe UI", sans-serif;
+
+  font-family: var(--brm-font-body);
+  color: var(--brm-text);
+  background: var(--brm-bg);
+  min-height: 100vh;
+  scroll-behavior: smooth;
+}
+
+.brm-page .container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.brm-page .section {
+  padding: 4rem 0;
+  scroll-margin-top: 6rem;
+}
+
+/* Eyebrow "—— RÓTULO" acima dos títulos de secção */
+
+.brm-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--brm-accent);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.brm-eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 2px;
+  background: var(--brm-accent);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.brm-section-title {
+  font-family: var(--brm-font-display);
+  font-weight: 800;
+  font-size: 1.9rem;
+  line-height: 1.15;
+  margin: 0 0 0.75rem;
+}
+
+.brm-section-subtitle {
+  color: var(--brm-muted);
+  max-width: 38rem;
+  margin: 0 0 2.5rem;
+}
+
+/* Botões */
+
+.brm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.brm-btn-primary {
+  background: var(--brm-accent);
+  color: #211f1c;
+}
+
+.brm-btn-primary:hover {
+  background: var(--brm-accent-dark);
+  transform: translateY(-2px);
+}
+
+.brm-btn-outline {
+  background: transparent;
+  color: var(--brm-text-inverse);
+  border-color: var(--brm-border-inverse);
+}
+
+.brm-btn-outline:hover {
+  border-color: var(--brm-accent);
+  color: var(--brm-accent);
+}
+
+/* Card base, reutilizado por serviços/depoimentos/porquê-escolher-nos */
+
+.brm-card {
+  background: var(--brm-surface);
+  border: 1px solid var(--brm-border);
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.brm-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(32, 30, 26, 0.1);
+}
+
+/* Topbar */
+
+.brm-topbar {
+  background: var(--brm-bg-dark);
+  color: var(--brm-muted-inverse);
+  font-size: 0.8rem;
+  display: none;
+}
+
+.brm-topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1.25rem;
+}
+
+.brm-topbar-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--brm-text-inverse);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.brm-topbar-social {
+  display: flex;
+  gap: 0.85rem;
+}
+
+.brm-topbar-social a {
+  color: var(--brm-muted-inverse);
+  transition: color 0.2s ease;
+}
+
+.brm-topbar-social a:hover {
+  color: var(--brm-accent);
+}
+
+/* Navbar */
+
+.brm-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+.brm-navbar-row {
+  background: rgba(247, 243, 236, 0.95);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--brm-border);
+}
+
+.brm-navbar-row-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+}
+
+.brm-navbar-brand {
+  font-family: var(--brm-font-display);
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--brm-text);
+  text-decoration: none;
+}
+
+.brm-navbar-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: var(--brm-text);
+  cursor: pointer;
+}
+
+.brm-navbar-links {
+  position: fixed;
+  inset: 0;
+  top: 4.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  background: var(--brm-bg);
+  padding: 1.5rem 1.25rem;
+  transform: translateX(100%);
+  transition: transform 0.25s ease;
+  overflow-y: auto;
+}
+
+.brm-navbar-links-open {
+  transform: translateX(0);
+}
+
+.brm-navbar-link {
+  color: var(--brm-text);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--brm-border);
+}
+
+.brm-navbar-cta {
+  margin-top: 1rem;
+  align-self: flex-start;
+}
+
+/* Footer */
+
+.brm-footer {
+  background: var(--brm-bg-dark);
+  color: var(--brm-muted-inverse);
+  padding-top: 3rem;
+}
+
+.brm-footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding-bottom: 2rem;
+}
+
+.brm-footer-brand {
+  display: block;
+  font-family: var(--brm-font-display);
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--brm-text-inverse);
+  margin-bottom: 0.4rem;
+}
+
+.brm-footer-text {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+}
+
+.brm-footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--brm-accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.brm-footer-heading {
+  color: var(--brm-text-inverse);
+  font-size: 0.95rem;
+  margin: 0 0 0.9rem;
+}
+
+.brm-footer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  font-size: 0.9rem;
+}
+
+.brm-footer-list a {
+  color: var(--brm-muted-inverse);
+  text-decoration: none;
+}
+
+.brm-footer-list a:hover {
+  color: var(--brm-accent);
+}
+
+.brm-footer-social {
+  display: flex;
+  gap: 0.85rem;
+  margin-top: 0.75rem;
+}
+
+.brm-footer-social-icon {
+  color: var(--brm-muted-inverse);
+  font-size: 1.1rem;
+  transition: color 0.2s ease;
+}
+
+.brm-footer-social-icon:hover {
+  color: var(--brm-accent);
+}
+
+.brm-footer-bottom {
+  border-top: 1px solid var(--brm-border-inverse);
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.brm-footer-note {
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+.brm-footer-note a {
+  color: var(--brm-accent);
+}
+
+/* Botão flutuante de WhatsApp */
+
+.brm-whatsapp-float {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #25d366;
+  color: #0b1a10;
+  font-weight: 700;
+  font-size: 0.85rem;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease;
+}
+
+.brm-whatsapp-float:hover {
+  transform: translateY(-2px);
+}
+
+.brm-whatsapp-float-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .brm-whatsapp-float span {
+    display: none;
+  }
+  .brm-whatsapp-float {
+    padding: 0.75rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .brm-topbar {
+    display: block;
+  }
+
+  .brm-footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .brm-section-title {
+    font-size: 2.5rem;
+  }
+
+  .brm-navbar-toggle {
+    display: none;
+  }
+
+  .brm-navbar-links {
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.75rem;
+    background: none;
+    padding: 0;
+    transform: none;
+    overflow: visible;
+  }
+
+  .brm-navbar-link {
+    padding: 0;
+    border-bottom: none;
+  }
+
+  .brm-navbar-cta {
+    margin-top: 0;
+  }
+
+  .brm-footer-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

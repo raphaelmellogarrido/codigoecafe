@@ -66,6 +66,9 @@ const FazTudo = lazy(() => import("./pages/projects/FazTudo/FazTudo"));
 // StudioTattoo.jsx, não rotas separadas).
 const StudioTattoo = lazy(() => import("./pages/projects/StudioTattoo/StudioTattoo"));
 
+// Também fora do prefixo /projetos, a pedido: codigoecafe.com/remodelacao.
+const BragaRemodelacao = lazy(() => import("./pages/projects/BragaRemodelacao/BragaRemodelacao"));
+
 const Achadinhos = lazy(() => import("./pages/projects/Achadinhos/Achadinhos"));
 const AchadinhosHome = lazy(() => import("./pages/projects/Achadinhos/AchadinhosHome"));
 const AchadinhosProducts = lazy(() => import("./pages/projects/Achadinhos/AchadinhosProducts"));
@@ -252,6 +255,8 @@ export default function App() {
           <Route path="/faz-tudo" element={<FazTudo />} />
 
           <Route path="/tattoo" element={<StudioTattoo />} />
+
+          <Route path="/remodelacao" element={<BragaRemodelacao />} />
 
           <Route path="/achadinhos" element={<Achadinhos />}>
             <Route index element={<AchadinhosHome />} />
