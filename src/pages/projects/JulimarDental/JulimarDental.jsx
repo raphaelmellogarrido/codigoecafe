@@ -1,6 +1,5 @@
 // src/pages/projects/JulimarDental/JulimarDental.jsx
 // Página principal: provider do carrinho + composição de todas as secções.
-// (Footer, botão flutuante e CSS completo chegam na próxima task.)
 
 import { useMemo, useState } from 'react';
 import { CartProvider, useCart } from './CartContext.jsx';
@@ -12,6 +11,8 @@ import StepsSection from './StepsSection.jsx';
 import CategoryCarousel from './CategoryCarousel.jsx';
 import ProductGrid from './ProductGrid.jsx';
 import CartDrawer from './CartDrawer.jsx';
+import JulimarDentalFooter from './JulimarDentalFooter.jsx';
+import WhatsappFloatButton from './WhatsappFloatButton.jsx';
 import './JulimarDental.css';
 
 function JulimarDentalContent() {
@@ -42,6 +43,8 @@ function JulimarDentalContent() {
       <section id="produtos" className="jd-products-section">
         <ProductGrid products={filteredProducts} onAddToCart={addToCart} />
       </section>
+      <JulimarDentalFooter />
+      <WhatsappFloatButton />
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
     </div>
   );
