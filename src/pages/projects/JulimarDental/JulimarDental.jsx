@@ -1,10 +1,11 @@
 // src/pages/projects/JulimarDental/JulimarDental.jsx
 // Página principal: provider do carrinho + composição de todas as secções.
-// (Banners, passos, categorias, grid e carrinho chegam nas próximas tasks.)
+// (Passos, categorias, grid e carrinho chegam nas próximas tasks.)
 
 import { useState } from 'react';
 import { CartProvider } from './CartContext.jsx';
 import JulimarDentalNavbar from './JulimarDentalNavbar.jsx';
+import HeroBanners from './HeroBanners.jsx';
 import './JulimarDental.css';
 
 function JulimarDentalContent() {
@@ -13,6 +14,7 @@ function JulimarDentalContent() {
   return (
     <div className="jd-page">
       <JulimarDentalNavbar searchTerm={searchTerm} onSearchChange={setSearchTerm} onCartClick={() => {}} />
+      <HeroBanners />
       <p style={{ padding: '2rem' }}>Catálogo chegando...</p>
     </div>
   );
