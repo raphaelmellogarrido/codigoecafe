@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { CartProvider } from './CartContext.jsx';
 import JulimarDentalNavbar from './JulimarDentalNavbar.jsx';
 import HeroBanners from './HeroBanners.jsx';
+import StepsSection from './StepsSection.jsx';
 import './JulimarDental.css';
 
 function JulimarDentalContent() {
@@ -15,6 +16,7 @@ function JulimarDentalContent() {
     <div className="jd-page">
       <JulimarDentalNavbar searchTerm={searchTerm} onSearchChange={setSearchTerm} onCartClick={() => {}} />
       <HeroBanners />
+      <StepsSection />
       <p style={{ padding: '2rem' }}>Catálogo chegando...</p>
     </div>
   );
