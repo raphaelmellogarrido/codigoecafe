@@ -1,6 +1,6 @@
 // src/pages/projects/JulimarDental/JulimarDental.jsx
 // Página principal: provider do carrinho + composição de todas as secções.
-// (Carrinho lateral chega na próxima task.)
+// (Footer, botão flutuante e CSS completo chegam na próxima task.)
 
 import { useMemo, useState } from 'react';
 import { CartProvider, useCart } from './CartContext.jsx';
@@ -11,11 +11,13 @@ import HeroBanners from './HeroBanners.jsx';
 import StepsSection from './StepsSection.jsx';
 import CategoryCarousel from './CategoryCarousel.jsx';
 import ProductGrid from './ProductGrid.jsx';
+import CartDrawer from './CartDrawer.jsx';
 import './JulimarDental.css';
 
 function JulimarDentalContent() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [cartOpen, setCartOpen] = useState(false);
   const { addToCart } = useCart();
 
   const filteredProducts = useMemo(() => {
@@ -29,7 +31,7 @@ function JulimarDentalContent() {
 
   return (
     <div className="jd-page">
-      <JulimarDentalNavbar searchTerm={searchTerm} onSearchChange={setSearchTerm} onCartClick={() => {}} />
+      <JulimarDentalNavbar searchTerm={searchTerm} onSearchChange={setSearchTerm} onCartClick={() => setCartOpen(true)} />
       <HeroBanners />
       <StepsSection />
       <CategoryCarousel
@@ -40,6 +42,7 @@ function JulimarDentalContent() {
       <section id="produtos" className="jd-products-section">
         <ProductGrid products={filteredProducts} onAddToCart={addToCart} />
       </section>
+      <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
     </div>
   );
 }
