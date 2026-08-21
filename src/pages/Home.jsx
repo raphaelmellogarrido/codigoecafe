@@ -164,6 +164,14 @@ const projects = [
     image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=900&q=75",
     path: "/remodelacao",
   },
+  {
+    name: "Julimar Dental",
+    description: "Catálogo B2B para fornecedor de materiais odontológicos, com busca, filtro por categoria e orçamento montado automaticamente para o WhatsApp.",
+    tags: ["React", "Context API", "UI/UX"],
+    gradient: "linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%)",
+    image: "https://images.unsplash.com/photo-1606811856475-5e6fcdc6e509?auto=format&fit=crop&w=900&q=75",
+    path: "/fornecedor",
+  },
 ];
 
 // Dados dos testemunhos
