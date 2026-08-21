@@ -69,6 +69,9 @@ const StudioTattoo = lazy(() => import("./pages/projects/StudioTattoo/StudioTatt
 // Também fora do prefixo /projetos, a pedido: codigoecafe.com/remodelacao.
 const BragaRemodelacao = lazy(() => import("./pages/projects/BragaRemodelacao/BragaRemodelacao"));
 
+// Também fora do prefixo /projetos, a pedido: codigoecafe.com/fornecedor.
+const JulimarDental = lazy(() => import("./pages/projects/JulimarDental/JulimarDental"));
+
 const Achadinhos = lazy(() => import("./pages/projects/Achadinhos/Achadinhos"));
 const AchadinhosHome = lazy(() => import("./pages/projects/Achadinhos/AchadinhosHome"));
 const AchadinhosProducts = lazy(() => import("./pages/projects/Achadinhos/AchadinhosProducts"));
@@ -257,6 +260,8 @@ export default function App() {
           <Route path="/tattoo" element={<StudioTattoo />} />
 
           <Route path="/remodelacao" element={<BragaRemodelacao />} />
+
+          <Route path="/fornecedor" element={<JulimarDental />} />
 
           <Route path="/achadinhos" element={<Achadinhos />}>
             <Route index element={<AchadinhosHome />} />
