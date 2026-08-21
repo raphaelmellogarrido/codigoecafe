@@ -2,6 +2,7 @@
 // Painel lateral do orçamento: lista de itens, controlo de quantidade,
 // remover, total geral e botão para enviar o orçamento pelo WhatsApp.
 
+import { useEffect } from 'react';
 import { HiOutlineMinus, HiOutlinePlus, HiOutlineTrash, HiX } from 'react-icons/hi';
 import { FaWhatsapp } from 'react-icons/fa6';
 import { useCart } from './CartContext.jsx';
@@ -10,6 +11,22 @@ import { formatBRL } from './format.js';
 
 export default function CartDrawer({ open, onClose }) {
   const { items, cartTotal, updateQuantity, removeItem } = useCart();
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [open, onClose]);
 
   return (
     <>
