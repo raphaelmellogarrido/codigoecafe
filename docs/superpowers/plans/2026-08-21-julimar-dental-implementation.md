@@ -1334,10 +1334,10 @@ export default function WhatsappFloatButton() {
 - [ ] **Step 3: Render both from `JulimarDental.jsx`**
 
 Add the imports and render `<JulimarDentalFooter />` and
-`<WhatsappFloatButton />` right after the `<CartDrawer ... />` line (both are
-`fixed`/flow-independent, so exact order relative to the drawer doesn't
-affect layout — footer goes right before the drawer in document order so it
-still reads top-to-bottom naturally):
+`<WhatsappFloatButton />` right **before** the `<CartDrawer ... />` line
+(both are `fixed`/flow-independent, so exact order relative to the drawer
+doesn't affect layout — footer goes right before the drawer in document
+order so it still reads top-to-bottom naturally):
 
 ```jsx
       <JulimarDentalFooter />
