@@ -23,7 +23,7 @@ export default function OrdersPage() {
   if (!user) {
     return (
       <div className="ep-empty">
-        <p>Precisas de iniciar sessão para ver os teus pedidos.</p>
+        <p>Precisas de iniciar sessão para ver os seus pedidos.</p>
         <Link to="/ecommerce-platform/entrar" className="ep-primary-button">
           Entrar ou criar conta
         </Link>

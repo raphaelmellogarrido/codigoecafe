@@ -43,7 +43,7 @@ export default function CheckoutPage() {
   if (items.length === 0) {
     return (
       <div className="ep-empty">
-        <p>O teu carrinho está vazio.</p>
+        <p>O seu carrinho está vazio.</p>
         <Link to="/ecommerce-platform" className="ep-primary-button">
           Ver produtos
         </Link>

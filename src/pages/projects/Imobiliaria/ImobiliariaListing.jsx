@@ -144,7 +144,7 @@ export default function ImobiliariaListing() {
 
       <section className="im-listing-header">
         <span className="im-section-label">Catálogo</span>
-        <h1>Encontra o teu próximo imóvel</h1>
+        <h1>Encontra o seu próximo imóvel</h1>
         <p>{loading ? "A carregar imóveis..." : `${filtered.length} imóvel${filtered.length === 1 ? "" : "is"} encontrado${filtered.length === 1 ? "" : "s"}`}</p>
       </section>
 

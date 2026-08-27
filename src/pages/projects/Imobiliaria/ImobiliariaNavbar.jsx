@@ -41,7 +41,7 @@ export default function ImobiliariaNavbar() {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }
 
-  // "Sobre" e "Contacto" são secções só da Home. Se já estivermos lá, rola
+  // "Sobre" e "Contato" são secções só da Home. Se já estivermos lá, rola
   // suavemente até à secção; se estivermos noutra página (Imóveis, detalhe
   // de um imóvel), navega para a Home e passa o alvo via state — a Home lê
   // esse state e rola até lá assim que montar (mesmo padrão do "/projetos"
@@ -72,7 +72,7 @@ export default function ImobiliariaNavbar() {
             Sobre
           </Link>
           <Link to="/imobiliaria" state={{ scrollTo: 'contacto' }} onClick={(e) => handleSectionClick(e, 'contacto')}>
-            Contacto
+            Contato
           </Link>
           <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="im-nav-whatsapp">
             <FaWhatsapp /> Contacte-nos

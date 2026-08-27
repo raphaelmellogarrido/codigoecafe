@@ -240,9 +240,9 @@ export default function ClinicaDentista() {
         <div className="dc-hero-content reveal" ref={heroRef}>
           <span className="dc-eyebrow">Odontologia moderna em Aveiro</span>
           <h1>
-            O cuidado que o teu <span className="dc-highlight">sorriso</span> merece
+            O cuidado que o seu <span className="dc-highlight">sorriso</span> merece
           </h1>
-          <p>Tratamentos completos com tecnologia de ponta, numa clínica pensada para o teu conforto do primeiro ao último minuto.</p>
+          <p>Tratamentos completos com tecnologia de ponta, numa clínica pensada para o seu conforto do primeiro ao último minuto.</p>
           <div className="dc-hero-actions">
             <a href={WHATSAPP_URL} className="dc-cta-button" target="_blank" rel="noopener noreferrer">
               Marcar Consulta
@@ -295,7 +295,7 @@ export default function ClinicaDentista() {
         <div className="dc-section-header reveal" ref={teamHeaderRef}>
           <span className="dc-section-label">A nossa equipe</span>
           <h2>Profissionais em quem podes confiar</h2>
-          <p>Especialistas dedicados a cada área da tua saúde oral.</p>
+          <p>Especialistas dedicados a cada área da sua saúde oral.</p>
         </div>
         <div className="dc-team-grid">
           {team.map((member, i) => (
@@ -308,7 +308,7 @@ export default function ClinicaDentista() {
       <section id="servicos" className="dc-section dc-services-section">
         <div className="dc-section-header reveal" ref={servicesHeaderRef}>
           <span className="dc-section-label">Serviços</span>
-          <h2>Tudo o que o teu sorriso precisa, num só lugar</h2>
+          <h2>Tudo o que o seu sorriso precisa, num só lugar</h2>
           <p>Da prevenção à estética, cuidamos de cada etapa com a mesma atenção.</p>
         </div>
         <div className="dc-services-grid">
@@ -331,19 +331,19 @@ export default function ClinicaDentista() {
         </div>
       </section>
 
-      {/* Contacto */}
+      {/* Contato */}
       <section id="contato" className="dc-section dc-contact-section reveal" ref={contactRef}>
         <div className="dc-contact-grid">
           <div className="dc-contact-form-wrap">
-            <span className="dc-section-label">Contacto</span>
-            <h2>Marca a tua consulta</h2>
+            <span className="dc-section-label">Contato</span>
+            <h2>Marca a sua consulta</h2>
             <p>Preenche o formulário e entraremos em contacto em menos de 24 horas.</p>
 
             <form ref={formRef} className="dc-contact-form" onSubmit={handleFormSubmit}>
               <div className="dc-form-row">
                 <label>
                   Nome
-                  <input type="text" name="nome" placeholder="O teu nome" required />
+                  <input type="text" name="nome" placeholder="O seu nome" required />
                 </label>
                 <label>
                   Email

@@ -44,7 +44,7 @@ export default function AchadinhosLogin() {
 
       <form className="ach-auth-card" onSubmit={handleSubmit}>
         <h1>Área administrativa</h1>
-        <p className="ach-auth-subtitle">Entra com o teu e-mail e senha para gerir os produtos.</p>
+        <p className="ach-auth-subtitle">Entra com o seu e-mail e senha para gerir os produtos.</p>
 
         <label className="ach-field">
           E-mail

@@ -623,6 +623,136 @@
   width: 100%;
 }
 
+/* ===== Calculadora de plano ===== */
+/* Acento próprio deste bloco (verde), separado da paleta lima/laranja da
+   marca — o mesmo padrão usado no simulador do /tattoo, só que com a cor
+   pedida para o /gym. */
+.ak-calc-section {
+  --ak-calc-accent: #10b981;
+  --ak-calc-accent-dark: #0d9668;
+}
+
+.ak-calc-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  padding: 2rem;
+  background: linear-gradient(155deg, var(--ak-bg-card) 0%, rgba(16, 185, 129, 0.08) 100%);
+  border: 1px solid var(--ak-border);
+  border-radius: 20px;
+}
+
+.ak-calc-fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .ak-calc-fields {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.ak-calc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.ak-calc-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ak-calc-accent);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Select nativo com aparência customizada: sem seta do navegador, fundo
+   escuro, seta própria em SVG e destaque verde no foco/hover. */
+.ak-calc-select {
+  appearance: none;
+  width: 100%;
+  padding: 0.85rem 2.75rem 0.85rem 1rem;
+  background-color: var(--ak-bg-soft);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%2310b981' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  border: 1px solid var(--ak-border);
+  border-radius: 10px;
+  color: var(--ak-white);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ak-calc-select:hover {
+  border-color: var(--ak-calc-accent);
+}
+
+.ak-calc-select:focus-visible {
+  outline: none;
+  border-color: var(--ak-calc-accent);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+}
+
+.ak-calc-select option {
+  background: var(--ak-bg-soft);
+  color: var(--ak-white);
+}
+
+.ak-calc-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  align-self: flex-start;
+  padding: 1rem 2rem;
+  background: var(--ak-calc-accent);
+  color: #06231a;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.ak-calc-submit:hover {
+  background: var(--ak-calc-accent-dark);
+  transform: translateY(-2px);
+}
+
+.ak-calc-submit-disabled {
+  background: var(--ak-border);
+  color: var(--ak-muted);
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none;
+}
+
+@media (min-width: 1024px) {
+  .ak-calc-panel {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 1.5rem;
+  }
+
+  .ak-calc-fields {
+    flex: 1;
+  }
+
+  .ak-calc-submit {
+    align-self: flex-end;
+    white-space: nowrap;
+  }
+}
+
 /* ===== Horários ===== */
 .ak-schedule {
   max-width: 760px;

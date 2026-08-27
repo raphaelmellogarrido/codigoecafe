@@ -8,7 +8,7 @@ export default function ImobiliariaFooter() {
     <footer id="contacto" className="im-footer">
       <div className="im-footer-cta">
         <h2>Não encontraste o imóvel ideal?</h2>
-        <p>Fala connosco no WhatsApp — percebemos o que procuras e mostramos-te opções à tua medida.</p>
+        <p>Fala connosco no WhatsApp — percebemos o que procuras e mostramos-te opções à sua medida.</p>
         <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="im-btn-whatsapp">
           <FaWhatsapp /> Falar no WhatsApp
         </a>
@@ -28,7 +28,7 @@ export default function ImobiliariaFooter() {
           <Link to="/imobiliaria" state={{ scrollTo: 'sobre' }}>
             Sobre
           </Link>
-          <a href="#contacto">Contacto</a>
+          <a href="#contacto">Contato</a>
         </div>
 
         <div className="im-footer-socials">

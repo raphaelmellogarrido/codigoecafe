@@ -1,8 +1,8 @@
 // src/components/Portfolio/Portfolio.jsx
-// Grelha de 6 projetos fictícios. Cada projeto tem:
+// Grelha com os 3 cases de automação via WhatsApp. Cada projeto tem:
 //  - Gradient placeholder (cores diferentes)
-//  - Nome, descrição, tags de tech
-//  - Botão "Ver Projeto"
+//  - Nome, descrição, tag de resultado (não técnica)
+//  - Botão "Ver site ao vivo"
 // Hover: overlay escuro com zoom
 
 import { Link } from 'react-router-dom';
@@ -21,9 +21,17 @@ function ProjectCard({ project, index }) {
     >
       <div className="project-image">
         <div className="project-overlay">
-          {project.path ? (
+          {project.path && project.external ? (
+            // Build estático à parte (fora do React Router, ex.: /fornecedor):
+            // precisa de <a> normal para forçar um reload completo da página.
+            // Um <Link> tentaria navegação client-side, não encontraria a rota
+            // e cairia no catch-all de volta para a home.
+            <a href={project.path} className="project-link">
+              Ver site ao vivo <HiArrowRight />
+            </a>
+          ) : project.path ? (
             <Link to={project.path} className="project-link">
-              Ver Projeto <HiArrowRight />
+              Ver site ao vivo <HiArrowRight />
             </Link>
           ) : (
             <span className="project-link project-link-disabled">Em breve</span>
@@ -34,11 +42,7 @@ function ProjectCard({ project, index }) {
         <h3 className="project-name">{project.name}</h3>
         <p className="project-description">{project.description}</p>
         <div className="project-tags">
-          {project.tags.map((tag, i) => (
-            <span key={i} className="project-tag">
-              {tag}
-            </span>
-          ))}
+          <span className="project-tag">{project.tag}</span>
         </div>
       </div>
     </div>
@@ -54,10 +58,10 @@ export default function Portfolio({ projects }) {
         <div ref={headerRef} className="section-header reveal">
           <span className="section-label">Portfólio</span>
           <h2 className="section-title">
-            Projetos em <span className="gradient-text">destaque</span>
+            Não fazemos só sites. Fazemos sites que <span className="gradient-text">atendem por você</span>.
           </h2>
           <p className="section-description">
-            Uma seleção do nosso trabalho recente — cada projeto conta uma história única.
+            3 sites com automação de WhatsApp que economizam horas de atendimento toda semana.
           </p>
         </div>
 

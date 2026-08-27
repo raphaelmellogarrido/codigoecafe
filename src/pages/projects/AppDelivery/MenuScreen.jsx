@@ -44,7 +44,7 @@ export default function MenuScreen() {
 
       {restaurantId && restaurantId !== restaurant.id && (
         <p className="dl-status-warning">
-          O teu carrinho tem itens de outro restaurante — ao adicionar algo aqui, ele será substituído.
+          O seu carrinho tem itens de outro restaurante — ao adicionar algo aqui, ele será substituído.
         </p>
       )}
 

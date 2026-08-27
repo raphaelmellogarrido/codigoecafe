@@ -50,7 +50,7 @@ export default function TrackingScreen() {
   return (
     <div>
       <header className="dl-screen-header">
-        <h1>{stepIndex === 3 ? 'Pedido entregue!' : 'A acompanhar o teu pedido'}</h1>
+        <h1>{stepIndex === 3 ? 'Pedido entregue!' : 'A acompanhar o seu pedido'}</h1>
         <p>{restaurant.name}</p>
       </header>
 

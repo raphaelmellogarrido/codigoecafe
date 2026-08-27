@@ -52,7 +52,7 @@ export default function Contact() {
         setTimeout(() => setSent(false), 4000);
         // Evento padrão da Meta (não um trackCustom): fica elegível pra
         // otimização de campanha por conversão e pra Custom Audiences de leads.
-        ReactPixel.track("Lead", { content_name: "Formulário de Contacto" });
+        ReactPixel.track("Lead", { content_name: "Formulário de Contato" });
       } else {
         setError(true);
       }
@@ -68,11 +68,11 @@ export default function Contact() {
     <section id="contact" className="contact section">
       <div className="container">
         <div className="section-header">
-          <span className="section-label">Contacto</span>
+          <span className="section-label">Contato</span>
           <h2 className="section-title">
             Vamos criar algo <span className="gradient-text">incrível</span> juntos?
           </h2>
-          <p className="section-description">Conta-nos o teu projeto. Respondemos em menos de 24 horas.</p>
+          <p className="section-description">Conta-nos o seu projeto. Respondemos em menos de 24 horas.</p>
         </div>
 
         <div className="contact-grid">
@@ -80,7 +80,7 @@ export default function Contact() {
           <form className="contact-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="name">Nome</label>
-              <input type="text" id="name" name="name" value={form.name} onChange={handleChange} placeholder="O teu nome" required />
+              <input type="text" id="name" name="name" value={form.name} onChange={handleChange} placeholder="O seu nome" required />
             </div>
 
             <div className="form-group">
@@ -95,7 +95,7 @@ export default function Contact() {
 
             <div className="form-group">
               <label htmlFor="message">Mensagem</label>
-              <textarea id="message" name="message" value={form.message} onChange={handleChange} placeholder="Conta-nos mais sobre o teu projeto..." rows="5" required />
+              <textarea id="message" name="message" value={form.message} onChange={handleChange} placeholder="Conta-nos mais sobre o seu projeto..." rows="5" required />
             </div>
 
             <button type="submit" className="btn-primary form-submit" disabled={isSubmitting}>
@@ -119,8 +119,8 @@ export default function Contact() {
 
           {/* Coluna direita — Informações */}
           <div className="contact-info">
-            <h3 className="info-title">Informações de Contacto</h3>
-            <p className="info-description">Estamos disponíveis para responder a todas as tuas questões. Escolhe o canal que preferires.</p>
+            <h3 className="info-title">Informações de Contato</h3>
+            <p className="info-description">Estamos disponíveis para responder a todas as suas questões. Escolhe o canal que preferires.</p>
 
             <div className="info-list">
               <div className="info-item">

@@ -29,7 +29,7 @@ export default function PrivacyPolicy() {
           <h2>1. Quem é o responsável pelo tratamento de dados</h2>
           <p>
             Código e Café, com sede em Aveiro, Portugal, é responsável pela recolha e tratamento dos dados descritos
-            nesta política. Contacto: <a href="mailto:contacto@codigoecafe.com">contacto@codigoecafe.com</a> ·{" "}
+            nesta política. Contato: <a href="mailto:contacto@codigoecafe.com">contacto@codigoecafe.com</a> ·{" "}
             <a href="tel:+351913247176">+351 913 247 176</a>.
           </p>
 
@@ -46,7 +46,7 @@ export default function PrivacyPolicy() {
           </ul>
 
           <h2>3. Cookies e pixels de terceiros</h2>
-          <p>Usamos os seguintes serviços de terceiros, que podem colocar cookies ou identificadores no teu dispositivo:</p>
+          <p>Usamos os seguintes serviços de terceiros, que podem colocar cookies ou identificadores no seu dispositivo:</p>
           <ul>
             <li>
               <strong>Meta Pixel (Facebook/Instagram Ads):</strong> mede visitas e conversões (ex.: envio do
@@ -62,17 +62,17 @@ export default function PrivacyPolicy() {
             </li>
           </ul>
 
-          <h2>4. Para que usamos os teus dados</h2>
+          <h2>4. Para que usamos os seus dados</h2>
           <ul>
             <li>Responder às mensagens enviadas pelo formulário de contacto.</li>
             <li>Medir o desempenho do site e das campanhas de publicidade.</li>
             <li>Melhorar a experiência de navegação e os conteúdos do site.</li>
           </ul>
 
-          <h2>5. Os teus direitos</h2>
+          <h2>5. Os seus direitos</h2>
           <p>
             Ao abrigo do Regulamento Geral de Proteção de Dados (RGPD), tens o direito de aceder, retificar, apagar
-            ou pedir a portabilidade dos teus dados pessoais, bem como te opor ao seu tratamento ou retirar o
+            ou pedir a portabilidade dos seus dados pessoais, bem como te opor ao seu tratamento ou retirar o
             consentimento a qualquer momento. Para exercer qualquer um destes direitos, contacta-nos por{" "}
             <a href="mailto:contacto@codigoecafe.com">contacto@codigoecafe.com</a>. Tens também o direito de
             apresentar reclamação junto da Comissão Nacional de Proteção de Dados (CNPD).
@@ -80,7 +80,7 @@ export default function PrivacyPolicy() {
 
           <h2>6. Partilha de dados</h2>
           <p>
-            Não vendemos os teus dados pessoais. Partilhamos dados de navegação com a Meta (Meta Platforms, Inc.)
+            Não vendemos os seus dados pessoais. Partilhamos dados de navegação com a Meta (Meta Platforms, Inc.)
             estritamente para os fins de medição e publicidade descritos acima, ao abrigo dos seus próprios termos e
             política de privacidade.
           </p>

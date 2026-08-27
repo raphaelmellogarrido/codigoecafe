@@ -48,7 +48,7 @@ export default function ImobiliariaLogin() {
           <FaHouseChimney />
         </span>
         <h1>Área administrativa</h1>
-        <p className="im-auth-subtitle">Entra com o teu e-mail e palavra-passe para gerir os imóveis.</p>
+        <p className="im-auth-subtitle">Entra com o seu e-mail e palavra-passe para gerir os imóveis.</p>
 
         <label className="im-field">
           E-mail

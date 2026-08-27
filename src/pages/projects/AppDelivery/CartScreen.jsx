@@ -14,7 +14,7 @@ export default function CartScreen() {
   if (items.length === 0) {
     return (
       <div className="dl-empty">
-        <p>O teu carrinho está vazio.</p>
+        <p>O seu carrinho está vazio.</p>
         <Link to="/app-delivery" className="dl-primary-button">Ver restaurantes</Link>
       </div>
     );
@@ -28,7 +28,7 @@ export default function CartScreen() {
   return (
     <div>
       <header className="dl-screen-header">
-        <h1>O teu pedido</h1>
+        <h1>O seu pedido</h1>
         <p>{restaurant?.name}</p>
       </header>
 

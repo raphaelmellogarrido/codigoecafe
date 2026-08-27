@@ -40,7 +40,7 @@ const navLinks = [
   { href: "#equipa", label: "Equipa" },
   { href: "#galeria", label: "Galeria" },
   { href: "#depoimentos", label: "Depoimentos" },
-  { href: "#contacto", label: "Contacto" },
+  { href: "#contacto", label: "Contato" },
 ];
 
 // Número de demonstração — mesmo formato/placeholder usado nos outros
@@ -58,7 +58,7 @@ const values = [
   {
     icon: <FaHandHoldingHeart />,
     title: "Cuidado como em casa",
-    description: "Ambiente calmo e equipa paciente, para o teu animal se sentir seguro em cada visita.",
+    description: "Ambiente calmo e equipa paciente, para o seu animal se sentir seguro em cada visita.",
   },
   {
     icon: <FaXRay />,
@@ -76,7 +76,7 @@ const services = [
   {
     icon: <FaStethoscope />,
     title: "Consultas & Check-ups",
-    description: "Avaliação completa da saúde do teu animal, com atenção a cada detalhe.",
+    description: "Avaliação completa da saúde do seu animal, com atenção a cada detalhe.",
   },
   {
     icon: <FaSyringe />,
@@ -291,9 +291,9 @@ export default function Veterinaria() {
         <div className="vt-hero-content reveal" ref={heroRef}>
           <span className="vt-eyebrow">Clínica veterinária em Aveiro</span>
           <h1>
-            Cuidado especializado para quem faz parte da tua <span className="vt-highlight">família</span>
+            Cuidado especializado para quem faz parte da sua <span className="vt-highlight">família</span>
           </h1>
-          <p>Consultas, cirurgias, vacinação e emergências 24h — tudo com uma equipa que trata o teu animal com o mesmo carinho que tu.</p>
+          <p>Consultas, cirurgias, vacinação e emergências 24h — tudo com uma equipa que trata o seu animal com o mesmo carinho que tu.</p>
           <div className="vt-hero-actions">
             <a href={WHATSAPP_URL} className="vt-cta-button" target="_blank" rel="noopener noreferrer">
               <FaWhatsapp /> Agendar Consulta
@@ -358,7 +358,7 @@ export default function Veterinaria() {
       <section id="servicos" className="vt-section vt-services-section">
         <div className="vt-section-header reveal" ref={servicesHeaderRef}>
           <span className="vt-section-label">Serviços</span>
-          <h2>Tudo o que o teu animal precisa, num só lugar</h2>
+          <h2>Tudo o que o seu animal precisa, num só lugar</h2>
           <p>Da prevenção à emergência, cuidamos de cada etapa com a mesma atenção.</p>
         </div>
         <div className="vt-services-grid">
@@ -373,7 +373,7 @@ export default function Veterinaria() {
         <div className="vt-section-header reveal" ref={teamHeaderRef}>
           <span className="vt-section-label">A nossa equipa</span>
           <h2>Veterinários em quem podes confiar</h2>
-          <p>Especialistas dedicados a cada área da saúde do teu animal.</p>
+          <p>Especialistas dedicados a cada área da saúde do seu animal.</p>
         </div>
         <div className="vt-team-grid">
           {team.map((member, i) => (
@@ -409,19 +409,19 @@ export default function Veterinaria() {
         </div>
       </section>
 
-      {/* Contacto */}
+      {/* Contato */}
       <section id="contacto" className="vt-section vt-contact-section reveal" ref={contactRef}>
         <div className="vt-contact-grid">
           <div className="vt-contact-form-wrap">
-            <span className="vt-section-label">Contacto</span>
-            <h2>Marca a consulta do teu animal</h2>
+            <span className="vt-section-label">Contato</span>
+            <h2>Marca a consulta do seu animal</h2>
             <p>Preenche o formulário e entraremos em contacto em menos de 24 horas. Para urgências, usa o WhatsApp.</p>
 
             <form ref={formRef} className="vt-contact-form" onSubmit={handleFormSubmit}>
               <div className="vt-form-row">
                 <label>
                   Nome
-                  <input type="text" name="nome" placeholder="O teu nome" required />
+                  <input type="text" name="nome" placeholder="O seu nome" required />
                 </label>
                 <label>
                   Nome do animal

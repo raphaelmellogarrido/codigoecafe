@@ -32,7 +32,7 @@ export default function ShopPage() {
   return (
     <div>
       <header className="ep-header">
-        <h1>Equipamento para o teu setup</h1>
+        <h1>Equipamento para o seu setup</h1>
         <p>Catálogo servido por uma API Node.js/Express, com dados persistidos em SQLite.</p>
       </header>
 

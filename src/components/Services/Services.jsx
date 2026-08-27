@@ -1,47 +1,24 @@
 // src/components/Services/Services.jsx
-// Grelha de 4 cards com os serviços oferecidos.
-// Cada card tem: ícone gradient, título, descrição e 3 features.
+// Card único de destaque: "Sites que Vendem".
+// Reúne, como benefícios dentro do card, o que antes eram 4 cards separados
+// (Web Sites, Automação, Apps Mobile, Loja Virtual) — foco em negócio local.
 // Hover: card sobe e ganha brilho verde.
-// Animação fadeInUp via useScrollReveal (cada card individualmente).
+// Animação fadeInUp via useScrollReveal.
 
-import { FaCode, FaMobileScreen, FaGaugeHigh, FaBagShopping, FaCheck, FaBolt } from "react-icons/fa6";
+import { FaCode, FaCheck } from "react-icons/fa6";
 import useScrollReveal from "../../hooks/useScrollReveal";
 import "./Services.css";
 
-// Mapa de nomes de ícones para componentes reais
-const iconMap = {
-  FaCode: FaCode,
-  FaMobileScreen: FaMobileScreen,
-  FaBolt: FaBolt,
-  FaGaugeHigh: FaGaugeHigh,
-  FaBagShopping: FaBagShopping,
-};
+const features = [
+  "Botão de WhatsApp fixo que rastreia de onde veio o cliente",
+  "Carrega em menos de 2s no celular e já vem otimizado para Google",
+  "Já configurado para Google Meu Negócio",
+  "Hospedagem, domínio e suporte inclusos por 1 ano",
+];
 
-function ServiceCard({ service, index }) {
-  const ref = useScrollReveal();
-  const IconComponent = iconMap[service.icon] || FaCode;
-
-  return (
-    <div ref={ref} className={`service-card reveal reveal-delay-${index + 1}`}>
-      <div className="service-icon">
-        <IconComponent />
-      </div>
-      <h3 className="service-title">{service.title}</h3>
-      <p className="service-description">{service.description}</p>
-      <ul className="service-features">
-        {service.features.map((feature, i) => (
-          <li key={i}>
-            <FaCheck className="feature-check" />
-            <span>{feature}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-export default function Services({ services }) {
+export default function Services() {
   const headerRef = useScrollReveal();
+  const cardRef = useScrollReveal();
 
   return (
     <section id="services" className="services section">
@@ -51,13 +28,27 @@ export default function Services({ services }) {
           <h2 className="section-title">
             Serviços que <span className="gradient-text">transformam ideias</span>
           </h2>
-          <p className="section-description">Do conceito ao deploy — oferecemos soluções completas para o teu projeto digital.</p>
+          <p className="section-description">Um único foco: site que traz cliente do Google direto pro seu WhatsApp.</p>
         </div>
 
-        <div className="services-grid">
-          {services.map((service, index) => (
-            <ServiceCard key={index} service={service} index={index} />
-          ))}
+        <div className="services-grid services-grid--single">
+          <div ref={cardRef} className="service-card reveal reveal-delay-1">
+            <div className="service-icon">
+              <FaCode />
+            </div>
+            <h3 className="service-title">Sites que Vendem</h3>
+            <p className="service-description">
+              Não é só site bonito. É site feito para vender.
+            </p>
+            <ul className="service-features">
+              {features.map((feature, i) => (
+                <li key={i}>
+                  <FaCheck className="feature-check" />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

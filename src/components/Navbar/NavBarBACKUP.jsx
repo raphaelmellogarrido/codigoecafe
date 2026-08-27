@@ -15,7 +15,7 @@ const links = [
   { href: "#services", label: "Serviços" },
   { href: "#portfolio", label: "Portfólio" },
   { href: "#stats", label: "Sobre" },
-  { href: "#contact", label: "Contacto" },
+  { href: "#contact", label: "Contato" },
 ];
 
 export default function Navbar() {

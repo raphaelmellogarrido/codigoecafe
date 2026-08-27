@@ -1,6 +1,6 @@
 // src/pages/Home.jsx
 // Página inicial: agrupa todas as secções do site numa única rota ("/").
-// Os dados (services, projects, testimonials) ficam aqui como constantes,
+// Os dados (projects) ficam aqui como constantes,
 // para serem facilmente editáveis sem entrar nos componentes.
 
 import { useEffect, useRef } from "react";
@@ -10,189 +10,41 @@ import Hero from "../components/Hero/Hero";
 import Services from "../components/Services/Services";
 import Portfolio from "../components/Portfolio/Portfolio";
 import Stats from "../components/Stats/Stats";
-import Testimonials from "../components/Testimonials/Testimonials";
+import HowItWorks from "../components/HowItWorks/HowItWorks";
 import Contact from "../components/Contact/Contact";
 import Footer from "../components/Footer/Footer";
 
-// Dados dos serviços
-const services = [
-  {
-    icon: "FaCode",
-    title: "Web Sites",
-    description: "Sites e aplicações web modernas, de alta performance e totalmente responsivas.",
-    features: ["React, Next.js e Headless CMS", "Sites Institucionais & Blogs", "Alta Performance e SEO Técnico"],
-  },
-  {
-    icon: "FaBolt",
-    title: "Automação",
-    description: "Conexão e automação de fluxos de trabalho para eliminar tarefas manuais e escalar a operação.",
-    features: ["Relatórios Automáticos e Métricas", "Fluxos de Trabalho Inteligentes", "Otimização de Processos Internos"],
-  },
-  {
-    icon: "FaMobileScreen",
-    title: "Apps Mobile",
-    description: "Aplicações para iOS e Android intuitivas, rápidas e otimizadas para a melhor experiência.",
-    features: ["Desenvolvidas em React Native", "Design Intuitivo e Foco no Utilizador", "Integração de APIs e Notificações"],
-  },
-  {
-    icon: "FaBagShopping",
-    title: "Loja Virtual",
-    description: "Plataformas e-commerce completas, seguras e otimizadas para converter visitantes em clientes.",
-    features: ["Pagamentos Seguros e Checkout Rapid", "Gestão Simples de Stock e Pedidos", "Estrutura Otimizada para Conversão"],
-  },
-];
-
 // Dados dos projetos do portfólio
 const projects = [
-  // {
-  //   name: "Dashboard Analytics",
-  //   description: "Painel administrativo com gráficos em tempo real e relatórios personalizáveis.",
-  //   tags: ["React", "D3.js", "Node.js"],
-  //   gradient: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
-  //   image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=75",
-  //   path: "/dashboard-analytics",
-  // },
-  // {
-  //   name: "E-commerce Platform",
-  //   description: "Loja online completa com pagamentos, gestão de stock e área de cliente.",
-  //   tags: ["React", "Node.js", "SQLite"],
-  //   gradient: "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)",
-  //   image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=900&q=75",
-  //   path: "/ecommerce-platform",
-  // },
-  // {
-  //   name: "App de Delivery",
-  //   description: "Aplicação de entregas em tempo real com tracking e pagamentos.",
-  //   tags: ["React", "React Router", "Leaflet"],
-  //   gradient: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
-  //   image: "https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?auto=format&fit=crop&w=900&q=75",
-  //   path: "/app-delivery",
-  // },
-  // {
-  //   name: "Sistema de Gestão",
-  //   description: "ERP personalizado para automatizar processos internos da empresa.",
-  //   tags: ["React", "Node.js", "SQLite"],
-  //   gradient: "linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)",
-  //   image: "https://images.unsplash.com/photo-1758876202468-5ffe0ee61f07?auto=format&fit=crop&w=900&q=75",
-  //   path: "/sistema-gestao",
-  // },
   {
-    name: "Pizzaria Mello's",
-    description: "Cardápio de pizzaria com pedidos direto pelo WhatsApp — meio a meio visual, carrinho completo e cardápio por abas (salgadas, doces e bebidas).",
-    tags: ["React", "Context API", "UI/UX"],
-    gradient: "linear-gradient(135deg, #c1440e 0%, #9c3609 100%)",
-    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=75",
-    path: "/pizzaria",
-  },
-  {
-    name: "Landing Page SaaS",
-    description: "Landing page de alta conversão para startup de tecnologia.",
-    tags: ["React", "Tailwind", "Framer Motion"],
-    gradient: "linear-gradient(135deg, #ec4899 0%, #be185d 100%)",
-    image: "https://images.unsplash.com/photo-1768293336571-c48f8765a82d?auto=format&fit=crop&w=900&q=75",
-    path: "/landing-page-saas",
-  },
-  {
-    name: "Portfolio Criativo",
-    description: "Site portfolio interativo com animações 3D e efeitos visuais.",
-    tags: ["Three.js", "GSAP", "React"],
-    gradient: "linear-gradient(135deg, #06b6d4 0%, #0e7490 100%)",
-    image: "https://images.unsplash.com/photo-1768729797971-472ce92e7a71?auto=format&fit=crop&w=900&q=75",
-    path: "/portfolio-criativo",
-  },
-  {
-    name: "Clínica Odontológica",
-    description: "Landing page moderna para clínica dentária, pronta para clientes reais.",
-    tags: ["React", "CSS", "UI/UX"],
-    gradient: "linear-gradient(135deg, #0d9488 0%, #0f766e 100%)",
-    image: "https://images.unsplash.com/photo-1662837625421-5fd8ed6131a0?auto=format&fit=crop&w=900&q=75",
-    path: "/clinica-dentista",
-  },
-  {
-    name: "Achadinhos",
-    description: "Catálogo de produtos com painel administrativo para afiliados — cadastro de fotos, preços e links, pronto para redes sociais.",
-    tags: ["React", "Firebase", "Cloudflare R2"],
-    gradient: "linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)",
-    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=75",
-    path: "/achadinhos",
-  },
-  {
-    name: "Clínica Veterinária",
-    description: "Landing page elegante para clínica veterinária, com galeria, equipa e contacto direto por WhatsApp.",
-    tags: ["React", "CSS", "UI/UX"],
-    gradient: "linear-gradient(135deg, #2f6f52 0%, #234f3b 100%)",
-    image: "https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=900&q=75",
-    path: "/veterinaria",
-  },
-  {
-    name: "Imobiliária Domus",
-    description: "Site de imobiliária com painel administrativo — catálogo de imóveis com galeria de fotos, filtros por cidade/distância/preço e contacto direto por WhatsApp.",
-    tags: ["React", "Firebase", "Leaflet"],
-    gradient: "linear-gradient(135deg, #a9832f 0%, #1c1a17 100%)",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=75",
-    path: "/imobiliaria",
-  },
-  {
-    name: "Apex Kinetic Club",
-    description: "Landing page de alta conversão para um clube de fitness, com grelha bento, planos e horários interativos.",
-    tags: ["React", "CSS", "UI/UX"],
-    gradient: "linear-gradient(135deg, #ccff00 0%, #7a9900 100%)",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=75",
-    path: "/gym",
-  },
-  {
-    name: "Faz Tudo",
-    description: "Site de portfólio para prestador de serviços residenciais, com calculadora de orçamento por WhatsApp, galeria interativa de antes/depois e mapa de área de atendimento.",
-    tags: ["React", "Leaflet", "UI/UX"],
-    gradient: "linear-gradient(135deg, #ff7a1a 0%, #1c1611 100%)",
-    image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=900&q=75",
-    path: "/faz-tudo",
-  },
-  {
-    name: "Studio Tattoo",
-    description: "Site de portfólio para estúdio de tatuagem, com galeria filtrável por estilo, perfis dos tatuadores e agendamento direto pelo WhatsApp.",
-    tags: ["React", "UI/UX"],
+    name: "Studio Tattoo — Orçamento Automático",
+    description:
+      'O estúdio perdia 2h por dia respondendo "quanto custa?". Criamos uma calculadora onde o cliente escolhe o local (pescoço, mão, braço, peito, costas, pernas, pé), o tamanho e o estilo — e a mensagem já chega pronta no WhatsApp do tatuador certo: "Olá, quero orçamento de tatuagem na mão 10-15cm estilo oriental". Resultado: orçamento 70% mais rápido.',
+    tag: "Automação de WhatsApp",
     gradient: "linear-gradient(135deg, #d92626 0%, #18181c 100%)",
     image: "https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?auto=format&fit=crop&w=900&q=75",
     path: "/tattoo",
   },
   {
-    name: "BragaRenova",
-    description: "Site de portfólio para empresa de remodelações em Braga, com formulário de orçamento via WhatsApp, comparador de antes/depois e portfólio de projetos.",
-    tags: ["React", "UI/UX"],
-    gradient: "linear-gradient(135deg, #c2a572 0%, #211f1c 100%)",
-    image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=900&q=75",
-    path: "/remodelacao",
-  },
-  {
-    name: "Julimar Dental",
-    description: "Catálogo B2B para fornecedor de materiais odontológicos, com busca, filtro por categoria e orçamento montado automaticamente para o WhatsApp.",
-    tags: ["React", "Context API", "UI/UX"],
+    name: "Fornecedor — Pedido Completo no WhatsApp",
+    description:
+      'O fornecedor B2B perdia pedidos por telefone. Criamos um e-orçamento onde a clínica monta o kit (luvas, resinas, cimentos), vê o total e envia a lista completa pelo WhatsApp em 1 clique: "Olá, gostaria de fazer um pedido! ITENS: 1x Luva Nitrílica G... Total: R$52,00". Resultado: ticket médio maior e resposta em 10 minutos.',
+    tag: "Loja que vende no Zap",
     gradient: "linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%)",
     image: "https://images.unsplash.com/photo-1606811856475-5e6fcdc6e509?auto=format&fit=crop&w=900&q=75",
     path: "/fornecedor",
-  },
-];
-
-// Dados dos testemunhos
-const testimonials = [
-  {
-    text: "Precisávamos de renovar a nossa presença online e de uma página que realmente passasse confiança aos pacientes que nos procuram em Aveiro. O trabalho foi super ágil, prático e o resultado ficou impecável e muito fácil de usar no telemóvel.",
-    name: "Dra. Sofia Matos",
-    role: "Diretor Clínico, Clínica Médica Glicínias",
-    initials: "SM",
+    // Build estático à parte (public/fornecedor), fora do React Router —
+    // precisa de <a> normal (reload completo), não do <Link> do SPA.
+    external: true,
   },
   {
-    text: "O maior problema era o nosso site antigo que vivia a dar problemas e nunca funcionava bem. Ficamos com uma página limpa, profissional e muito rápida. O atendimento foi direto ao ponto e sem complicações técnicas desnecessárias.",
-    name: "Miguel Henriques",
-    role: "Gerente, Henriques & Filhos, Lda",
-    initials: "MH",
-  },
-  {
-    text: "Excelente profissional. Entendeu exatamente o que precisávamos para destacar os nossos serviços na internet sem aquela lenga-lenga de agência grande. Comunicação 100% transparente e entrega rápida. Recomendo vivamente.",
-    name: "Beatriz Pinho",
-    role: "Responsável de Marketing, Centro de Estética Ílhavo",
-    initials: "BP",
+    name: "Academia Apex — Matrícula pelo WhatsApp",
+    description:
+      'Academia perdia lead porque a pessoa tinha que ir até lá para saber preço de plano. Criamos seletor onde aluno escolhe modalidade (Musculação, Cross, HIIT), horário (manhã, tarde, noite) e frequência (2x, 3x, 5x). A mensagem já chega pronta no WhatsApp da recepção: "Olá! Quero orçamento de Cross 5x à noite". Resultado: recepção responde com preço fechado e agenda aula experimental no mesmo minuto.',
+    tag: "Matrícula pelo WhatsApp",
+    gradient: "linear-gradient(135deg, #ccff00 0%, #7a9900 100%)",
+    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=75",
+    path: "/gym",
   },
 ];
 
@@ -219,10 +71,10 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <Services services={services} />
+        <Services />
         <Portfolio projects={projects} />
         <Stats />
-        <Testimonials testimonials={testimonials} />
+        <HowItWorks />
         <Contact />
       </main>
       <Footer />

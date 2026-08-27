@@ -7,24 +7,23 @@
 //  - Mesh gradient animado no fundo (via CSS)
 
 import { FaReact, FaNodeJs, FaJs, FaCode, FaHtml5, FaCss3Alt } from "react-icons/fa";
-import { HiArrowRight, HiPlay } from "react-icons/hi";
+import { HiArrowRight, HiPlay, HiCheck } from "react-icons/hi";
 import useScrollReveal from "../../hooks/useScrollReveal";
 import "./Hero.css";
+
+const BENEFITS = [
+  "Botão de WhatsApp sempre visível",
+  "Otimizado para aparecer no Google",
+  "Design profissional que passa confiança",
+];
 
 export default function Hero() {
   // Um ref por elemento — sem isto, a classe "reveal" nunca recebe o
   // "visible" que o CSS precisa para tirar o opacity:0 (ver useScrollReveal.js).
-  const labelRef = useScrollReveal();
   const titleRef = useScrollReveal();
   const subtitleRef = useScrollReveal();
-  const descriptionRef = useScrollReveal();
   const buttonsRef = useScrollReveal();
-
-  // Scroll suave para a secção de contacto
-  const scrollToContact = (e) => {
-    e.preventDefault();
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-  };
+  const benefitsRef = useScrollReveal();
 
   const scrollToPortfolio = (e) => {
     e.preventDefault();
@@ -40,35 +39,32 @@ export default function Hero() {
       </div>
 
       <div className="container hero-content">
-        <span ref={labelRef} className="section-label reveal">
-          ⚡ Full Stack Studio
-        </span>
-
         <h1 ref={titleRef} className="hero-title reveal reveal-delay-1">
-          <span className="gradient-text">Código e Café</span>
+          Mais <span className="gradient-text">clientes pelo WhatsApp</span> em 7 dias
         </h1>
 
         <h2 ref={subtitleRef} className="hero-subtitle reveal reveal-delay-2">
-          Desenvolvimento Full Stack focado em criar experiências digitais incríveis.
+          12 sites no ar: pizzarias, clínicas, imobiliárias e mais.
         </h2>
 
-        <p ref={descriptionRef} className="hero-description reveal reveal-delay-3">
-          Transformamos ideias e designs em aplicações web modernas, rápidas e totalmente responsivas. Cada linha de código é uma linha de café — feita com paixão e precisão.
-        </p>
-
-        <div ref={buttonsRef} className="hero-buttons reveal reveal-delay-4">
-          {/* <a href="#contact" className="btn-primary" onClick={scrollToContact}>
-            <span>Vamos Conversar?</span>
-            <HiArrowRight />
-          </a> */}
+        <div ref={buttonsRef} className="hero-buttons reveal reveal-delay-3">
           <a href="https://wa.me/+351913247176" className="btn-primary" target="blank">
-            <span>Vamos Conversar?</span>
+            <span>Quero um Orçamento em 24h</span>
             <HiArrowRight />
           </a>
           <a href="#portfolio" className="btn-outline" onClick={scrollToPortfolio}>
-            <HiPlay /> Ver Projetos
+            <HiPlay /> Ver Sites Ao Vivo
           </a>
         </div>
+
+        <ul ref={benefitsRef} className="hero-benefits reveal reveal-delay-4">
+          {BENEFITS.map((benefit) => (
+            <li key={benefit}>
+              <HiCheck />
+              <span>{benefit}</span>
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/* Cards decorativos flutuantes com ícones de tech */}

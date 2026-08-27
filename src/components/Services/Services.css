@@ -15,6 +15,16 @@
   gap: 2rem;
 }
 
+.services-grid--single {
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+.services-grid--single .service-card {
+  max-width: 480px;
+  width: 100%;
+}
+
 .service-card {
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));

@@ -6,7 +6,7 @@
 // Stack: React + CSS puro + IntersectionObserver (useScrollReveal, já usado no site principal).
 // Acessível diretamente em /gym (fora do prefixo /projetos, a pedido).
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { HiArrowLeft, HiMenuAlt3, HiX, HiOutlineLocationMarker, HiOutlinePhone, HiOutlineClock, HiOutlineMail, HiArrowRight } from "react-icons/hi";
 import {
@@ -27,6 +27,7 @@ import {
   FaWhatsapp,
   FaTiktok,
   FaBolt,
+  FaCalendarDays,
 } from "react-icons/fa6";
 import useScrollReveal from "../../../hooks/useScrollReveal";
 import "./ApexKinetic.css";
@@ -35,8 +36,9 @@ const navLinks = [
   { href: "#inicio", label: "Início" },
   { href: "#modalidades", label: "Modalidades" },
   { href: "#planos", label: "Planos" },
+  { href: "#calculadora", label: "Calculadora" },
   { href: "#horarios", label: "Horários" },
-  { href: "#contacto", label: "Contacto" },
+  { href: "#contacto", label: "Contato" },
 ];
 
 // Mesmo número de demonstração usado nos outros projetos do portfólio —
@@ -80,7 +82,7 @@ const modalidades = [
     icon: <FaChalkboardUser />,
     title: "Personal Training",
     tag: "1-a-1 com coach dedicado",
-    description: "Plano 100% individual — objetivo, avaliação e progressão construídos à tua volta, sessão após sessão.",
+    description: "Plano 100% individual — objetivo, avaliação e progressão construídos à sua volta, sessão após sessão.",
   },
   {
     className: "ak-bento-well",
@@ -128,6 +130,18 @@ const plans = [
   },
 ];
 
+// Calculadora de plano ("monte o seu plano") — mesmo padrão do /tattoo:
+// 4 selects simples que montam a mensagem do WhatsApp, sem tabela de preços
+// fixa (o valor final depende de negociação/promoção em curso).
+const calcPlanos = plans.map((p) => p.name);
+const calcModalidades = ["Musculação", "Cross", "HIIT", "Yoga"];
+const calcHorarios = ["Manhã", "Tarde", "Noite"];
+const calcFrequencias = ["2x", "3x", "5x"];
+
+function buildCalcMessage(plano, modalidade, frequencia, horario) {
+  return `Olá! Quero orçamento do plano ${plano} de ${modalidade} ${frequencia} por semana no período da ${horario.toLowerCase()}. Vim pelo site da Apex Kinetic Club.`;
+}
+
 // Padrão comum em boxes/ginásios reais: dias alternados com a mesma grelha
 // de horários (Seg/Qua/Sex vs. Ter/Qui), Sábado só de manhã.
 const mwf = [
@@ -171,7 +185,7 @@ const facilities = [
   { icon: <FaSquareParking />, title: "Estacionamento Gratuito", description: "Lugares reservados para membros, mesmo nas horas de maior movimento." },
   { icon: <FaBagShopping />, title: "Loja & Suplementos", description: "Suplementação, snacks e equipamento de treino, sem sair do clube." },
   { icon: <FaSnowflake />, title: "Zona de Recovery", description: "Banhos de gelo e compressão para acelerar a recuperação muscular." },
-  { icon: <FaWifi />, title: "Wifi de Alta Velocidade", description: "Rede dedicada para trabalhares ou fazeres stream do teu treino." },
+  { icon: <FaWifi />, title: "Wifi de Alta Velocidade", description: "Rede dedicada para trabalhares ou fazeres stream do seu treino." },
   { icon: <FaChild />, title: "Área Kids", description: "Espaço vigiado para os mais pequenos enquanto treinas sem preocupações." },
 ];
 
@@ -275,15 +289,27 @@ export default function ApexKinetic() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeDay, setActiveDay] = useState(0);
+  const [calcPlano, setCalcPlano] = useState("");
+  const [calcModalidade, setCalcModalidade] = useState("");
+  const [calcHorario, setCalcHorario] = useState("");
+  const [calcFrequencia, setCalcFrequencia] = useState("");
   const heroRef = useScrollReveal();
   const heroImageRef = useScrollReveal();
   const statsRef = useScrollReveal();
   const bentoHeaderRef = useScrollReveal();
   const pricingHeaderRef = useScrollReveal();
+  const calcHeaderRef = useScrollReveal();
+  const calcPanelRef = useScrollReveal();
   const scheduleHeaderRef = useScrollReveal();
   const facilitiesHeaderRef = useScrollReveal();
   const testimonialsHeaderRef = useScrollReveal();
   const contactRef = useScrollReveal();
+
+  const calcIsReady = Boolean(calcPlano && calcModalidade && calcHorario && calcFrequencia);
+  const calcWhatsappHref = useMemo(() => {
+    if (!calcIsReady) return undefined;
+    return waLink(buildCalcMessage(calcPlano, calcModalidade, calcFrequencia, calcHorario));
+  }, [calcIsReady, calcPlano, calcModalidade, calcFrequencia, calcHorario]);
 
   useEffect(() => {
     // rAF evita ler window.scrollY em todos os disparos do evento "scroll"
@@ -410,7 +436,7 @@ export default function ApexKinetic() {
         <div className="ak-section-header reveal" ref={bentoHeaderRef}>
           <span className="ak-section-label">Modalidades</span>
           <h2>Quatro formas de treinar, uma só obsessão</h2>
-          <p>Escolhe o teu caminho — ou combina todos, é para isso que o clube existe.</p>
+          <p>Escolhe o seu caminho — ou combina todos, é para isso que o clube existe.</p>
         </div>
         <div className="ak-bento-grid">
           {modalidades.map((item, i) => (
@@ -433,11 +459,114 @@ export default function ApexKinetic() {
         </div>
       </section>
 
+      {/* Calculadora de plano */}
+      <section id="calculadora" className="ak-section ak-calc-section">
+        <div className="ak-section-header reveal" ref={calcHeaderRef}>
+          <span className="ak-section-label">Simulador</span>
+          <h2>Monte seu plano e receba o preço no WhatsApp</h2>
+          <p>Escolha plano, modalidade, horário e frequência para receber estimativa rápida.</p>
+        </div>
+
+        <div className="ak-calc-panel reveal" ref={calcPanelRef}>
+          <div className="ak-calc-fields">
+            <label className="ak-calc-field">
+              <span className="ak-calc-label">
+                <FaStar aria-hidden="true" />
+                Plano
+              </span>
+              <select
+                className="ak-calc-select"
+                value={calcPlano}
+                onChange={(e) => setCalcPlano(e.target.value)}
+              >
+                <option value="">Selecionar</option>
+                {calcPlanos.map((p) => (
+                  <option key={p} value={p}>
+                    {p}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="ak-calc-field">
+              <span className="ak-calc-label">
+                <FaDumbbell aria-hidden="true" />
+                Modalidade
+              </span>
+              <select
+                className="ak-calc-select"
+                value={calcModalidade}
+                onChange={(e) => setCalcModalidade(e.target.value)}
+              >
+                <option value="">Selecionar</option>
+                {calcModalidades.map((m) => (
+                  <option key={m} value={m}>
+                    {m}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="ak-calc-field">
+              <span className="ak-calc-label">
+                <HiOutlineClock aria-hidden="true" />
+                Horário
+              </span>
+              <select
+                className="ak-calc-select"
+                value={calcHorario}
+                onChange={(e) => setCalcHorario(e.target.value)}
+              >
+                <option value="">Selecionar</option>
+                {calcHorarios.map((h) => (
+                  <option key={h} value={h}>
+                    {h}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="ak-calc-field">
+              <span className="ak-calc-label">
+                <FaCalendarDays aria-hidden="true" />
+                Frequência
+              </span>
+              <select
+                className="ak-calc-select"
+                value={calcFrequencia}
+                onChange={(e) => setCalcFrequencia(e.target.value)}
+              >
+                <option value="">Selecionar</option>
+                {calcFrequencias.map((f) => (
+                  <option key={f} value={f}>
+                    {f}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+
+          <a
+            href={calcWhatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`ak-calc-submit${calcIsReady ? "" : " ak-calc-submit-disabled"}`}
+            aria-disabled={!calcIsReady}
+            onClick={(e) => {
+              if (!calcIsReady) e.preventDefault();
+            }}
+          >
+            <FaWhatsapp aria-hidden="true" />
+            Pedir Orçamento
+          </a>
+        </div>
+      </section>
+
       {/* Horários */}
       <section id="horarios" className="ak-section">
         <div className="ak-section-header reveal" ref={scheduleHeaderRef}>
           <span className="ak-section-label">Horários</span>
-          <h2>Encontra o teu treino em qualquer dia</h2>
+          <h2>Encontra o seu treino em qualquer dia</h2>
           <p>Musculação livre está sempre aberta. As turmas seguem esta grelha semanal.</p>
         </div>
 
@@ -492,13 +621,13 @@ export default function ApexKinetic() {
         </div>
       </section>
 
-      {/* Contacto / Localização */}
+      {/* Contato / Localização */}
       <section id="contacto" className="ak-section ak-contact-section reveal" ref={contactRef}>
         <div className="ak-contact-grid">
           <div className="ak-contact-main">
-            <span className="ak-section-label">Contacto</span>
-            <h2>A tua primeira aula é por nossa conta</h2>
-            <p>Manda-nos uma mensagem no WhatsApp e marcamos a tua aula experimental para esta semana — sem compromisso.</p>
+            <span className="ak-section-label">Contato</span>
+            <h2>A sua primeira aula é por nossa conta</h2>
+            <p>Manda-nos uma mensagem no WhatsApp e marcamos a sua aula experimental para esta semana — sem compromisso.</p>
             <a href={WHATSAPP_URL} className="ak-cta-button ak-contact-whatsapp" target="_blank" rel="noopener noreferrer">
               <FaWhatsapp /> Falar no WhatsApp
             </a>
@@ -557,7 +686,7 @@ export default function ApexKinetic() {
               <FaBolt className="ak-logo-icon" />
               APEX <span className="ak-logo-accent">KINETIC</span>
             </a>
-            <p>Treino sério, comunidade real. O teu clube de performance em Aveiro.</p>
+            <p>Treino sério, comunidade real. O seu clube de performance em Aveiro.</p>
           </div>
           <div className="ak-footer-links">
             {navLinks.map((link) => (

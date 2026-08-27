@@ -11,7 +11,7 @@ export default function CartPage() {
   if (items.length === 0) {
     return (
       <div className="ep-empty">
-        <p>O teu carrinho está vazio.</p>
+        <p>O seu carrinho está vazio.</p>
         <Link to="/ecommerce-platform" className="ep-primary-button">
           Ver produtos
         </Link>
@@ -22,7 +22,7 @@ export default function CartPage() {
   return (
     <div>
       <header className="ep-header">
-        <h1>O teu carrinho</h1>
+        <h1>O seu carrinho</h1>
       </header>
 
       <div className="ep-cart-list">

@@ -11,6 +11,9 @@
 }
 
 .project-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
@@ -89,6 +92,9 @@
 }
 
 .project-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   padding: 1.5rem;
 }
 
@@ -110,6 +116,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  margin-top: auto;
 }
 
 .project-tag {

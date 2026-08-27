@@ -12,7 +12,7 @@ const links = [
   { href: "#services", label: "Serviços" },
   { href: "#portfolio", label: "Portfólio" },
   { href: "#stats", label: "Sobre" },
-  { href: "#contact", label: "Contacto" },
+  { href: "#contact", label: "Contato" },
 ];
 
 const WHATSAPP_URL = "https://wa.me/351913247176";

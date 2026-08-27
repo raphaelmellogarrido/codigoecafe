@@ -17,7 +17,7 @@ const features = [
   {
     icon: <FaChartLine />,
     title: 'Métricas em tempo real',
-    description: 'Dashboards que mostram exatamente onde o teu tempo está a ser gasto.',
+    description: 'Dashboards que mostram exatamente onde o seu tempo está a ser gasto.',
   },
   {
     icon: <FaShieldAlt />,
@@ -92,7 +92,7 @@ export default function LandingPageSaaS() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight"
         >
-          Automatiza o teu fluxo de trabalho <span className="text-emerald-400">sem escrever código</span>
+          Automatiza o seu fluxo de trabalho <span className="text-emerald-400">sem escrever código</span>
         </motion.h1>
 
         <motion.p
@@ -102,8 +102,8 @@ export default function LandingPageSaaS() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mt-6 text-lg text-slate-400 max-w-2xl mx-auto"
         >
-          A Flowly conecta as tuas ferramentas favoritas e automatiza tarefas repetitivas em minutos,
-          para a tua equipa focar no que realmente importa.
+          A Flowly conecta as suas ferramentas favoritas e automatiza tarefas repetitivas em minutos,
+          para a sua equipa focar no que realmente importa.
         </motion.p>
 
         <motion.div
@@ -150,7 +150,7 @@ export default function LandingPageSaaS() {
           className="text-center mb-14"
         >
           <h2 className="text-3xl font-bold">Planos simples e transparentes</h2>
-          <p className="text-slate-400 mt-3">Escolhe o plano ideal para a tua equipa. Cancela quando quiseres.</p>
+          <p className="text-slate-400 mt-3">Escolhe o plano ideal para a sua equipa. Cancela quando quiseres.</p>
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -202,7 +202,7 @@ export default function LandingPageSaaS() {
           transition={{ duration: 0.5 }}
           className="bg-slate-900 border border-slate-800 rounded-2xl p-12"
         >
-          <h2 className="text-3xl font-bold">Pronto para automatizar o teu trabalho?</h2>
+          <h2 className="text-3xl font-bold">Pronto para automatizar o seu trabalho?</h2>
           <p className="text-slate-400 mt-3">Junta-te a milhares de equipas que já poupam horas todas as semanas.</p>
           <button className="mt-8 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold px-8 py-3 rounded-lg transition-colors">
             Criar conta gratuita

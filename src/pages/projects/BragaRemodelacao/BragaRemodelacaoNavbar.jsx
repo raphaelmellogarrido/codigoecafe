@@ -15,7 +15,7 @@ const NAV_LINKS = [
   { href: '#sobre', label: 'Sobre' },
   { href: '#servicos', label: 'Serviços' },
   { href: '#projetos', label: 'Projetos' },
-  { href: '#orcamento', label: 'Contacto' },
+  { href: '#orcamento', label: 'Contato' },
 ];
 
 export default function BragaRemodelacaoNavbar() {

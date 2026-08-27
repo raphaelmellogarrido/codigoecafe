@@ -32,7 +32,7 @@ export default function CookieConsent() {
       <div className="cookie-consent-content">
         <FaCookieBite className="cookie-consent-icon" aria-hidden="true" />
         <p>
-          Usamos cookies e o Meta Pixel para melhorar a tua experiência e medir o desempenho das nossas campanhas.
+          Usamos cookies e o Meta Pixel para melhorar a sua experiência e medir o desempenho das nossas campanhas.
           Ao continuar a navegar, aceitas isto. Consulta a nossa{" "}
           <Link to="/politica-de-privacidade" onClick={dismiss}>
             Política de Privacidade

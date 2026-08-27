@@ -41,7 +41,7 @@ const values = [
   {
     icon: <HiOutlineAcademicCap />,
     title: 'Avaliação especializada',
-    description: 'Avaliamos o teu imóvel com dados reais de mercado, para um preço justo e competitivo.',
+    description: 'Avaliamos o seu imóvel com dados reais de mercado, para um preço justo e competitivo.',
   },
   {
     icon: <HiOutlineChatAlt2 />,
@@ -59,7 +59,7 @@ const steps = [
   {
     icon: <HiOutlineChatAlt2 />,
     title: 'Fala connosco',
-    description: 'Contacta-nos por WhatsApp e agendamos uma visita ao teu horário.',
+    description: 'Contacta-nos por WhatsApp e agendamos uma visita ao seu horário.',
   },
   {
     icon: <HiOutlineClipboardCheck />,
@@ -160,7 +160,7 @@ export default function ImobiliariaHome() {
     return (favoritos.length > 0 ? favoritos : properties).slice(0, 6);
   }, [properties]);
 
-  // Suporte ao "Sobre"/"Contacto" do menu quando vêm de outra página (ver
+  // Suporte ao "Sobre"/"Contato" do menu quando vêm de outra página (ver
   // ImobiliariaNavbar) — rola até à secção pedida assim que a Home montar.
   useEffect(() => {
     if (location.state?.scrollTo && !hasScrolledRef.current) {

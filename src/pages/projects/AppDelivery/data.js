@@ -2,7 +2,7 @@
 // Dados fictícios do app de delivery. Coordenadas em Aveiro, Portugal
 // (mesma cidade usada no rodapé de contacto do site principal).
 
-export const DESTINATION = { lat: 40.6443, lng: -8.6455, label: 'A tua morada' };
+export const DESTINATION = { lat: 40.6443, lng: -8.6455, label: 'A sua morada' };
 
 export const restaurants = [
   {

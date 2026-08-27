@@ -29,7 +29,7 @@ export default function BragaRemodelacaoFooter() {
             <li><a href="#sobre" onClick={(event) => scrollToSection(event, 'sobre')}>Sobre Nós</a></li>
             <li><a href="#servicos" onClick={(event) => scrollToSection(event, 'servicos')}>Serviços</a></li>
             <li><a href="#projetos" onClick={(event) => scrollToSection(event, 'projetos')}>Projetos</a></li>
-            <li><a href="#orcamento" onClick={(event) => scrollToSection(event, 'orcamento')}>Contactos</a></li>
+            <li><a href="#orcamento" onClick={(event) => scrollToSection(event, 'orcamento')}>Contatos</a></li>
           </ul>
         </div>
 
@@ -43,7 +43,7 @@ export default function BragaRemodelacaoFooter() {
         </div>
 
         <div className="brm-footer-col">
-          <h3 className="brm-footer-heading">Contacto</h3>
+          <h3 className="brm-footer-heading">Contato</h3>
           <p className="brm-footer-text">Braga, Portugal</p>
           <div className="brm-footer-social">
             <a href={SOCIAL_LINKS.facebook} aria-label="Facebook" className="brm-footer-social-icon">

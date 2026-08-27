@@ -4,13 +4,14 @@
 // Usa useRef + useEffect + requestAnimationFrame + IntersectionObserver.
 
 import { useEffect, useRef, useState } from "react";
+import useScrollReveal from "../../hooks/useScrollReveal";
 import "./Stats.css";
 
 const stats = [
-  { value: 9, suffix: "", label: "Projetos Entregues" },
-  { value: 9, suffix: "", label: "Clientes Satisfeitos" },
-  { value: 10, suffix: "+", label: "Anos de Experiência" },
-  { value: 100, suffix: "%", label: "Satisfação" },
+  { value: 7, suffix: " dias", label: "Entrega Rápida" },
+  { value: 100, suffix: "%", label: "Foco no WhatsApp" },
+  { value: 3, suffix: "x", label: "Mais Rápido que Agência" },
+  { text: "Suporte", label: "30 Dias Incluso" },
 ];
 
 function Counter({ end, suffix }) {
@@ -59,14 +60,20 @@ function Counter({ end, suffix }) {
 }
 
 export default function Stats() {
+  const headerRef = useScrollReveal();
+
   return (
     <section id="stats" className="stats section">
       <div className="container">
+        <div ref={headerRef} className="section-header reveal">
+          <h2 className="section-title">Por que trabalhar comigo agora?</h2>
+        </div>
+
         <div className="stats-grid">
           {stats.map((stat, i) => (
             <div key={i} className="stat-item">
               <div className="stat-number gradient-text">
-                <Counter end={stat.value} suffix={stat.suffix} />
+                {stat.text ? stat.text : <Counter end={stat.value} suffix={stat.suffix} />}
               </div>
               <div className="stat-label">{stat.label}</div>
             </div>
