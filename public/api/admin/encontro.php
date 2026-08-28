@@ -1,8 +1,7 @@
 <?php
 // Leitura/edição do card "Próximo encontro ao vivo" pelo admin
 // (/admin-meditacao, seção "Encontro ao Vivo"). Protegido por
-// X-Admin-Secret — ver ADMIN_SECRET em _conexao.php e o comentário sobre
-// "mesma auth do admin" em config.example.php. Público (sem auth) é
+// X-Admin-Secret — ver ADMIN_SECRET em _conexao.php. Público (sem auth) é
 // public/api/encontro.php.
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');

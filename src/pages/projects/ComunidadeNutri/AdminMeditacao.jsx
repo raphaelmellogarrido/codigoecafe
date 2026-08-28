@@ -509,7 +509,7 @@ function AdminMeditacao() {
   }
 
   async function handleCopiarLinkConvite() {
-    await navigator.clipboard.writeText("https://renatodepaula.com/comunidade");
+    await navigator.clipboard.writeText("https://codigoecafe.com/comunidade-nutri");
     setLinkCopiado(true);
     setTimeout(() => setLinkCopiado(false), 2000);
   }

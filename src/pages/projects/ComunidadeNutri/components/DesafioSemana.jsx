@@ -4,11 +4,12 @@ import confetti from "canvas-confetti";
 import { DESAFIO_SEMANA } from "../data/mockData";
 import { useEmailSessao, chaveUsuario, logSalvandoParaUsuario } from "./usuarioStorage";
 
-// PHP externo análogo ao de aulas.php (fora deste repo) — ainda não existe
-// no servidor, precisa ser criado espelhando o mesmo contrato:
-// GET ?email=... -> { itens: [{ item_id, concluido }] }
+// Contrato: GET ?email=... -> { itens: [{ item_id, concluido }] }
 // POST { email, item_id, concluido } -> marca/desmarca um item.
-const DESAFIO_SEMANA_URL = "https://renatodepaula.com/api/hotmart/desafio-semana.php";
+// Caminho relativo (mesmo domínio do site) — antes apontava hardcoded pro
+// domínio antigo (renatodepaula.com), quebrando o progresso de check no
+// Clube Nutri mesmo com o resto do site já rebrandado.
+const DESAFIO_SEMANA_URL = "/api/hotmart/desafio-semana.php";
 // Conteúdo (título/descrição) dos 3 itens, editável pelo admin em
 // /admin — não confundir com DESAFIO_SEMANA_URL acima, que é só
 // o progresso de CHECK do aluno. Público, sem auth, mesmo padrão de

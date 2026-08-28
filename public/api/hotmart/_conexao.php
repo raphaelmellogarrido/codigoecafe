@@ -1,9 +1,19 @@
 <?php
-// Conexão compartilhada com o MySQL da Hostinger (banco clonado do Clube
-// Presença original, ver config.example.php).
-// Lê credenciais de config.php (arquivo fora do Git, subido manualmente no
-// servidor — ver config.example.php) e cai pra variáveis de ambiente
-// (getenv) se config.php não existir. Nunca hardcoda senha aqui.
+// Conexão compartilhada com o MySQL da Hostinger — banco novo "Clube
+// Nutri" (u826914764_comu_nutri), clonado do banco original do Clube
+// Presença (renatodepaula.com) e já populado.
+//
+// Lê credenciais de private/db_config.php — arquivo FORA da pasta public/
+// (não é servido pela web, nem depende do .htaccess pra ficar protegido) e
+// fora do Git, subido manualmente no servidor um nível ACIMA da
+// public_html (mesma altura da pasta public_html, não dentro dela). Ver
+// private/db_config.example.php na raiz do repo pro formato esperado.
+// Cai pra variáveis de ambiente (getenv) se o arquivo não existir (ex:
+// ambiente local). Nunca hardcoda senha aqui.
+//
+// Substituiu o antigo public/api/hotmart/config.php (ficava dentro de
+// public/, só protegido por .htaccess) — se esse arquivo antigo ainda
+// existir no servidor, ele é ignorado: não é mais lido por este arquivo.
 //
 // Uso: require __DIR__ . '/_conexao.php'; (ou '../_conexao.php' de uma
 // subpasta) e use $mysqli. Este arquivo não é acessível direto via URL
@@ -16,8 +26,11 @@
 // BRT, criando/lendo linha de presença com a data errada.
 date_default_timezone_set('America/Sao_Paulo');
 
-if (file_exists(__DIR__ . '/config.php')) {
-    require __DIR__ . '/config.php';
+// __DIR__ aqui é public/api/hotmart — sobe 3 níveis (hotmart, api, public)
+// pra chegar na raiz do projeto/conta, onde private/db_config.php mora ao
+// lado (não dentro) de public_html.
+if (file_exists(__DIR__ . '/../../../private/db_config.php')) {
+    require __DIR__ . '/../../../private/db_config.php';
 } else {
     if (!defined('DB_HOST')) define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
     if (!defined('DB_USER')) define('DB_USER', getenv('DB_USER') ?: '');
@@ -26,11 +39,12 @@ if (file_exists(__DIR__ . '/config.php')) {
 }
 
 // Chave da área administrativa (ver public/api/admin/encontro.php) — mesmo
-// padrão de fallback getenv() acima, mas FORA do if/else de config.php:
-// precisa valer tanto quando config.php existe (produção normalmente
-// define ADMIN_SECRET lá, junto de DB_*) quanto quando não existe. Se não
-// for configurada em lugar nenhum, fica '' e o endpoint admin recusa tudo
-// (nunca autentica com chave vazia).
+// padrão de fallback getenv() acima, mas FORA do if/else de
+// private/db_config.php: precisa valer tanto quando esse arquivo existe e
+// define ADMIN_SECRET quanto quando não define (o db_config.php atual só
+// tem DB_*/SMTP_*, não tem ADMIN_SECRET — ver aviso no
+// private/db_config.example.php). Se não for configurada em lugar nenhum,
+// fica '' e o endpoint admin recusa tudo (nunca autentica com chave vazia).
 if (!defined('ADMIN_SECRET')) {
     define('ADMIN_SECRET', getenv('ADMIN_SECRET') ?: '');
 }

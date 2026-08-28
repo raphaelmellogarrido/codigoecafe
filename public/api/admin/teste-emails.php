@@ -72,13 +72,14 @@ function revogarAcessoAlunos(mysqli $mysqli, string $email): void
 
 // Convite por e-mail disparado ao adicionar um acesso (front:
 // checkbox "Enviar e-mail de convite automaticamente"). Manda via SMTP
-// autenticado (PHPMailer, comunidade@renatodepaula.com) em vez do mail()
+// autenticado (PHPMailer, comunidade@codigoecafe.com) em vez do mail()
 // nativo — mail() sem autenticação SMTP é o motivo do Gmail mostrar "via
-// srv..." no remetente. Credenciais SMTP ficam em config.php (fora do
-// Git, mesmo padrão de DB_*/ADMIN_SECRET em _conexao.php) — de propósito
-// NÃO usa getenv()/painel da Hostinger aqui: o painel deles tem um bug
-// documentado que injeta um "\" espúrio em senha com caractere especial
-// (ver HANDOFF.md, "Problema 2"), então config.php é a via mais segura.
+// srv..." no remetente. Credenciais SMTP ficam em private/db_config.php
+// (fora do Git e fora de public/, mesmo padrão de DB_* em _conexao.php) —
+// de propósito NÃO usa getenv()/painel da Hostinger aqui: o painel deles
+// tem um bug documentado que injeta um "\" espúrio em senha com caractere
+// especial (ver HANDOFF.md, "Problema 2"), então o arquivo fora do Git é a
+// via mais segura.
 // Best-effort (try/catch sem relançar) — mesmo padrão do resto do
 // projeto: falha de envio não deve derrubar a liberação de acesso, que já
 // foi salva no banco antes desta função ser chamada. O erro real do
@@ -90,38 +91,38 @@ function enviarConviteComunidade(string $email, string $nome, ?string &$erroSaid
     // modo=criar) em vez de /comunidade puro — que caía em
     // /comunidade/login sem modo=criar, mostrando "Entrar" pra quem ainda
     // não tem senha nenhuma.
-    $link = 'https://renatodepaula.com/comunidade/login?modo=criar';
+    $link = 'https://codigoecafe.com/comunidade-nutri/login?modo=criar';
     $saudacaoTexto = $nome !== '' ? "Olá, {$nome}," : 'Olá,';
     $saudacaoHtml = htmlspecialchars($saudacaoTexto, ENT_QUOTES, 'UTF-8');
     $emailHtml = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
 
     $textoPlano = "{$saudacaoTexto}\n\n"
-        . "Você foi convidado para fazer parte da Comunidade Meditação Raiz, do Dr. Renato de Paula.\n\n"
+        . "Você foi convidado para fazer parte do Clube Nutri.\n\n"
         . "Um espaço diário para voltar pra si, com práticas guiadas, encontros ao vivo e uma comunidade que medita junto com você.\n\n"
         . "É só entrar no link abaixo e seguir os passos para começar:\n{$link}\n\n"
         . "Seu acesso foi liberado com o e-mail {$email}. Use ele para entrar.\n\n"
-        . "Nos vemos lá dentro,\nEquipe Dr. Renato de Paula\n";
+        . "Nos vemos lá dentro,\nEquipe Clube Nutri\n";
 
     $html = <<<HTML
 <div style="font-family: Arial, Helvetica, sans-serif; max-width: 480px; margin: 0 auto; color: #222; line-height: 1.5;">
   <p>{$saudacaoHtml}</p>
-  <p>Você foi convidado para fazer parte da <strong>Comunidade Meditação Raiz</strong>, do Dr. Renato de Paula.</p>
+  <p>Você foi convidado para fazer parte do <strong>Clube Nutri</strong>.</p>
   <p>Um espaço diário para voltar pra si, com práticas guiadas, encontros ao vivo e uma comunidade que medita junto com você.</p>
   <p>É só entrar no link abaixo e seguir os passos para começar:</p>
   <p style="text-align:center; margin: 28px 0;">
     <a href="{$link}" style="background:#111; color:#fff; text-decoration:none; padding:14px 28px; border-radius:8px; display:inline-block; font-weight:bold;">Entrar na comunidade</a>
   </p>
   <p>Seu acesso foi liberado com o e-mail <strong>{$emailHtml}</strong>. Use ele para entrar.</p>
-  <p>Nos vemos lá dentro,<br>Equipe Dr. Renato de Paula</p>
+  <p>Nos vemos lá dentro,<br>Equipe Clube Nutri</p>
 </div>
 HTML;
 
-    // SMTP_COMUNIDADE_USER/SENHA definidos em config.php (ver
-    // config.example.php). Sem eles configurados, não dá pra autenticar —
-    // falha limpo (retorna false) em vez de deixar o PHPMailer estourar
-    // exception com a config vazia.
+    // SMTP_COMUNIDADE_USER/SENHA definidos em private/db_config.php (ver
+    // private/db_config.example.php na raiz do repo). Sem eles
+    // configurados, não dá pra autenticar — falha limpo (retorna false) em
+    // vez de deixar o PHPMailer estourar exception com a config vazia.
     if (!defined('SMTP_COMUNIDADE_USER') || !defined('SMTP_COMUNIDADE_SENHA') || SMTP_COMUNIDADE_SENHA === '') {
-        $erroSaida = 'SMTP_COMUNIDADE_USER/SENHA não configurados em config.php';
+        $erroSaida = 'SMTP_COMUNIDADE_USER/SENHA não configurados em private/db_config.php';
         error_log('enviarConviteComunidade: ' . $erroSaida);
         return false;
     }
@@ -137,12 +138,12 @@ HTML;
         $mail->Port = 465;
         $mail->CharSet = 'UTF-8';
 
-        $mail->setFrom(SMTP_COMUNIDADE_USER, 'Comunidade Meditação Raiz');
+        $mail->setFrom(SMTP_COMUNIDADE_USER, 'Clube Nutri');
         $mail->Sender = SMTP_COMUNIDADE_USER; // envelope sender = From, evita SPF softfail
-        $mail->addReplyTo('contato@renatodepaula.com', 'Renato de Paula');
+        $mail->addReplyTo('contato@codigoecafe.com', 'Clube Nutri');
         $mail->addAddress($email, $nome ?: '');
 
-        $mail->Subject = 'Você foi convidado para a Comunidade Meditação Raiz 🧘';
+        $mail->Subject = 'Você foi convidado para o Clube Nutri 🧘';
         $mail->isHTML(true);
         $mail->Body = $html;
         $mail->AltBody = $textoPlano;

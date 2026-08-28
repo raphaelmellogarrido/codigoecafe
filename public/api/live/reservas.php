@@ -9,12 +9,11 @@ header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit;
 
-$mysqli = new mysqli('localhost', 'u790959747_clube_user', 'yB8=~FE1$', 'u790959747_clube');
-if ($mysqli->connect_error) {
-    http_response_code(500);
-    echo json_encode(['erro' => $mysqli->connect_error]);
-    exit;
-}
+// Antes: abria a própria conexão aqui, com a senha do banco ANTIGO
+// (renatodepaula.com) hardcoded em texto puro — vazamento de credencial
+// real de um site diferente, ainda em produção. Corrigido pra usar a
+// mesma conexão compartilhada dos demais endpoints (nunca hardcoda senha).
+require __DIR__ . '/../hotmart/_conexao.php';
 
 $mysqli->query("CREATE TABLE IF NOT EXISTS live_reservas (
   id INT AUTO_INCREMENT PRIMARY KEY,

@@ -5,6 +5,11 @@ dist-ssr
 config.php
 server/data/*.sqlite*
 
+# Conexão real do Clube Nutri (private/db_config.php) — fica fora do Git e
+# fora de public/ mesmo localmente, caso alguém crie uma cópia de teste aqui.
+# Ver private/db_config.example.php pro formato esperado.
+private/db_config.php
+
 # PocketBase (backend do blog) — o binário e os dados locais não vão para o Git,
 # só o schema (blog-server/pb_migrations/) é versionado.
 blog-server/pocketbase.exe
