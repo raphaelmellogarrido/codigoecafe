@@ -5873,9 +5873,10 @@ h3.cm-config-subtitle {
   display: flex;
 }
 
-/* Zona de soltar no final de cada coluna — permite mover um card pra
-   última posição, já que soltar EM CIMA de outro card sempre insere antes
-   dele (ver Dashboard.jsx tratarDrop). Só existe em edit_mode. */
+/* Zona de soltar no final de cada coluna — atalho pra jogar um card pra
+   última posição sem precisar mirar no último card (ver Dashboard.jsx
+   tratarDrop, que documenta a semântica exata do drop em cima de um card).
+   Só existe em edit_mode. */
 .cm-card-editavel-dropzone-fim {
   min-height: 36px;
   border: 2px dashed transparent;

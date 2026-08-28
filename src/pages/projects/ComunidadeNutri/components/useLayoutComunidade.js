@@ -67,15 +67,24 @@ function useLayoutComunidade(editMode) {
       // pra atualizar a tela.
       setCards((atual) => atual.map((c) => (c.card_key === cardKey ? { ...c, ...mudancas } : c)));
       if (!emailSessao) return;
+      // Manda SEMPRE o estado completo do card (coluna/ordem/visivel/
+      // titulo_custom), não só o campo que mudou: quando o card_key ainda
+      // não tem linha em layout_comunidade, layout.php preenche o que
+      // faltar com defaults PRÓPRIOS ('meio'/0) — e aí o primeiro
+      // rename/olho num card da coluna direita gravava ele como meio/0,
+      // jogando o card pra outra coluna pra TODO MUNDO. Os defaults de
+      // verdade moram só aqui no front (registroCards.js), então o front é
+      // que tem que mandá-los junto.
+      const estadoAtual = cards.find((c) => c.card_key === cardKey);
       fetch(LAYOUT_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: emailSessao, card_key: cardKey, ...mudancas }),
+        body: JSON.stringify({ email: emailSessao, ...estadoAtual, card_key: cardKey, ...mudancas }),
       }).catch((err) => {
         console.error("Não foi possível salvar o layout:", err);
       });
     },
-    [emailSessao],
+    [cards, emailSessao],
   );
 
   const moverCard = useCallback(

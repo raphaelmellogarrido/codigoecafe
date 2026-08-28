@@ -66,6 +66,13 @@ function Dashboard() {
   const { cardsPorColuna, salvarCampo, moverCard } = useLayoutComunidade(editMode);
   const [cardArrastado, setCardArrastado] = useState(null);
 
+  // Semântica do drop (verificada, é de propósito): dentro da MESMA coluna,
+  // recalcularOrdem tira o card arrastado da lista antes de reinserir no
+  // índice do alvo, então arrastar pra BAIXO larga o card DEPOIS do alvo e
+  // arrastar pra CIMA larga ANTES dele — que é o que o admin espera ao
+  // soltar um card inteiro em cima de outro. Entre colunas diferentes,
+  // sempre ANTES do alvo. Toda posição é alcançável num arrasto só (a
+  // dropzone do fim da coluna é só um atalho), e nenhum arrasto vira no-op.
   function tratarDrop(coluna, cardKeyAlvo) {
     if (!cardArrastado) return;
     const cardsDaColuna = cardsPorColuna[coluna];

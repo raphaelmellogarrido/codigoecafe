@@ -7,6 +7,11 @@
 // src/pages/projects/ComunidadeNutri/components/useLayoutComunidade.js.
 // Ver docs/superpowers/specs/2026-08-28-layout-comunidade-nutri-design.md.
 header('Content-Type: application/json');
+// no-store como em pulso.php/ranking.php: a Hostinger tem CDN na frente e
+// cacheia GET sem Cache-Control por conta própria. Sem isso, o aluno (e o
+// próprio admin, no F5 depois de salvar) podia continuar recebendo o layout
+// antigo por minutos, parecendo que a edição não salvou.
+header('Cache-Control: no-store');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
