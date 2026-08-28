@@ -5827,3 +5827,71 @@ h3.cm-config-subtitle {
     font-size: 13.5px;
   }
 }
+
+/* ---------------------------------------------------------------------
+   Modo de edição de layout do dashboard (?edit_mode=1) — CardEditavel.jsx,
+   ColunaMeio.jsx, ColunaDireita.jsx, TituloEditavel.jsx. Chrome visual só
+   aparece pro admin com edit_mode ativo (ver Dashboard.jsx); alunos
+   normais nunca carregam essas classes.
+   ------------------------------------------------------------------- */
+.cm-card-editavel {
+  position: relative;
+  border: 2px dashed #9b7fc7;
+  border-radius: 14px;
+  padding-top: 30px;
+  cursor: grab;
+}
+
+.cm-card-editavel:active {
+  cursor: grabbing;
+}
+
+.cm-card-editavel.is-oculto {
+  opacity: 0.45;
+}
+
+.cm-card-editavel-barra {
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cm-card-editavel-grip {
+  color: #9b7fc7;
+}
+
+.cm-card-editavel-olho {
+  background: none;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  color: #9b7fc7;
+  display: flex;
+}
+
+/* Zona de soltar no final de cada coluna — permite mover um card pra
+   última posição, já que soltar EM CIMA de outro card sempre insere antes
+   dele (ver Dashboard.jsx tratarDrop). Só existe em edit_mode. */
+.cm-card-editavel-dropzone-fim {
+  min-height: 36px;
+  border: 2px dashed transparent;
+  border-radius: 14px;
+}
+
+.cm-card-editavel-dropzone-fim:hover {
+  border-color: #9b7fc7;
+}
+
+.cm-titulo-editavel {
+  outline: none;
+  border-radius: 4px;
+}
+
+.cm-titulo-editavel:focus {
+  outline: 2px solid #9b7fc7;
+  outline-offset: 2px;
+}
