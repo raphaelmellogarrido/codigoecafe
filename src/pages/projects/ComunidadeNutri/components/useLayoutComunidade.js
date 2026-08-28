@@ -80,9 +80,13 @@ function useLayoutComunidade(editMode) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: emailSessao, ...estadoAtual, card_key: cardKey, ...mudancas }),
-      }).catch((err) => {
-        console.error("Não foi possível salvar o layout:", err);
-      });
+      })
+        .then((r) => {
+          if (!r.ok) console.error("layout.php recusou o salvamento:", r.status);
+        })
+        .catch((err) => {
+          console.error("Não foi possível salvar o layout:", err);
+        });
     },
     [cards, emailSessao],
   );
