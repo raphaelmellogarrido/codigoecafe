@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import TituloEditavel from "./TituloEditavel";
 
 const PULSO_URL = "/api/comunidade/pulso.php";
 // 3s (era 60s até 26/08) — pedido do cliente pra bater com o mesmo "quase
@@ -26,7 +27,7 @@ const EVENTO_PARTILHA_CRIADA = "comunidadePartilhaCriada";
 // mockado. Mesmo padrão de polling de ColunaEncontros.jsx (verificarLive):
 // fetch imediato no mount + setInterval de 60s, pra bater com o
 // Cache-Control do PHP.
-function MeditandoJunto() {
+function MeditandoJunto({ tituloOverride = null, editavelTitulo = false, onSalvarTitulo = () => {} }) {
   // null = ainda carregando a 1ª vez (ou o fetch falhou) — o card some
   // nesse estado em vez de mostrar zeros que não são reais ainda.
   const [pulso, setPulso] = useState(null);
@@ -91,7 +92,8 @@ function MeditandoJunto() {
   return (
     <div className="cm-widget cm-grid-pulso">
       <h3>
-        <span aria-hidden="true">🧘</span> Meditando junto
+        <span aria-hidden="true">🧘</span>{" "}
+        <TituloEditavel texto={tituloOverride ?? "Meditando junto"} editavel={editavelTitulo} onSalvar={onSalvarTitulo} />
       </h3>
 
       <div className="cm-pulso-linha">

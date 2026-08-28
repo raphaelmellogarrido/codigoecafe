@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { ARQUIVOS_OCULTOS_AULAS_RAIZ, TITULOS_AULAS_RAIZ } from "../titulosAulasRaiz";
 import { calcularMaxDiaCompleto, calcularUltimoDiaCompletadoData, diasRestantesPausa, isoLocal } from "./progressoDias";
+import TituloEditavel from "./TituloEditavel";
 
 const TOTAL_DIAS = 16; // Dia 0 a Dia 15
 
@@ -138,6 +139,9 @@ export default function JornadaProgress({
   hojeServidor = null,
   badgeDiaConcluidoTexto = "Dia de curso concluído",
   ocultarLinkBoraAula = false,
+  tituloOverride = null,
+  editavelTitulo = false,
+  onSalvarTitulo = () => {},
 }) {
   const { totalAssistidos, statusPorDia, diaAtualIndex } = useMemo(() => calcularStatusPorDia(progressoPorArquivo), [progressoPorArquivo]);
 
@@ -176,7 +180,9 @@ export default function JornadaProgress({
   if (compacto) {
     return (
       <div className="cm-widget cm-grid-progresso cm-jornada-compacta">
-        <h3>Sua Jornada</h3>
+        <h3>
+          <TituloEditavel texto={tituloOverride ?? "Sua Jornada"} editavel={editavelTitulo} onSalvar={onSalvarTitulo} />
+        </h3>
         <div className="cm-jornada-compacta-corpo">
           <div className="cm-jornada-compacta-anel-wrap">
             <svg className="cm-jornada-anel" viewBox="0 0 120 120">

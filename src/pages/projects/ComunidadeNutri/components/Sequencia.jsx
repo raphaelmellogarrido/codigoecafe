@@ -1,5 +1,6 @@
 import { Flame, Check } from "lucide-react";
 import { useSequenciaMeditacao } from "./useSequenciaMeditacao";
+import TituloEditavel from "./TituloEditavel";
 
 // Card "Sequência" da coluna 3 do dashboard — 100% funcional, não clicável.
 // Toda vez que o botão "Meditei hoje" (BotaoMediteiHoje) marca o dia, esse
@@ -7,7 +8,7 @@ import { useSequenciaMeditacao } from "./useSequenciaMeditacao";
 // real com quebra por dia faltando e as 7 bolinhas Seg-Dom da semana atual.
 // Percentual/mensagem lúdica saíram do card (pedido do cliente) — o hook
 // ainda calcula esses campos, só não são mais usados aqui.
-function Sequencia() {
+function Sequencia({ tituloOverride = null, editavelTitulo = false, onSalvarTitulo = () => {} }) {
   const { streak, bolinhas } = useSequenciaMeditacao();
 
   return (
@@ -17,7 +18,7 @@ function Sequencia() {
           <span className="cm-icone-badge cm-icone-fogo">
             <Flame size={15} />
           </span>
-          Sequência
+          <TituloEditavel texto={tituloOverride ?? "Sequência"} editavel={editavelTitulo} onSalvar={onSalvarTitulo} />
         </h3>
         <span className="cm-pill-suave">Esta semana</span>
       </div>

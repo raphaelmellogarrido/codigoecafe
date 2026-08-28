@@ -3,6 +3,7 @@ import { Check } from "lucide-react";
 import confetti from "canvas-confetti";
 import { DESAFIO_SEMANA } from "../data/mockData";
 import { useEmailSessao, chaveUsuario, logSalvandoParaUsuario } from "./usuarioStorage";
+import TituloEditavel from "./TituloEditavel";
 
 // Contrato: GET ?email=... -> { itens: [{ item_id, concluido }] }
 // POST { email, item_id, concluido } -> marca/desmarca um item.
@@ -68,7 +69,7 @@ function dispararConfete() {
  * otimista de AulasMeditacaoRaiz.jsx (atualiza local primeiro, POST
  * depois, e o local sempre manda se o PHP discordar).
  */
-export default function DesafioSemana() {
+export default function DesafioSemana({ tituloOverride = null, editavelTitulo = false, onSalvarTitulo = () => {} }) {
   // Conteúdo (título/subtítulo de cada item) começa com o mock — mesmo
   // padrão de "valor inicial só pra não ficar em branco" usado em
   // ColunaEncontros.jsx — e é substituído pelo conteúdo real assim que o
@@ -261,7 +262,9 @@ export default function DesafioSemana() {
 
   return (
     <div className="cm-widget cm-grid-desafio">
-      <h3>{DESAFIO_SEMANA.tituloWidget}</h3>
+      <h3>
+        <TituloEditavel texto={tituloOverride ?? DESAFIO_SEMANA.tituloWidget} editavel={editavelTitulo} onSalvar={onSalvarTitulo} />
+      </h3>
 
       {/* Checklist continua montado (só fica coberto pela celebração) —
           é ele quem define a altura do card o tempo todo. Se fosse

@@ -3,6 +3,7 @@ import { Check, CheckCircle2, XCircle } from "lucide-react";
 import { PROXIMO_ENCONTRO_VIVO } from "../data/mockData";
 import { useEmailSessao } from "./usuarioStorage";
 import { snapshotLocalSincrono, buscarReservas, reservarVaga, cancelarReserva } from "./reservasLive";
+import TituloEditavel from "./TituloEditavel";
 
 // Meses abreviados em pt-BR, como o admin digita em data_texto (ex: "Sab, 5
 // Set") — ver seção "Encontro ao Vivo" em AdminMeditacao.jsx. Só as 3
@@ -97,7 +98,7 @@ const EMAIL_TESTE = "teste@meditacaoraiz.com";
 // ColunaEncontros.jsx (28/08) pra caber no registro de cards do modo de
 // edição de layout (?edit_mode=1, ver registroCards.js) — mesmo
 // comportamento de sempre, só virou componente próprio.
-function CardEncontro() {
+function CardEncontro({ tituloOverride = null, editavelTitulo = false, onSalvarTitulo = () => {} }) {
   const nome = lerNomeSessao();
 
   const emailSessao = useEmailSessao();
@@ -230,7 +231,8 @@ function CardEncontro() {
   return (
     <div className="cm-widget cm-encontro-vivo cm-grid-encontro">
       <h3>
-        <span className="cm-dot-pulse" aria-hidden="true" /> Próximo encontro ao vivo
+        <span className="cm-dot-pulse" aria-hidden="true" />{" "}
+        <TituloEditavel texto={tituloOverride ?? "Próximo encontro ao vivo"} editavel={editavelTitulo} onSalvar={onSalvarTitulo} />
       </h3>
       <div className="cm-encontro-caixa">
         <strong className="cm-encontro-titulo">{encontro.titulo}</strong>
