@@ -96,7 +96,7 @@ function garantirEstruturaClube(mysqli $mysqli): void
 {
     // (não pode ser `const` aqui dentro — PHP só aceita const no nível do
     // arquivo/classe, não dentro do corpo de uma função)
-    $estruturaClubeVersao = 8;
+    $estruturaClubeVersao = 9;
     $marcador = sys_get_temp_dir() . '/comunidade_estrutura_v' . $estruturaClubeVersao . '.ok';
     if (file_exists($marcador)) {
         return;
@@ -373,6 +373,25 @@ function garantirEstruturaClube(mysqli $mysqli): void
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                 UNIQUE KEY uniq_comentario_email (comentario_id, email),
                 INDEX(comentario_id)
+            )"
+        );
+
+        // Layout editável do dashboard (?edit_mode=1) — ordem/coluna/
+        // visibilidade/título custom de cada um dos 6 cards das colunas 2 e
+        // 3 do dashboard (ColunaMeio/ColunaDireita). Uma linha por
+        // card_key; tabela vazia (estado inicial) = todos os cards usam os
+        // defaults do registro do front (registroCards.js) — nunca quebra
+        // o dashboard de quem nunca configurou nada. Ver
+        // docs/superpowers/specs/2026-08-28-layout-comunidade-nutri-design.md
+        // e public/api/comunidade/layout.php.
+        $mysqli->query(
+            "CREATE TABLE IF NOT EXISTS layout_comunidade (
+                card_key VARCHAR(40) NOT NULL PRIMARY KEY,
+                coluna VARCHAR(10) NOT NULL DEFAULT 'meio',
+                ordem INT NOT NULL DEFAULT 0,
+                visivel TINYINT(1) NOT NULL DEFAULT 1,
+                titulo_custom VARCHAR(100) NULL,
+                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             )"
         );
 
