@@ -11,11 +11,7 @@ import { HiArrowRight, HiPlay, HiCheck } from "react-icons/hi";
 import useScrollReveal from "../../hooks/useScrollReveal";
 import "./Hero.css";
 
-const BENEFITS = [
-  "Botão de WhatsApp sempre visível",
-  "Otimizado para aparecer no Google",
-  "Design profissional que passa confiança",
-];
+const BENEFITS = ["Botão de WhatsApp", "Otimizado para aparecer no Google", "Design profissional que passa confiança", "30 dias de ajustes grátis"];
 
 export default function Hero() {
   // Um ref por elemento — sem isto, a classe "reveal" nunca recebe o
@@ -40,11 +36,11 @@ export default function Hero() {
 
       <div className="container hero-content">
         <h1 ref={titleRef} className="hero-title reveal reveal-delay-1">
-          Mais <span className="gradient-text">clientes pelo WhatsApp</span> em 7 dias
+          <span className="gradient-text">Mais clientes</span> pelo WhatsApp<span className="gradient-text"> em 7 dias.</span>
         </h1>
 
         <h2 ref={subtitleRef} className="hero-subtitle reveal reveal-delay-2">
-          12 sites no ar: pizzarias, clínicas, imobiliárias e mais.
+          Sites profissionais feitos pra transformar visita em conversa - sem mensalidade e sem dor de cabeça.
         </h2>
 
         <div ref={buttonsRef} className="hero-buttons reveal reveal-delay-3">
