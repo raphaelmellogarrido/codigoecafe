@@ -39,7 +39,7 @@ function ComunidadeLayout() {
     <div className="comunidade-app cm-shell">
       <ComunidadeSidebar session={session} onSair={handleSair} />
       <div className="cm-content">
-        <Outlet />
+        <Outlet context={{ session }} />
       </div>
     </div>
   );

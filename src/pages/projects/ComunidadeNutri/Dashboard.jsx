@@ -1,6 +1,10 @@
-import ColunaProgresso from "./components/ColunaProgresso";
-import ColunaEncontros from "./components/ColunaEncontros";
+import { useState } from "react";
+import { useOutletContext, useSearchParams } from "react-router-dom";
+import ColunaMeio from "./components/ColunaMeio";
+import ColunaDireita from "./components/ColunaDireita";
 import DificuldadeDoDia from "./components/DificuldadeDoDia";
+import { isAdminEmail } from "./components/isAdmin";
+import useLayoutComunidade from "./components/useLayoutComunidade";
 
 // Dashboard: grid único de 3 colunas (a 4ª, sidebar esquerda, é resolvida
 // por fora em ComunidadeLayout) — cada coluna é um filho direto do grid
@@ -24,10 +28,10 @@ import DificuldadeDoDia from "./components/DificuldadeDoDia";
 // sempre vazio (tabela de posts nunca teve registro), o "card fantasma"
 // do print. Componente continua existindo em FeedComunidade.jsx, só não é
 // mais montado aqui. Coluna 2 (.cm-coluna-meio) é o botão "Já meditei
-// hoje" (BotaoMediteiHoje, dentro de ColunaProgresso) + Sequência + Sua
+// hoje" (BotaoMediteiHoje, dentro de ColunaMeio) + Sequência + Sua
 // Jornada + Meditando junto (MeditandoJunto). Coluna 3
 // (.cm-coluna-direita) é Próximo encontro + Desafio da semana + Ranking de
-// Presença (ColunaEncontros) — Ranking e Meditando junto trocaram de
+// Presença (ColunaDireita) — Ranking e Meditando junto trocaram de
 // coluna de novo a pedido do cliente. Biblioteca de
 // Meditações foi removida a pedido do cliente. Sem accordion por Dia
 // nesta versão (removido a pedido do cliente); DIAS continua existindo só
@@ -41,7 +45,35 @@ import DificuldadeDoDia from "./components/DificuldadeDoDia";
 // comentários dela dava a falsa impressão de página gigante quando na
 // verdade era só o usuário rolando o feed sem querer (ver order na coluna 1
 // dentro do @media de ComunidadeApp.css).
+//
+// Modo de edição de layout (28/08, ?edit_mode=1): quando
+// isAdminEmail(session.email) E a URL tem ?edit_mode=1, ColunaMeio/
+// ColunaDireita ganham a borda tracejada + grip + olho de cada card (ver
+// CardEditavel.jsx) e os 6 cards passam a vir de useLayoutComunidade()
+// (ordem/visibilidade/título salvos em layout_comunidade) em vez de JSX
+// fixo — ver docs/superpowers/specs/2026-08-28-layout-comunidade-nutri-design.md.
+// Drag-and-drop entre as duas colunas é controlado aqui (cardArrastado +
+// tratarDrop), porque só o Dashboard enxerga as DUAS colunas ao mesmo
+// tempo — ColunaMeio/ColunaDireita só sabem da própria lista. `session`
+// vem do Outlet context de ComunidadeLayout.jsx (não remonta
+// useComunidadeAuth aqui pra não duplicar o fetch de revalidação de
+// avatar que esse hook já faz sozinho).
 function Dashboard() {
+  const { session } = useOutletContext();
+  const [searchParams] = useSearchParams();
+  const editMode = isAdminEmail(session?.email) && searchParams.get("edit_mode") === "1";
+
+  const { cardsPorColuna, salvarCampo, moverCard } = useLayoutComunidade(editMode);
+  const [cardArrastado, setCardArrastado] = useState(null);
+
+  function tratarDrop(coluna, cardKeyAlvo) {
+    if (!cardArrastado) return;
+    const cardsDaColuna = cardsPorColuna[coluna];
+    const indice = cardKeyAlvo === null ? cardsDaColuna.length : cardsDaColuna.findIndex((c) => c.card_key === cardKeyAlvo);
+    moverCard(cardArrastado, coluna, indice === -1 ? cardsDaColuna.length : indice);
+    setCardArrastado(null);
+  }
+
   return (
     <div className="cm-main">
       <div className="cm-grid-feed cm-feed-empilhado">
@@ -49,11 +81,23 @@ function Dashboard() {
       </div>
 
       <div className="cm-coluna-meio">
-        <ColunaProgresso />
+        <ColunaMeio
+          cards={cardsPorColuna.meio}
+          editMode={editMode}
+          salvarCampo={salvarCampo}
+          onDragStartCard={setCardArrastado}
+          onDropCard={(cardKeyAlvo) => tratarDrop("meio", cardKeyAlvo)}
+        />
       </div>
 
       <div className="cm-coluna-direita">
-        <ColunaEncontros />
+        <ColunaDireita
+          cards={cardsPorColuna.direita}
+          editMode={editMode}
+          salvarCampo={salvarCampo}
+          onDragStartCard={setCardArrastado}
+          onDropCard={(cardKeyAlvo) => tratarDrop("direita", cardKeyAlvo)}
+        />
       </div>
     </div>
   );
