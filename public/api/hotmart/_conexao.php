@@ -1,0 +1,419 @@
+<?php
+// Conexão compartilhada com o MySQL da Hostinger (banco clonado do Clube
+// Presença original, ver config.example.php).
+// Lê credenciais de config.php (arquivo fora do Git, subido manualmente no
+// servidor — ver config.example.php) e cai pra variáveis de ambiente
+// (getenv) se config.php não existir. Nunca hardcoda senha aqui.
+//
+// Uso: require __DIR__ . '/_conexao.php'; (ou '../_conexao.php' de uma
+// subpasta) e use $mysqli. Este arquivo não é acessível direto via URL
+// (bloqueado no .htaccess desta pasta).
+
+// Fuso fixo em Brasília — o servidor da Hostinger normalmente roda em UTC,
+// então sem isso `new DateTime('today')` (usado em calcularStreakEmail) e
+// qualquer CURDATE()/NOW() em SQL (aulas.php, aulas-raiz/progresso.php)
+// calculam "hoje" adiantado em relação ao usuário entre ~21h e meia-noite
+// BRT, criando/lendo linha de presença com a data errada.
+date_default_timezone_set('America/Sao_Paulo');
+
+if (file_exists(__DIR__ . '/config.php')) {
+    require __DIR__ . '/config.php';
+} else {
+    if (!defined('DB_HOST')) define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+    if (!defined('DB_USER')) define('DB_USER', getenv('DB_USER') ?: '');
+    if (!defined('DB_PASS')) define('DB_PASS', getenv('DB_PASS') ?: '');
+    if (!defined('DB_NAME')) define('DB_NAME', getenv('DB_NAME') ?: '');
+}
+
+// Chave da área administrativa (ver public/api/admin/encontro.php) — mesmo
+// padrão de fallback getenv() acima, mas FORA do if/else de config.php:
+// precisa valer tanto quando config.php existe (produção normalmente
+// define ADMIN_SECRET lá, junto de DB_*) quanto quando não existe. Se não
+// for configurada em lugar nenhum, fica '' e o endpoint admin recusa tudo
+// (nunca autentica com chave vazia).
+if (!defined('ADMIN_SECRET')) {
+    define('ADMIN_SECRET', getenv('ADMIN_SECRET') ?: '');
+}
+
+// SMTP da caixa comunidade@ (ver public/api/admin/teste-emails.php,
+// enviarConviteComunidade). Fallback pra getenv() só por consistência com
+// o resto deste arquivo — mas o painel Hostinger tem um bug documentado
+// que corrompe senha com caractere especial (HANDOFF.md, "Problema 2"),
+// então RECOMENDADO configurar direto em config.php, nunca só no painel.
+if (!defined('SMTP_COMUNIDADE_USER')) {
+    define('SMTP_COMUNIDADE_USER', getenv('SMTP_COMUNIDADE_USER') ?: 'comunidade@codigoecafe.com');
+}
+if (!defined('SMTP_COMUNIDADE_SENHA')) {
+    define('SMTP_COMUNIDADE_SENHA', getenv('SMTP_COMUNIDADE_SENHA') ?: '');
+}
+
+$mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+if ($mysqli->connect_error) {
+    http_response_code(500);
+    header('Content-Type: application/json');
+    echo json_encode(['erro' => 'Erro banco: ' . $mysqli->connect_error]);
+    exit;
+}
+$mysqli->set_charset('utf8mb4');
+// Mesmo motivo do date_default_timezone_set acima, só que pro lado do
+// MySQL: garante que CURDATE()/NOW() dentro de SQL (não só em PHP) também
+// resolvem pra data de Brasília, não UTC.
+$mysqli->query("SET time_zone = '-03:00'");
+
+// Cria/ajusta o que os endpoints novos precisam, sem exigir SQL manual no
+// phpMyAdmin — mesmo padrão de auto-provisionamento que webhook.php e
+// live/reservas.php já usam neste repo. Idempotente: seguro chamar em
+// toda requisição.
+//
+// Perf: essa função sozinha é ~7 round-trips de rede pro MySQL (4x CREATE
+// TABLE IF NOT EXISTS, 2x SELECT em INFORMATION_SCHEMA.COLUMNS, 1x DELETE)
+// — em hospedagem compartilhada isso pesava em TODA request de
+// comentarios.php e aulas-raiz/progresso.php, mesmo sem nenhuma mudança de
+// schema pra fazer (era o gargalo real por trás dos ~10s de carregamento
+// de "Sua prática hoje"/comentários, não falta de índice). Por isso, abaixo
+// de $estruturaClubeVersao: escreve um arquivo-marcador na primeira vez que
+// roda com sucesso e, enquanto ele existir, pula a função inteira com um
+// único file_exists() (1 stat, não bate no banco). Corrida entre requests
+// concorrentes logo após um deploy é inofensiva — todo CREATE/ALTER aqui já
+// é condicional/idempotente. Pra forçar rerun depois de mudar o schema
+// nesta função, basta subir o arquivo com $estruturaClubeVersao
+// incrementada (não depende de lembrar de apagar o marcador no servidor).
+function garantirEstruturaClube(mysqli $mysqli): void
+{
+    // (não pode ser `const` aqui dentro — PHP só aceita const no nível do
+    // arquivo/classe, não dentro do corpo de uma função)
+    $estruturaClubeVersao = 8;
+    $marcador = sys_get_temp_dir() . '/comunidade_estrutura_v' . $estruturaClubeVersao . '.ok';
+    if (file_exists($marcador)) {
+        return;
+    }
+
+    // Tudo abaixo em try/catch: desde PHP 8.1 o mysqli lança
+    // mysqli_sql_exception por padrão (MYSQLI_REPORT_ERROR|STRICT) em vez
+    // de só retornar false. O dashboard dispara ~4 fetches simultâneos no
+    // primeiro load da sessão (comentarios.php, progresso.php, pulso.php,
+    // etc.) — se duas dessas requests chegam aqui ao mesmo tempo, ainda
+    // antes do marcador existir, o par "SELECT checa se a coluna existe" +
+    // "ALTER TABLE ADD COLUMN" não é atômico: as duas podem passar pelo
+    // SELECT vendo que a coluna não existe e colidir no ALTER (uma delas
+    // recebe "Duplicate column name"). Sem este try/catch essa exceção
+    // subia direto pra fora da função e virava 500 na request — quebrando
+    // o feed inteiro na primeira visita, mesmo a tabela tendo sido criada
+    // com sucesso pela outra request. Bug real (24/08): comentários só
+    // apareciam depois de F5 porque a 2ª request já achava o marcador
+    // pronto e pulava a função inteira.
+    try {
+        $mysqli->query(
+            "CREATE TABLE IF NOT EXISTS progresso_aulas_raiz (
+                email VARCHAR(255) NOT NULL,
+                arquivo VARCHAR(50) NOT NULL,
+                dia TINYINT NOT NULL DEFAULT 0,
+                progresso_percent TINYINT NOT NULL DEFAULT 0,
+                ultima_posicao INT NOT NULL DEFAULT 0,
+                assistida TINYINT(1) NOT NULL DEFAULT 0,
+                completada_em DATETIME NULL,
+                PRIMARY KEY (email, arquivo)
+            )"
+        );
+
+        // Comentários por aula (ComentariosFeed.jsx) — permanente, não faz parte
+        // de nenhum reset semanal (DesafioSemana etc.). aula_id sem FK de
+        // propósito: aceita tanto id de vídeo do curso mock (Aula.jsx, ex:
+        // "boas-vindas") quanto arquivo do curso real (AulasMeditacaoRaiz.jsx,
+        // ex: "dia1.2.mp4"), sem exigir uma tabela de aulas unificada.
+        $mysqli->query(
+            "CREATE TABLE IF NOT EXISTS comentarios (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                email VARCHAR(255) NOT NULL,
+                nome VARCHAR(255),
+                aula_id VARCHAR(100) NOT NULL DEFAULT 'geral',
+                comentario TEXT NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                INDEX(aula_id),
+                INDEX(created_at)
+            )"
+        );
+
+        // Feed da Comunidade (Clube Nutri) — mural real, consumido por
+        // FeedComunidade.jsx via public/api/comunidade/posts.php. Substitui o
+        // mock fixo (FEED_COMUNIDADE em mockData.js, removido) que mostrava
+        // sempre os mesmos 4 posts fake pra todo mundo — agora tabela vazia =
+        // feed vazio de verdade, sem inventar autor nenhum.
+        $mysqli->query(
+            "CREATE TABLE IF NOT EXISTS posts_comunidade (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                email VARCHAR(255) NOT NULL,
+                nome VARCHAR(255) NOT NULL DEFAULT 'Aluno',
+                texto TEXT NOT NULL,
+                curtidas INT NOT NULL DEFAULT 0,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                INDEX(created_at)
+            )"
+        );
+
+        // Recuperação de senha (esqueceu-senha.php / redefinir-senha.php).
+        // Token é a própria PK (bin2hex(random_bytes(32)) — 64 chars hex, cabe
+        // em 128 mas deixamos folga). expires_at: 1h a partir da geração.
+        $mysqli->query(
+            "CREATE TABLE IF NOT EXISTS password_resets (
+                email VARCHAR(255) NOT NULL,
+                token VARCHAR(128) NOT NULL PRIMARY KEY,
+                expires_at DATETIME NOT NULL,
+                INDEX(email)
+            )"
+        );
+        // Limpeza oportunista de tokens vencidos — sem cron, só aproveita que
+        // toda request já passa por aqui (mesmo espírito idempotente do resto
+        // desta função).
+        $mysqli->query("DELETE FROM password_resets WHERE expires_at < NOW()");
+
+        $temApelido = $mysqli->query(
+            "SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
+             WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'alunos' AND COLUMN_NAME = 'apelido'"
+        );
+        if ($temApelido && $temApelido->num_rows === 0) {
+            $mysqli->query("ALTER TABLE alunos ADD COLUMN apelido VARCHAR(30) NULL AFTER nome");
+        }
+
+        // Controle manual da live (seção "Controle da Live" em AdminMeditacao.jsx,
+        // consumida por public/api/live/status.php + public/api/admin/live-controle.php).
+        // Trava o botão "Entrar na live" em ColunaEncontros.jsx até o professor
+        // liberar, independente de link_live já estar preenchido. Mesmo padrão de
+        // ALTER condicional do apelido acima. Default 0 (travado): a coluna nunca
+        // libera sozinha na primeira vez que é criada.
+        $temLiveLiberada = $mysqli->query(
+            "SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
+             WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'config_encontro' AND COLUMN_NAME = 'live_liberada'"
+        );
+        if ($temLiveLiberada && $temLiveLiberada->num_rows === 0) {
+            $mysqli->query("ALTER TABLE config_encontro ADD COLUMN live_liberada TINYINT(1) NOT NULL DEFAULT 0");
+        }
+
+        // Foto opcional em "Sua prática hoje" (DificuldadeDoDia.jsx) — caminho
+        // público (ex: /uploads/posts/xxx.jpg) gravado por comentarios.php,
+        // arquivo salvo por upload-imagem-comentario.php. NULL = sem foto
+        // (maioria dos comentários). Mesmo padrão de ALTER condicional acima.
+        $temImageUrl = $mysqli->query(
+            "SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
+             WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'comentarios' AND COLUMN_NAME = 'image_url'"
+        );
+        if ($temImageUrl && $temImageUrl->num_rows === 0) {
+            $mysqli->query("ALTER TABLE comentarios ADD COLUMN image_url VARCHAR(255) NULL AFTER comentario");
+        }
+
+        // Foto de "Sua prática hoje", v2 (mesmo bug documentado abaixo pro
+        // avatar_blob, reportado de novo 26/08: a foto de comentário some
+        // porque upload-imagem-comentario.php salvava em
+        // public/uploads/posts/, apagado a cada deploy). image_url acima
+        // fica em desuso (nunca mais escrito, só não é dropado — mesmo
+        // tratamento dado a avatar_url v1); a foto nova vive DENTRO do banco
+        // (image_blob) e é servida por public/api/hotmart/imagem-comentario.php.
+        // Diferente do avatar (upload já grava direto, sem staging): aqui o
+        // comentário ainda não existe no momento do upload, então o blob
+        // passa antes por comentario_imagens_pendentes (abaixo) e só migra
+        // pra cá quando comentarios.php POST cria a linha de verdade.
+        $temImageBlob = $mysqli->query(
+            "SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
+             WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'comentarios' AND COLUMN_NAME = 'image_blob'"
+        );
+        if ($temImageBlob && $temImageBlob->num_rows === 0) {
+            $mysqli->query("ALTER TABLE comentarios ADD COLUMN image_blob MEDIUMBLOB NULL AFTER image_url");
+            $mysqli->query("ALTER TABLE comentarios ADD COLUMN image_mime VARCHAR(20) NULL AFTER image_blob");
+        }
+
+        // Staging da foto entre o upload (upload-imagem-comentario.php) e o
+        // envio do comentário de verdade (comentarios.php POST) — token
+        // efêmero, mesmo espírito de password_resets acima (linha
+        // temporária + limpeza oportunista, sem cron). Se o aluno escolher
+        // uma foto e nunca enviar o comentário, a linha fica órfã até a
+        // limpeza de 1h abaixo apagar.
+        $mysqli->query(
+            "CREATE TABLE IF NOT EXISTS comentario_imagens_pendentes (
+                token CHAR(32) NOT NULL PRIMARY KEY,
+                image_blob MEDIUMBLOB NOT NULL,
+                image_mime VARCHAR(20) NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            )"
+        );
+        // Mesmo padrão de limpeza oportunista do password_resets acima.
+        $mysqli->query("DELETE FROM comentario_imagens_pendentes WHERE created_at < NOW() - INTERVAL 1 HOUR");
+
+        // Foto de perfil (Configuracoes.jsx + upload-avatar.php) — caminho
+        // público (ex: /uploads/avatars/xxx.webp) gravado direto por
+        // upload-avatar.php (diferente de image_url dos comentários, aqui o
+        // próprio endpoint de upload já grava no banco). NULL = sem foto
+        // (mostra iniciais). Coluna pode já existir manualmente em produção
+        // (feito direto no banco) — este bloco só garante que outros
+        // ambientes (local/staging) também tenham ela, mesmo padrão de ALTER
+        // condicional acima.
+        $temAvatar = $mysqli->query(
+            "SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
+             WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'alunos' AND COLUMN_NAME = 'avatar_url'"
+        );
+        if ($temAvatar && $temAvatar->num_rows === 0) {
+            $mysqli->query("ALTER TABLE alunos ADD COLUMN avatar_url VARCHAR(255) NULL AFTER apelido");
+        }
+
+        // Foto de perfil, v2 (bug reportado 25/08: a foto salva como arquivo
+        // em avatar_url sumia depois de todo `git push`, porque a Hostinger
+        // recria a pasta do app do zero a cada deploy — apagando qualquer
+        // arquivo que não veio do Git, mesmo problema já documentado no
+        // HANDOFF.md pros vídeos). avatar_url acima fica em desuso (nunca
+        // mais escrito, só não é dropado); a foto agora vive DENTRO do banco
+        // (avatar_blob), que sobrevive a qualquer deploy, e é servida por
+        // public/api/hotmart/avatar.php. avatar_versao incrementa a cada
+        // upload — funciona como cache-buster (?v=N na URL) e como "tem foto
+        // ou não" (0 = nunca subiu/perdeu a foto antiga da v1, front mostra
+        // iniciais). Mesmo padrão de ALTER condicional usado acima.
+        $temAvatarBlob = $mysqli->query(
+            "SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
+             WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'alunos' AND COLUMN_NAME = 'avatar_blob'"
+        );
+        if ($temAvatarBlob && $temAvatarBlob->num_rows === 0) {
+            $mysqli->query("ALTER TABLE alunos ADD COLUMN avatar_blob MEDIUMBLOB NULL AFTER avatar_url");
+            $mysqli->query("ALTER TABLE alunos ADD COLUMN avatar_versao INT NOT NULL DEFAULT 0 AFTER avatar_blob");
+        }
+
+        // Resposta a comentário (botão "Responder" em "Sua prática hoje",
+        // DificuldadeDoDia.jsx + ComentarioCard.jsx) — NULL = comentário raiz,
+        // preenchido = resposta aninhada sob o comentário pai. Sem FK de
+        // propósito (mesma decisão de aula_id acima): se o pai for apagado,
+        // as respostas ficam órfãs mas comentarios.php simplesmente não as
+        // busca mais (não aparecem soltas no feed). Mesmo padrão de ALTER
+        // condicional usado pra image_url acima.
+        $temParentId = $mysqli->query(
+            "SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
+             WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'comentarios' AND COLUMN_NAME = 'parent_id'"
+        );
+        if ($temParentId && $temParentId->num_rows === 0) {
+            $mysqli->query("ALTER TABLE comentarios ADD COLUMN parent_id INT NULL AFTER aula_id, ADD INDEX(parent_id)");
+        }
+
+        // Visibilidade da partilha (toggle "Público/Privado/Orientador" em
+        // "Sua prática hoje", DificuldadeDoDia.jsx) — 'publico' (default, é o
+        // que sempre existiu: todo mundo vê), 'privado' (só quem postou),
+        // 'orientador' (só admin/orientador, mesma lista fixa do DELETE
+        // acima). Filtrado no SELECT do GET, não só escondido no front —
+        // ver comentarios.php. NOT NULL DEFAULT 'publico' pra toda linha
+        // antiga (de antes desta coluna existir) continuar visível pra todo
+        // mundo, sem precisar de UPDATE em massa. Mesmo padrão de ALTER
+        // condicional usado pra parent_id acima.
+        $temVisibilidade = $mysqli->query(
+            "SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
+             WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'comentarios' AND COLUMN_NAME = 'visibilidade'"
+        );
+        if ($temVisibilidade && $temVisibilidade->num_rows === 0) {
+            $mysqli->query("ALTER TABLE comentarios ADD COLUMN visibilidade VARCHAR(20) NOT NULL DEFAULT 'publico' AFTER parent_id");
+        }
+
+        // Mensagem privada admin -> aluno (nome clicável em ComentarioCard.jsx
+        // quando quem está vendo é admin/orientador, ver EMAIL_ADMINISTRADOR/
+        // EMAIL_ORIENTADOR). Sem para_user_id de propósito: este schema não
+        // tem id numérico de usuário em lugar nenhum (alunos.email é a PK),
+        // então o e-mail do destinatário já é o identificador. Ver
+        // public/api/mensagens/{enviar,listar,marcar_lida}.php e
+        // docs/mensagens_privadas.sql.
+        $mysqli->query(
+            "CREATE TABLE IF NOT EXISTS mensagens_privadas (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                de_email VARCHAR(255) NOT NULL,
+                para_email VARCHAR(255) NOT NULL,
+                mensagem TEXT NOT NULL,
+                lida TINYINT(1) NOT NULL DEFAULT 0,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                INDEX(para_email),
+                INDEX(de_email),
+                INDEX(created_at)
+            )"
+        );
+
+        // Acesso de Teste (painel /admin, seção "Acesso de Teste") — lista de
+        // convite/auditoria dos e-mails liberados manualmente sem compra na
+        // Hotmart. A liberação de fato acontece em `alunos` (status='teste'),
+        // lida por login.php/register.php/check.php igual a um comprador
+        // normal (status='ativo') — ver public/api/admin/teste-emails.php.
+        $mysqli->query(
+            "CREATE TABLE IF NOT EXISTS comunidade_teste_emails (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                email VARCHAR(255) NOT NULL UNIQUE,
+                nome VARCHAR(255) NULL,
+                criado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
+                criado_por VARCHAR(100)
+            )"
+        );
+
+        // Reação rápida (🙏 ❤️ 🔥) em comentário/resposta de "Sua prática hoje"
+        // (ComentarioCard.jsx, botões ao lado de "Responder") — 1 linha por
+        // pessoa por comentário, a UNIQUE abaixo é o que garante isso (trocar
+        // de emoji é UPDATE/ON DUPLICATE KEY, nunca uma 2ª linha; tocar de
+        // novo no mesmo emoji é DELETE, ver comentario-reacao.php). Sem FK pra
+        // comentarios.id de propósito (mesma decisão de parent_id acima): um
+        // comentário apagado deixa reações órfãs, inofensivo — comentarios.php
+        // GET só agrega reação dos ids que ele mesmo já devolveu.
+        $mysqli->query(
+            "CREATE TABLE IF NOT EXISTS comentario_reacoes (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                comentario_id INT NOT NULL,
+                email VARCHAR(255) NOT NULL,
+                emoji VARCHAR(10) NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE KEY uniq_comentario_email (comentario_id, email),
+                INDEX(comentario_id)
+            )"
+        );
+
+        // Grava o marcador por último — se alguma query acima falhar/lançar, a
+        // função roda de novo na próxima request em vez de "esquecer" que faltou
+        // algo. @ silencia só erro de permissão/disco no temp dir: nesse caso
+        // raro, cai de novo em file_exists()===false na próxima request e
+        // repete o setup (pior caso = sem cache, não quebra nada).
+        @file_put_contents($marcador, (string) time());
+    } catch (\Throwable $e) {
+        // Nunca deixa esse setup idempotente derrubar a request com 500 —
+        // loga e segue sem marcador (não escrevemos ele aqui, então a
+        // próxima request tenta o setup de novo; pior caso é ficar lento
+        // de novo uma vez, não quebrar o feed). Ver comentário grande acima.
+        error_log('[Clube Nutri] garantirEstruturaClube falhou, seguindo sem setup: ' . $e->getMessage());
+    }
+}
+
+// URL pública da foto de perfil (ver avatar_blob/avatar_versao acima e
+// avatar.php) — null quando avatarVersao é 0/vazio (aluno nunca subiu foto,
+// ou subiu antes da v2 e perdeu no deploy: front mostra iniciais nesse
+// caso). ?v= é só cache-buster (muda a cada upload), avatar.php ignora o
+// valor, só lê email.
+function avatarUrlPublica(?string $email, $avatarVersao): ?string
+{
+    if (!$email || !$avatarVersao) return null;
+    return '/api/hotmart/avatar.php?email=' . rawurlencode($email) . '&v=' . (int) $avatarVersao;
+}
+
+// Streak real (dias consecutivos até hoje/ontem) calculado a partir das
+// datas em `presencas` — mesmo algoritmo que useSequenciaMeditacao.js já
+// faz no front: conta pra trás a partir de hoje; se hoje ainda não tem
+// presença, a contagem começa em ontem; qualquer buraco quebra a sequência.
+function calcularStreakEmail(mysqli $mysqli, string $email): int
+{
+    $stmt = $mysqli->prepare("SELECT data FROM presencas WHERE email = ? ORDER BY data DESC");
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $datas = [];
+    while ($row = $res->fetch_assoc()) {
+        $datas[$row['data']] = true;
+    }
+    $stmt->close();
+
+    if (!$datas) return 0;
+
+    $cursor = new DateTime('today');
+    if (!isset($datas[$cursor->format('Y-m-d')])) {
+        $cursor->modify('-1 day');
+    }
+    $streak = 0;
+    while (isset($datas[$cursor->format('Y-m-d')])) {
+        $streak++;
+        $cursor->modify('-1 day');
+    }
+    return $streak;
+}

@@ -11,6 +11,11 @@ import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-
 import ReactPixel from "react-facebook-pixel";
 import Home from "./pages/Home";
 import CookieConsent from "./components/CookieConsent/CookieConsent";
+// Não-lazy de propósito (mesmo padrão do App.jsx original do renato_de_paula):
+// componente pequeno, só lê localStorage (useComunidadeAuth), sem libs pesadas —
+// não vale a pena um chunk separado só pra ele.
+import ComunidadeAdminGuard from "./pages/projects/ComunidadeNutri/components/AdminGuard";
+import useComunidadeNutriAuth from "./pages/projects/ComunidadeNutri/components/useComunidadeAuth";
 
 const LandingPageSaaS = lazy(() => import("./pages/projects/LandingPageSaaS/LandingPageSaaS"));
 const PortfolioCriativo = lazy(() => import("./pages/projects/PortfolioCriativo/PortfolioCriativo"));
@@ -83,6 +88,21 @@ const BlogLoginPage = lazy(() => import("./pages/Blog/BlogLoginPage"));
 const BlogAdminPage = lazy(() => import("./pages/Blog/BlogAdminPage"));
 const BlogEditorPage = lazy(() => import("./pages/Blog/BlogEditorPage"));
 
+// Também fora do prefixo /projetos, a pedido: codigoecafe.com/comunidade-nutri.
+// Clonado de renatodepaula.com/comunidade ("Clube Presença") — ver
+// src/pages/projects/ComunidadeNutri. Banco de dados ainda não reconectado
+// nesta passada (fica para depois, junto da troca de endpoints PHP).
+const ComunidadeLayout = lazy(() => import("./pages/projects/ComunidadeNutri/ComunidadeLayout"));
+const ComunidadeLogin = lazy(() => import("./pages/projects/ComunidadeNutri/Login"));
+const ComunidadeDashboard = lazy(() => import("./pages/projects/ComunidadeNutri/Dashboard"));
+const ComunidadeAula = lazy(() => import("./pages/projects/ComunidadeNutri/Aula"));
+const ComunidadeAulasRaiz = lazy(() => import("./pages/projects/ComunidadeNutri/AulasMeditacaoRaiz"));
+const ComunidadeConfiguracoes = lazy(() => import("./pages/projects/ComunidadeNutri/Configuracoes"));
+const ComunidadeMensagens = lazy(() => import("./pages/projects/ComunidadeNutri/Mensagens"));
+const ComunidadeAdminPage = lazy(() => import("./pages/projects/ComunidadeNutri/AdminComunidadePage"));
+const ComunidadeEsqueceuSenha = lazy(() => import("./pages/projects/ComunidadeNutri/EsqueceuSenha"));
+const ComunidadeRedefinirSenha = lazy(() => import("./pages/projects/ComunidadeNutri/RedefinirSenha"));
+
 // Sem isto, o React Router mantém a posição de scroll da página anterior
 // ao navegar — quem clicasse "Ver Projeto" a meio da Home caía a meio da
 // página nova em vez de aparecer no topo.
@@ -114,6 +134,17 @@ function ProjetosRedirect() {
 // ligações lentas — normalmente é instantâneo).
 function RouteLoading() {
   return <div className="route-loading" aria-hidden="true" />;
+}
+
+// Mesmo truque do App.jsx original (renato_de_paula): decide a sessão ANTES
+// de pedir o chunk do ComunidadeLayout. useComunidadeAuth só lê localStorage
+// (síncrono), então dá pra manter fora do lazy() — sem isso, quem chega em
+// /comunidade-nutri sem sessão baixava o chunk inteiro do Layout só pra
+// descobrir, já montado, que precisava redirecionar pro login.
+function RotaComunidadeNutri() {
+  const { session } = useComunidadeNutriAuth();
+  if (!session) return <Navigate to="/comunidade-nutri/login" replace />;
+  return <ComunidadeLayout />;
 }
 
 export default function App() {
@@ -274,6 +305,25 @@ export default function App() {
             <Route path="admin/editar/:id" element={<BlogEditorPage />} />
             <Route path=":slug" element={<BlogPostPage />} />
           </Route> */}
+
+          <Route path="/comunidade-nutri/login" element={<ComunidadeLogin />} />
+          <Route path="/comunidade-nutri/esqueceu-senha" element={<ComunidadeEsqueceuSenha />} />
+          <Route path="/comunidade-nutri/redefinir-senha" element={<ComunidadeRedefinirSenha />} />
+          <Route path="/comunidade-nutri" element={<RotaComunidadeNutri />}>
+            <Route index element={<ComunidadeDashboard />} />
+            <Route path="aulas-raiz" element={<ComunidadeAulasRaiz />} />
+            <Route path="aula/:id" element={<ComunidadeAula />} />
+            <Route path="configuracoes" element={<ComunidadeConfiguracoes />} />
+            <Route path="mensagens" element={<ComunidadeMensagens />} />
+            <Route
+              path="admin"
+              element={
+                <ComunidadeAdminGuard>
+                  <ComunidadeAdminPage />
+                </ComunidadeAdminGuard>
+              }
+            />
+          </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

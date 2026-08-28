@@ -1,0 +1,5829 @@
+/* Design isolado de /comunidade — não reaproveita as variáveis do site
+   principal (--gold, --charcoal etc). Paleta clara e premium: fundo
+   #FFFEFB, cards bege #F5F1EB, verde sálvia #8A9A8C como cor de destaque.
+   Nunca fundo escuro (diferente do padrão Hotmart Club). */
+
+.comunidade-app {
+  --cm-bg: #fffefb;
+  --cm-beige: #f5f1eb;
+  --cm-beige-soft: #faf8f4;
+  --cm-sage: #8a9a8c;
+  --cm-sage-dark: #6f7d71;
+  --cm-sage-soft: #e4e9e4;
+  --cm-text: #33312c;
+  --cm-text-soft: #7a766e;
+  --cm-border: rgba(51, 49, 44, 0.08);
+  --cm-shadow: 0 14px 34px rgba(51, 49, 44, 0.07), 0 2px 8px rgba(51, 49, 44, 0.04);
+  --cm-radius: 24px;
+  /* Cores de validação (cadastro em Login.css tinha a mesma paleta local —
+     aqui viram tokens compartilhados porque Configuracoes.jsx também
+     precisa delas e fica dentro de .comunidade-app). */
+  --cm-green: #22c55e;
+  --cm-green-soft: rgba(34, 197, 94, 0.08);
+  --cm-red: #ef4444;
+  --cm-red-soft: rgba(239, 68, 68, 0.06);
+
+  font-family:
+    "Inter",
+    -apple-system,
+    sans-serif;
+  background: var(--cm-bg);
+  color: var(--cm-text);
+  min-height: 100vh;
+  line-height: 1.55;
+}
+
+.comunidade-app h1,
+.comunidade-app h2,
+.comunidade-app h3 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 600;
+  color: var(--cm-text);
+  margin: 0;
+}
+
+.comunidade-app * {
+  box-sizing: border-box;
+}
+
+/* 26/08, bug relatado: dava pra arrastar a tela pro lado no celular (algum
+   card estourando 100vw). overflow-x:hidden no html/body (index.css) já
+   trava o scroll do documento; aqui é reforço local — se algum filho
+   crescer além do container, ele é cortado aqui em vez de empurrar a
+   largura do .comunidade-app inteiro. */
+.comunidade-app {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.cm-content {
+  max-width: 100%;
+}
+
+.comunidade-app button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Shell: sidebar esquerda fixa + conteúdo */
+.cm-shell {
+  display: flex;
+  align-items: stretch;
+  min-height: 100vh;
+}
+
+.cm-sidebar-left {
+  width: 240px;
+  flex-shrink: 0;
+  background: var(--cm-beige-soft);
+  border-right: 1px solid var(--cm-border);
+  display: flex;
+  flex-direction: column;
+  padding: 26px 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+/* Dropdown de comunidade (26/08, ComunidadeSidebar.jsx) — substitui o antigo
+   brand fixo "Meditação raiz / POR DR. RENATO DE PAULA". Header clicável
+   (foto 36px + nome + seta) que abre um painel com as outras comunidades
+   (Alimentação/Exercício), hoje bloqueadas — cadeado nas 2 pontas, opacity
+   0.5 e pointer-events:none deixam claro que ainda não dá pra clicar. */
+.cm-comunidade-seletor {
+  position: relative;
+  padding: 0 6px 20px;
+}
+
+.cm-comunidade-seletor-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  padding: 4px 2px;
+  border-radius: 10px;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.cm-comunidade-seletor-btn:hover {
+  background: var(--cm-beige);
+}
+
+.cm-comunidade-seletor-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.cm-comunidade-seletor-label {
+  flex: 1;
+  min-width: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--cm-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cm-comunidade-seletor-seta {
+  flex-shrink: 0;
+  color: var(--cm-text-soft);
+  transition: transform 0.2s ease;
+}
+
+.cm-comunidade-seletor-seta.is-aberta {
+  transform: rotate(180deg);
+}
+
+.cm-comunidade-dropdown {
+  margin-top: 10px;
+  background: var(--cm-beige);
+  border-radius: 14px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cm-comunidade-dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--cm-text-soft);
+  font-size: 0.88rem;
+  font-weight: 500;
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.cm-comunidade-dropdown-img {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.cm-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.cm-sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--cm-text-soft);
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+  position: relative;
+}
+
+.cm-sidebar-nav-item:hover {
+  background: var(--cm-beige);
+  color: var(--cm-text);
+}
+
+.cm-sidebar-nav-item.is-ativo {
+  background: var(--cm-text);
+  color: #fff;
+}
+
+.cm-sidebar-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #c76b6b;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.cm-sidebar-footer {
+  margin-top: auto;
+  padding-top: 12px;
+  flex-shrink: 0;
+}
+
+.cm-ajuda-card {
+  background: #f5f3f0;
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 12px;
+}
+
+.cm-ajuda-card:hover {
+  background: #ede9e3;
+  transform: translateY(-1px);
+}
+
+/* Card completo "Posso ajudar?" (texto + seta) — só existe no desktop
+   (cm-ajuda-card--desktop, rodapé da sidebar). No celular/tablet ele some
+   (@media max-width:1024px mais abaixo, junto do resto da sidebar fixa —
+   ver bloco do hamburger) e vira só um ícone dentro da nav, ao lado de
+   "Configurações" — ver .cm-sidebar-nav-whatsapp logo abaixo e
+   ComunidadeSidebar.jsx (26/08, pedido do cliente: o card antigo em texto
+   duplicado embaixo do feed no mobile foi removido). */
+.cm-ajuda-card--desktop {
+  display: flex;
+}
+
+/* Ícone do WhatsApp dentro da nav (ComunidadeSidebar.jsx) — some por padrão
+   porque no desktop o card completo acima já cobre o mesmo atalho; a nav
+   inteira (e este ícone dentro dela) fica escondida no celular/tablet, onde
+   o hamburger assume a navegação (ver @media max-width:1024px mais abaixo). */
+.cm-sidebar-nav-whatsapp {
+  display: none;
+  border: none;
+  border-radius: 12px;
+  background: #25d366;
+  color: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.cm-ajuda-seta {
+  margin-left: auto;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.cm-ajuda-icone {
+  width: 36px;
+  height: 36px;
+  background: var(--cm-sage);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* Card "Mensagens" (Tarefa 2) — mesma base visual do cm-ajuda-card acima,
+   mas é um <NavLink> (elemento <a>), então precisa resetar sublinhado/cor
+   herdada de link que o card do WhatsApp (um <div onClick>) nunca teve. */
+.cm-mensagens-card {
+  text-decoration: none;
+  color: inherit;
+}
+
+.cm-mensagens-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  background: var(--cm-red);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+}
+
+.cm-ajuda-texto strong {
+  font-size: 13px;
+  display: block;
+}
+
+.cm-ajuda-texto span {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.cm-sidebar-user-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--cm-beige);
+  border-radius: 16px;
+  padding: 10px 12px;
+}
+
+.cm-sidebar-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--cm-sage);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Foto de perfil real (Configuracoes.jsx) no lugar das iniciais — mesmo
+   tamanho/formato de .cm-sidebar-avatar, só troca background por imagem. */
+.cm-sidebar-avatar-img {
+  object-fit: cover;
+  background: var(--cm-beige-soft);
+}
+
+.cm-sidebar-user-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cm-sidebar-user-info strong {
+  display: block;
+  font-size: 0.84rem;
+}
+
+.cm-badge-membro {
+  /* 26/08, bug relatado no mobile: pill de fundo cinza com o texto quebrando
+     em 2 linhas e descentralizado dentro do círculo. inline-block deixava o
+     texto alinhar à esquerda da caixa quando ela ficava mais larga que o
+     texto (min-height); flex+justify-content/align-items centraliza nos 2
+     eixos de verdade. white-space:nowrap é o que garante 1 linha só — a
+     largura disponível em .cm-sidebar-user-info (flex:1, min-width:0) é mais
+     que suficiente pro texto em qualquer breakpoint, então nowrap nunca
+     estoura a pill pro lado de fora. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 1.1;
+  font-weight: 600;
+  color: var(--cm-sage-dark);
+  background: var(--cm-sage-soft);
+  border-radius: 999px;
+  padding: 6px 12px;
+  min-height: 28px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.cm-sidebar-logout {
+  background: transparent;
+  border: none;
+  color: var(--cm-text-soft);
+  padding: 6px 8px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.cm-sidebar-logout span {
+  font-size: 0.6rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.cm-sidebar-logout:hover {
+  background: var(--cm-bg);
+  color: var(--cm-text);
+}
+
+/* 26/08: no desktop (sidebar fixa em 240px, ver .cm-sidebar-left), card do
+   usuário em 2 linhas: linha 1 = avatar + "Olá, Nome", linha 2 = badge
+   "Membro da comunidade" (Sair fica sobreposto nela, ancorado no canto).
+   Tentativa anterior usava CSS Grid com o avatar espalhando 2 linhas
+   (grid-row: 1/3) + .cm-sidebar-user-info como display:contents — essa
+   combinação (coluna "auto" dimensionada só por um item que "spanna" 2
+   linhas, sem nenhum outro item de 1 linha só na mesma coluna) fez o avatar
+   sumir. Solução mais simples e robusta: continua sendo o flex row normal
+   (avatar - coluna nome/badge) que SEMPRE mostra o avatar (é só um filho
+   flex comum, sem grid nem display:contents), e o botão Sair sai do fluxo
+   (position:absolute) ancorado embaixo à direita — assim ele não disputa
+   largura com a linha do nome (que é o que cortava o badge antes) e fica
+   alinhado exatamente com a linha do badge, sem depender de nenhum
+   comportamento exótico de grid. padding-right no card reserva o espaço
+   fixo do Sair pra o badge nunca ficar embaixo dele. Só 1025px+ (26/08:
+   faixa tablet 768-1024 estendida pra usar o hamburger, ver @media
+   max-width:1024px mais abaixo — abaixo de 1025px o card nem aparece, some
+   pro topbar/drawer). */
+@media (min-width: 1025px) {
+  .cm-sidebar-user-card {
+    position: relative;
+    align-items: center;
+    padding: 8px 58px 8px 10px;
+    gap: 8px;
+  }
+
+  .cm-sidebar-user-info strong {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* width:100% (em vez de fit-content) + overflow/ellipsis — a versão
+     anterior (fit-content + só nowrap) deixava o texto vazar por cima do
+     botão Sair quando "Membro da comunidade" não cabia nos ~90px que
+     sobram ao lado do avatar. Com largura fixa igual à coluna disponível,
+     o texto que não couber trunca em "…" em vez de sobrepor o Sair. */
+  .cm-sidebar-user-card .cm-badge-membro {
+    justify-content: flex-start;
+    font-size: 10px;
+    padding: 4px 10px;
+    min-height: 0;
+    width: 70%;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-top: 3px;
+  }
+
+  .cm-sidebar-logout {
+    position: absolute;
+    right: 10px;
+    bottom: 8px;
+    flex-direction: row;
+    gap: 3px;
+    font-size: 10px;
+    padding: 4px 8px;
+    border-radius: 14px;
+    background: #f5e8d2;
+    border: 1px solid #e8d5b8;
+  }
+
+  .cm-sidebar-logout svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .cm-sidebar-logout span {
+    font-size: 10px;
+  }
+}
+
+.cm-sidebar-copy {
+  text-align: center;
+  font-size: 0.68rem;
+  color: var(--cm-text-soft);
+  margin: 12px 0 0;
+}
+
+/* Hamburger (HamburgerMenu.jsx) — só existe visualmente <=1024px (celular +
+   tablet, regras em @media mais abaixo); no desktop fica sempre invisível
+   (a sidebar comum já cobre a navegação). Base aqui fora do @media garante
+   isso mesmo antes do CSS mobile carregar (evita flash do botão/drawer). */
+.cm-hamburger-btn,
+.cm-hamburger-overlay,
+.cm-hamburger-drawer,
+.cm-header-mobile-final {
+  display: none;
+}
+
+.cm-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Grid principal: col 1 (sidebar esquerda, 240px) já é resolvida pelo flex
+   do .cm-shell — aqui dentro de .cm-content fica o grid de 3 colunas da
+   referência (centro flexível + 2 colunas fixas de 360px cada). As 3
+   colunas são 3 filhos diretos do grid, cada um em sua própria track de
+   coluna, SEM linhas compartilhadas entre eles (nada de
+   `grid-template-areas`/`grid-template-rows` — foi removido de propósito:
+   linhas compartilhadas faziam o conteúdo mais alto de uma coluna, ex.
+   "Próximo encontro ao vivo" na coluna 3, empurrar pra baixo o conteúdo
+   de OUTRA coluna que dividia a mesma linha, ex. "Sua Jornada" na coluna
+   2 — resultado: topo desalinhado entre colunas + vão gigante entre
+   Sequência e Sua Jornada). Cada coluna empilha seu próprio conteúdo com
+   flexbox (ver .cm-feed-empilhado, .cm-coluna-meio, .cm-coluna-direita) —
+   topo sempre alinhado. `align-items: stretch` (em vez de `start`) faz as
+   3 colunas terminarem alinhadas embaixo também: cada coluna vira um item
+   de grid com a altura da maior das três (hoje normalmente colunas 2+3
+   empilhadas, já que a coluna 1 só tem o card "Sua prática hoje"); quem
+   não é a mais alta estica pra acompanhar (.cm-grid-feed{height:100%} +
+   .cm-duvida{flex:1} esticam o card até o fim da coluna 1; o
+   `margin-top: auto` no último widget de .cm-coluna-meio/-direita, mais
+   abaixo, cobre o caso oposto — coluna 1 mais alta que 2/3). */
+.cm-main {
+  padding: 32px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) 360px 360px;
+  gap: 24px;
+  align-items: stretch;
+  background: #f9f7f2;
+}
+
+/* As 3 colunas (Coluna 1 = "Sua prática hoje"; Coluna 2 = botão "Já
+   meditei hoje" + Sequência + Sua Jornada + Ranking de Presença, ver
+   ColunaProgresso.jsx; Coluna 3 = Próximo encontro + Desafio da semana +
+   Meditando junto, ver ColunaEncontros.jsx) viram flex column com a MESMA
+   altura (100%, herdada da linha do grid — ver `align-items: stretch` em
+   .cm-main) e o MESMO gap:24px entre widgets. !important porque antes
+   cada coluna tinha gap/height própria (24px/20px, 100%/auto) — unifica
+   as 3 de uma vez pra garantir que terminam exatamente na mesma linha Y
+   embaixo. Não quebra o celular (<=767px): lá elas viram display:contents
+   (ver media query mais abaixo); no tablet (768-1024) viram grid própria —
+   as duas variantes também ganharam !important pra vencer esta aqui. */
+.cm-grid-feed,
+.cm-feed-empilhado,
+.cm-coluna-meio,
+.cm-coluna-direita {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 24px !important;
+  height: 100% !important;
+  min-width: 0;
+}
+
+/* O card do MEIO de cada coluna cresce (flex:1 1 auto) pra absorver
+   sozinho a altura que sobra da coluna — "Sua Jornada" na coluna 2,
+   "Desafio da semana" na coluna 3. Substitui o antigo mecanismo de só
+   empurrar o ÚLTIMO widget pra baixo com margin-top:auto (regra logo
+   abaixo, mantida como reforço): antes o vão sobrava concentrado embaixo
+   de um widget só (ex.: Sequência/Sua Jornada ou Próximo encontro/
+   Desafios), agora ele é absorvido pelo card do meio e o gap:24px fica
+   sempre igual entre todos os widgets da coluna.
+   "Sua prática hoje" (coluna 1) NÃO entra mais nesse grupo (25/08): o feed
+   de comentários dela agora tem altura própria travada em 6 itens visíveis
+   (ver .cm-duvida .cm-comentarios-lista abaixo), então o card não pode mais
+   esticar pra absorver a sobra da coluna — sobraria justamente o vão
+   branco vazio DENTRO do card, embaixo da lista, que era o bug reportado.
+   flex:0 1 auto faz o card ocupar só a altura do próprio conteúdo; a
+   coluna 1 passa a poder terminar mais curta que as colunas 2/3 — troca
+   aceita pra não ter mais espaço vazio. */
+.cm-grid-feed .cm-duvida {
+  flex: 0 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.cm-coluna-meio .cm-jornada {
+  flex: 1 1 auto !important;
+}
+
+.cm-coluna-direita .cm-grid-desafio {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Reforço: se um dia o card do meio já tiver crescido o quanto podia e
+   ainda sobrar espaço (ex.: coluna 1 ficar mais alta que 2/3), o último
+   widget de cada coluna ainda cola no rodapé. */
+.cm-coluna-meio > *:last-child,
+.cm-coluna-direita > *:last-child {
+  margin-top: auto;
+}
+
+/* Tablet (26/08, prompt master responsividade): iPad Mini (768), Surface
+   Pro 7 (912) e iPad Pro (1024) tinham cada um seu próprio jeito de ficar
+   feio nessa faixa — ou pegavam o grid de 3 colunas do desktop espremido
+   em 2 (ver antigo @media max-width:1200px, removido daqui), ou caíam no
+   tratamento "sidebar vira ícones em linha" (antigo @media max-width:960px,
+   removido daqui — o hamburger, estendido até 1024px logo mais abaixo,
+   já cobre navegação nessa largura de forma estritamente melhor). Aqui as
+   3 colunas do desktop (.cm-grid-feed/.cm-coluna-meio/.cm-coluna-direita)
+   deixam de ser tracks de grid lado a lado e viram blocos empilhados: feed
+   no topo, largura cheia; o resto de cada coluna original vira sua própria
+   mini-grid (1 coluna até 800px, 2 colunas de 801px pra cima), num
+   container central de 720px — mesmo tratamento pro Surface Pro (912),
+   sem precisar de regra dedicada a ele. */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .cm-main {
+    display: flex;
+    flex-direction: column;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 16px;
+    gap: 20px;
+  }
+
+  .cm-grid-feed,
+  .cm-coluna-meio,
+  .cm-coluna-direita {
+    height: auto !important;
+    min-width: 0;
+  }
+
+  .cm-grid-feed {
+    order: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Restante dos widgets (botão "Já meditei", Sequência, Jornada, Meditando
+     junto, Próximo encontro, Desafio, Frase) viram mini-grids próprias por
+     coluna — !important pra vencer o display:flex!important da regra
+     unificada de desktop (mais acima no arquivo). align-items:start (em vez
+     do stretch do desktop) porque aqui cada card mantém a própria altura,
+     não precisa bater com o vizinho de linha numa grid de 3 colunas cheia. */
+  .cm-coluna-meio,
+  .cm-coluna-direita {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 16px !important;
+  }
+
+  /* Neutraliza o margin-top:auto do último widget de cada coluna (regra
+     base, pensada pro flex-column do desktop) — aqui não tem sobra de
+     altura pra empurrar. */
+  .cm-coluna-meio > *:last-child,
+  .cm-coluna-direita > *:last-child {
+    margin-top: 0 !important;
+  }
+
+  .cm-coluna-meio {
+    order: 2;
+  }
+
+  .cm-coluna-direita {
+    order: 3;
+  }
+}
+
+@media (min-width: 801px) and (max-width: 1024px) {
+  .cm-coluna-meio,
+  .cm-coluna-direita {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Login */
+.cm-login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.cm-login-card {
+  background: var(--cm-beige);
+  border-radius: var(--cm-radius);
+  padding: 40px;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: var(--cm-shadow);
+  text-align: center;
+}
+
+.cm-login-card h1 {
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+}
+
+.cm-login-sub {
+  color: var(--cm-text-soft);
+  font-size: 0.92rem;
+  margin: 0 0 24px;
+}
+
+.cm-login-card input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--cm-border);
+  background: var(--cm-bg);
+  font-size: 0.95rem;
+  margin-bottom: 14px;
+}
+
+.cm-login-card button[type="submit"] {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: none;
+  background: var(--cm-sage);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.2s ease;
+}
+
+.cm-login-card button[type="submit"]:hover {
+  background: var(--cm-sage-dark);
+}
+
+.cm-login-erro {
+  color: #a4442f;
+  font-size: 0.85rem;
+  margin: -6px 0 14px;
+}
+
+.cm-login-hint {
+  margin-top: 18px;
+  font-size: 0.78rem;
+  color: var(--cm-text-soft);
+}
+
+/* "Sua prática hoje" (DificuldadeDoDia.jsx) — substituiu o antigo hero de
+   vídeo ("Continue sua jornada": foto de fundo + overlay escuro + player).
+   Card claro, sem imagem: pergunta + textarea + comentários públicos. */
+.cm-duvida {
+  background: #f9f7f2;
+  border: 1px solid var(--cm-border);
+  border-radius: var(--cm-radius);
+  box-shadow: var(--cm-shadow);
+  padding: 32px;
+  color: #1a1a1a;
+  /* flex:1 é o padrão fora do grid do Dashboard; dentro de .cm-grid-feed
+     (coluna 1 do Dashboard) a regra .cm-grid-feed .cm-duvida acima
+     sobrescreve pra flex:0 1 auto (25/08) — o card não estica mais até o
+     fim da coluna, ver comentário lá pra o porquê (feed interno agora tem
+     altura travada em 6 itens visíveis). */
+  flex: 1;
+}
+
+/* Cabeçalho (item 1 do redesign): avatar redondo pequeno à esquerda + bloco
+   de texto (eyebrow/título/subtítulo) à direita, em flex row. O avatar é
+   menor que a altura do bloco de texto (48px vs. ~58px das 3 linhas), então
+   ele nunca estica a linha — quem dita a altura do cabeçalho é sempre o
+   texto, o avatar só centraliza dentro dela (align-items:center). */
+.cm-duvida-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.cm-duvida-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--cm-sage-soft);
+  color: var(--cm-sage-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.cm-duvida-avatar-img {
+  object-fit: cover;
+  background: var(--cm-beige-soft);
+}
+
+.cm-duvida-cabecalho-textos {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cm-duvida-eyebrow {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--cm-text-soft);
+  margin: 0;
+}
+
+.cm-duvida-titulo {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.cm-duvida-sub {
+  font-size: 13px;
+  color: var(--cm-text-soft);
+  margin: 0;
+  line-height: 1.4;
+  max-width: 480px;
+}
+
+.cm-duvida-form {
+  /* Ancora o popover de emoji (position:absolute), que precisa flutuar
+     relativo ao form e não à página. */
+  position: relative;
+}
+
+/* Textarea com borda suave e resize:none (item 2) — cresce sozinho via JS
+   (ajustarAlturaTextarea em DificuldadeDoDia.jsx) até ALTURA_MAX_TEXTAREA
+   (120px), depois vira scroll interno. */
+.cm-duvida-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: #fff;
+  border: 1px solid var(--cm-border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: #1a1a1a;
+  resize: none;
+  min-height: 76px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.cm-duvida-textarea:focus {
+  outline: none;
+}
+
+.cm-duvida-textarea::placeholder {
+  color: #b3ada2;
+  font-style: italic;
+}
+
+/* Toolbar em pílula: Negrito / Itálico / Emoji / Foto, logo abaixo do
+   textarea, alinhada à esquerda. Container cinza claro sem borda, cada botão
+   é um quadrado arredondado sem borda com hover/active suaves. */
+.cm-toolbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  background: #f5f5f5;
+  border-radius: 9999px;
+  padding: 6px 10px;
+  margin-top: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.cm-duvida-anexar-input {
+  display: none;
+}
+
+.cm-toolbar-btn {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.cm-toolbar-btn:hover:not(:disabled) {
+  background: #e5e5e5;
+}
+
+.cm-toolbar-btn:active:not(:disabled),
+.cm-toolbar-btn.is-ativo {
+  background: #ddd;
+}
+
+.cm-toolbar-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Popover de emoji (item 4): abre ABAIXO da toolbar (era acima, com
+   bottom:100%, e cobria o textarea/título — bug reportado). Só cuida do
+   posicionamento — o conteúdo agora é a lib emoji-picker-react (busca +
+   categorias, ~1000 emojis), que já vem com seu próprio card/sombra/borda,
+   então esta regra não duplica background/padding/shadow como fazia com o
+   grid de 20 emojis fixos de antes. */
+.cm-duvida-emoji-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 30;
+}
+
+@media (max-width: 600px) {
+  .cm-duvida-emoji-popover {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90vw;
+  }
+
+  .cm-duvida-emoji-popover .EmojiPickerReact {
+    width: 100% !important;
+  }
+}
+
+/* 26/08, bug relatado: o picker completo (emoji-picker-react) não cabe bem
+   no mobile mesmo com o ajuste de largura acima — print mostrou o campo de
+   busca cortado. Em vez de continuar ajustando a lib de terceiro pro mobile,
+   o botão de emoji some só ali (mantém B/I/foto) e o picker fica reservado
+   pro desktop, onde tem espaço de sobra e abre pra baixo normalmente. */
+@media (max-width: 768px) {
+  .cm-btn-emoji,
+  .cm-duvida-emoji-popover {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .cm-btn-emoji {
+    display: flex !important;
+  }
+}
+
+.cm-duvida-form-acoes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.cm-duvida-contador {
+  font-size: 0.78rem;
+  color: var(--cm-text-soft);
+}
+
+/* Agrupa o toggle de visibilidade + "Compartilhar" à direita — o contador
+   fica sozinho à esquerda via justify-content:space-between no pai acima. */
+.cm-duvida-form-acoes-direita {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Toggle "Público/Privado/Orientador" — mesma pílula cinza da toolbar B/I/
+   emoji/foto (.cm-toolbar-btn), só que com label de texto (não cabe só
+   ícone: as 3 opções precisam ser distinguíveis de relance). */
+.cm-duvida-visibilidade {
+  position: relative;
+}
+
+.cm-duvida-visibilidade-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #f5f5f5;
+  border: none;
+  border-radius: 9999px;
+  padding: 8px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cm-duvida-visibilidade-btn:hover,
+.cm-duvida-visibilidade-btn.is-ativo {
+  background: #e5e5e5;
+}
+
+/* Abre PRA CIMA (bottom:100%), diferente do popover de emoji (que abre pra
+   baixo): este botão fica no rodapé do form, colado no fim do card — abrindo
+   pra baixo o popover ficaria por baixo da lista de comentários seguinte,
+   fora da área visível na maioria das telas. */
+.cm-duvida-visibilidade-popover {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  z-index: 30;
+  /* min() com 100vw-48px por segurança em telas bem estreitas (320px) —
+     mesmo espírito defensivo do width:90vw do popover de emoji acima. */
+  width: min(210px, calc(100vw - 48px));
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: var(--cm-shadow);
+  border: 1px solid var(--cm-border);
+  padding: 6px;
+}
+
+.cm-duvida-visibilidade-opcao {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  background: none;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  color: var(--cm-text);
+}
+
+.cm-duvida-visibilidade-opcao:hover {
+  background: var(--cm-beige-soft);
+}
+
+.cm-duvida-visibilidade-opcao.is-selecionada {
+  background: var(--cm-sage-soft);
+}
+
+.cm-duvida-visibilidade-opcao svg {
+  flex-shrink: 0;
+  color: var(--cm-text-soft);
+}
+
+.cm-duvida-visibilidade-opcao.is-selecionada svg {
+  color: var(--cm-sage-dark);
+}
+
+.cm-duvida-visibilidade-opcao-textos {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1.2;
+}
+
+.cm-duvida-visibilidade-opcao-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.cm-duvida-visibilidade-opcao-desc {
+  font-size: 0.72rem;
+  color: var(--cm-text-soft);
+}
+
+.cm-duvida-enviar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.cm-duvida-enviar:hover:not(:disabled) {
+  background: #000;
+}
+
+.cm-duvida-enviar:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Preview quadradinho da foto selecionada, entre o textarea e a linha de
+   ações — some assim que a foto é removida ou o post é enviado. */
+.cm-duvida-foto-preview {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  margin-top: 10px;
+}
+
+.cm-duvida-foto-preview img {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  object-fit: cover;
+  display: block;
+  border: 1px solid #e5e0d8;
+}
+
+.cm-duvida-foto-remover {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border-radius: 50%;
+  background: #1a1a1a;
+  color: #fff;
+  border: 2px solid #f9f7f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.cm-duvida-foto-remover:hover {
+  background: #000;
+}
+
+.cm-duvida-foto-erro {
+  color: #a4442f;
+  font-size: 0.78rem;
+  margin: 8px 0 0;
+}
+
+.cm-duvida-divider {
+  height: 1px;
+  background: var(--cm-border);
+  margin-top: 32px;
+  margin-bottom: 20px;
+}
+
+.cm-duvida-vazio {
+  color: var(--cm-text-soft);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Card de comentário ÚNICO (ComentarioCard.jsx) — usado tanto no mural
+   "geral" (ComentariosFeed.jsx, em Aulas) quanto em "Sua prática hoje"
+   (DificuldadeDoDia.jsx, no Dashboard). Antes cada página tinha sua própria
+   cópia (.cm-comentario* aqui embaixo e .cm-duvida-comentario* — removidas)
+   e um fix de contraste aplicado só numa delas ficava pra trás na outra sem
+   ninguém perceber: foi exatamente o bug do texto preto em fundo escuro no
+   Dashboard. Regra daqui pra frente: TODA variante escura (admin/orientador)
+   sobrescreve cor via seletor de 2 classes (`.cm-comentario-card-admin
+   .cm-comentario-card-nome`, nunca `.cm-comentario-card-admin strong`)
+   pra ter especificidade sempre maior que qualquer regra-base de 1 classe,
+   não dependendo de ordem no arquivo pra ganhar o empate. */
+.cm-comentarios-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Só em DificuldadeDoDia.jsx ("Sua prática hoje", coluna 1 do dashboard):
+   scroll PRÓPRIO em vez de deixar o card esticar pra sempre com o scroll
+   infinito. Histórico: era max-height fixo (420px) → virou flex:1 pra
+   acompanhar a altura de .cm-duvida esticado (que igualava as colunas
+   2/3) → esse flex:1 é que causava o vão branco vazio embaixo da lista
+   quando as colunas 2/3 eram mais altas (o card esticava, a lista
+   esticava junto, e sobrava espaço em branco depois do último
+   comentário). Correção 25/08 (pedido do cliente): volta a ser altura
+   TRAVADA, mas agora calculada pra mostrar exatamente 6 comentários por
+   vez — cada .cm-comentario-card tem 92px fixos (ver regra mais abaixo,
+   aumentado de 78px em 25/08 pra fila de 6 encostar embaixo no "Meditando
+   junto"/citação da coluna 3) + gap de 12px entre eles, então 6 itens =
+   6×104px = 624px. .cm-duvida
+   também não estica mais pra bater com as colunas 2/3 (flex:0 1 auto na
+   regra .cm-grid-feed .cm-duvida acima), então não sobra vão nenhum: o
+   7º comentário em diante só aparece rolando o scroll DENTRO desta lista
+   (overflow-y:auto), que também é o `root` do IntersectionObserver que
+   dispara carregarMais() (+10) perto do fim desse scroll interno — ver
+   DificuldadeDoDia.jsx. ComentariosFeed.jsx (mural "Comentários" em
+   Aulas, fora de .cm-duvida) não é afetado por esta regra nem pela de
+   92px do card — continua com altura automática e a página inteira
+   rolando. */
+.cm-duvida .cm-comentarios-lista {
+  max-height: calc(6 * 104px); /* = 624px: 6 comentários de 92px + gap 12px */
+  gap: 12px;
+  overflow-y: auto;
+  padding-right: 4px;
+  /* Firefox — versão fina do scrollbar nativo (Chrome/Safari usam as
+     pseudo-classes -webkit-scrollbar-* logo abaixo). */
+  scrollbar-width: thin;
+  scrollbar-color: var(--cm-border) transparent;
+}
+
+.cm-duvida .cm-comentarios-lista::-webkit-scrollbar {
+  width: 6px;
+}
+
+.cm-duvida .cm-comentarios-lista::-webkit-scrollbar-thumb {
+  background: var(--cm-border);
+  border-radius: 999px;
+}
+
+/* "Você chegou ao fim" (.cm-comentarios-fim) já é renderizado DENTRO
+   deste container no JSX (não é irmão dele) — herda o overflow-y:auto
+   acima e rola junto com a lista, nunca fica solto fora do scroll. */
+
+.cm-comentario-card {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  /* avatar (36px) + corpo são os 2 únicos filhos diretos agora — foto e
+     lixeira moraram pra dentro de -topo-direita (ver comentário lá embaixo),
+     então quem dita a altura da linha é sempre o conteúdo de texto, nunca
+     mais um bloco de foto de 78px puxando a linha inteira pra baixo. */
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: #fff;
+  border: 1px solid var(--cm-border);
+  border-radius: 14px;
+}
+
+/* Só em "Sua prática hoje" (DificuldadeDoDia.jsx): altura FIXA de 92px por
+   comentário (25/08, pedido do cliente — subiu de 78px pra fila de 6 encostar
+   embaixo no card "Meditando junto"/citação do monge da coluna 3) — é essa
+   medida fixa que permite o container calcular "6 itens visíveis = 624px"
+   acima (.cm-duvida .cm-comentarios-lista). min-height + max-height travam o
+   bloco no mesmo tamanho tenha o comentário 1 linha, 2 linhas ou foto
+   anexada; overflow: hidden corta o que não couber (nome+badges+foto 40px no
+   topo, texto clampado em 2 linhas — ver override de .cm-comentario-card-texto
+   no fim do arquivo) em vez de esticar a linha. flex-shrink:0 evita que o
+   flex column da lista espreme os cards pra caber mais que 6. ComentariosFeed.jsx
+   (mural em Aulas, fora de .cm-duvida) mantém altura automática — mesmo
+   componente ComentarioCard.jsx, visual diferente só aqui dentro. */
+.cm-duvida .cm-comentario-card {
+  min-height: 92px;
+  max-height: 92px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* Destrava a altura fixa de 92px acima quando o card tem o formulário de
+   resposta aberto ou já tem respostas pra mostrar (Tarefa 1) — sem isso o
+   botão "Responder" e as respostas ficariam cortados pelo overflow:hidden.
+   Classe calculada em ComentarioCard.jsx (classeExpandido). */
+.cm-duvida .cm-comentario-card-expandido {
+  max-height: none;
+  align-items: flex-start;
+}
+
+/* Menu de troca de visibilidade (27/08, bug corrigido no mesmo dia): classe
+   À PARTE de -expandido acima — o popover (position:absolute, abre pra
+   BAIXO a partir do selinho no topo do card) nunca faz o card crescer de
+   verdade, só precisa que o overflow:hidden do card fixo de 92px não o
+   corte. Usar -expandido aqui (como antes) trazia de brinde o
+   align-items:flex-start dele, fazendo a foto do autor "pular" pra cima
+   toda vez que o menu abria mesmo em comentário curto — e mesmo assim, num
+   comentário curto o card continuava baixo, então o popover de 3 opções
+   vazava pra fora dele e sobrava só "Público" visível (max-height:none não
+   destrava overflow, só a altura). Esta regra só libera o overflow, sem
+   mexer em mais nada do layout normal do card. */
+.cm-duvida .cm-comentario-card-popover-visibilidade-aberto {
+  overflow: visible;
+}
+
+.cm-duvida .cm-comentario-skeleton-msg {
+  /* mesma altura de .cm-duvida .cm-comentario-card acima — sem isso o
+     skeleton (78px) e o card real (92px) trocam de tamanho quando o fetch
+     resolve, pulando o layout da lista. */
+  min-height: 92px;
+  max-height: 92px;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+/* Placeholder mostrado por DificuldadeDoDia.jsx/ComentariosFeed.jsx enquanto
+   o 1º fetch não resolveu e não havia cache pra pintar na hora (ver
+   cacheComentarios.js) — mesma altura/raio do .cm-comentario-card real pra
+   não pular layout quando o dado de verdade substitui o skeleton. */
+.cm-comentario-skeleton {
+  height: 64px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, var(--cm-border) 25%, #f4f4f4 37%, var(--cm-border) 63%);
+  background-size: 400% 100%;
+  animation: cm-skeleton-pulso 1.4s ease-in-out infinite;
+}
+
+@keyframes cm-skeleton-pulso {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Skeleton "com formato de mensagem" do scroll infinito de
+   DificuldadeDoDia.jsx (avatar redondo + 2 linhas cinzas) — usado tanto no
+   1º carregamento quanto enquanto +10 comentários chegam ao rolar até o
+   sentinel. Reaproveita a mesma animação cm-skeleton-pulso do
+   .cm-comentario-skeleton acima; não mexe nele porque ComentariosFeed.jsx
+   (que continua paginado 1/3) ainda usa o skeleton simples. */
+.cm-comentario-skeleton-msg {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+}
+
+.cm-comentario-skeleton-msg-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: linear-gradient(90deg, var(--cm-border) 25%, #f4f4f4 37%, var(--cm-border) 63%);
+  background-size: 400% 100%;
+  animation: cm-skeleton-pulso 1.4s ease-in-out infinite;
+}
+
+.cm-comentario-skeleton-msg-linhas {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cm-comentario-skeleton-msg-linha {
+  height: 10px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--cm-border) 25%, #f4f4f4 37%, var(--cm-border) 63%);
+  background-size: 400% 100%;
+  animation: cm-skeleton-pulso 1.4s ease-in-out infinite;
+}
+
+.cm-comentario-skeleton-msg-linha:last-child {
+  width: 60%;
+}
+
+/* Sentinel invisível observado pelo IntersectionObserver — sem altura
+   própria de propósito, só precisa existir no DOM depois da lista pra
+   disparar carregarMais() quando entra na viewport. */
+.cm-comentarios-sentinela {
+  height: 1px;
+}
+
+/* "Você chegou ao fim" — discreto, mesmo espírito de .cm-comentarios-vazio,
+   substitui a paginação 1/3 quando hasMore vira false. */
+.cm-comentarios-fim {
+  text-align: center;
+  color: var(--cm-text-soft);
+  font-size: 0.8rem;
+  padding-top: 14px;
+  margin: 0;
+}
+
+.cm-comentario-card-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--cm-sage-soft);
+  color: var(--cm-sage-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+/* Foto de perfil do autor (JOIN em comentarios.php) no lugar das iniciais —
+   mesmo tamanho/formato de .cm-comentario-card-avatar. */
+.cm-comentario-card-avatar-img {
+  object-fit: cover;
+  background: var(--cm-beige-soft);
+}
+
+.cm-comentario-card-corpo {
+  flex: 1;
+  min-width: 0;
+}
+
+/* flex-wrap:nowrap (25/08, bug relatado de novo em print do DevTools) — era
+   `wrap`: com nome longo + badge Admin/Orientador, o cluster
+   foto/data/lixeira (-topo-direita) quebrava pra uma 2ª linha inteiro. Como
+   "Sua prática hoje" trava o card em 92px com overflow:hidden (regra
+   .cm-duvida .cm-comentario-card lá em cima), essa 2ª linha ficava cortada
+   por cima do parágrafo — dava a impressão de foto "grudada" fora de
+   posição, embora o align-items:center/align-self de -topo-direita
+   estivessem corretos. Nowrap + .cm-comentario-card-nome truncando com "…"
+   (regra abaixo) garante foto/data/lixeira SEMPRE na mesma linha. */
+.cm-comentario-card-topo {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 4px;
+}
+
+.cm-comentario-card-nome {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--cm-text);
+  /* encolhe e trunca em vez de forçar o wrap da linha inteira (ver
+     comentário em .cm-comentario-card-topo acima) — min-width:0 é
+     obrigatório pro flex item conseguir encolher abaixo do texto inteiro.
+     flex-grow:0 (26/08, bug relatado: "ADMINISTRADOR" longe do nome) — com
+     grow:1 essa caixa esticava pra ocupar todo o espaço livre da linha (até
+     encostar no cluster -topo-direita, empurrado pro fim via
+     margin-left:auto nele), e como o texto fica alinhado à esquerda dentro
+     da caixa esticada, sobrava um vão enorme antes do badge (que vem logo
+     depois do nome no JSX). Só o shrink:1 é necessário pra truncar nome
+     longo — sem grow, nome e badge ficam grudados e é só o cluster da
+     direita que vai pro fim da linha. */
+  min-width: 0;
+  flex: 0 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Cluster da direita do header: foto mini (se tiver) -> data -> lixeira (se
+   podeExcluir), nessa ordem, gap:8px entre eles, centralizados verticalmente
+   (align-items:center herdado do flex column do card via -topo). O
+   margin-left:auto mora AQUI (não em -quando sozinho) pra empurrar o
+   cluster inteiro pro fim da linha em bloco — se tivesse só em -quando, a
+   foto (que vem antes dela agora) ficaria "solta" grudada no nome em vez de
+   acompanhar a data pro lado direito. */
+.cm-comentario-card-topo-direita {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  /* flex-shrink:0 (25/08) — com -topo agora nowrap e -nome truncando (ver
+     comentários acima), o cluster nunca deve ceder espaço; sem isso a foto
+     de 40px poderia ser espremida por engano. (height:100% removida daqui:
+     não fazia nada — o pai .cm-comentario-card-topo tem altura auto, então
+     % resolve pra auto também; quem centraliza de verdade é o
+     align-items:center acima + align-self da regra "> *" logo abaixo.) */
+  flex-shrink: 0;
+  margin-left: auto;
+  padding-left: 8px;
+}
+
+/* Foto/data/lixeira têm alturas intrínsecas diferentes (img 40px, texto,
+   botão) — sem isso ficam "tortos", um mais alto/baixo que o outro dentro
+   do cluster (bug reportado 25/08). align-self centraliza cada um na altura
+   do cluster; vertical-align cobre o caso do <img> dentro do botão -mini. */
+.cm-comentario-card-topo-direita > * {
+  align-self: center;
+  vertical-align: middle;
+}
+
+.cm-comentario-card-quando {
+  font-size: 0.76rem;
+  font-weight: 400;
+  color: var(--cm-text-soft);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Selinho de visibilidade (cadeado/escudo) — só existe no DOM quando o
+   comentário não é 'publico' (ver ComentarioCard.jsx). Ícone sozinho, sem
+   texto (o cluster da direita já é apertado: foto/data/lápis/lixeira), tooltip
+   nativo (title=) explica o que significa ao passar o mouse. */
+.cm-comentario-card-visibilidade {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.cm-comentario-card-visibilidade-privado {
+  color: var(--cm-text-soft);
+}
+
+.cm-comentario-card-visibilidade-orientador {
+  color: #f59e0b; /* mesma cor de .cm-badge-orientador */
+}
+
+.cm-comentario-card-visibilidade-publico {
+  color: var(--cm-text-soft);
+}
+
+/* Wrapper só existe quando o selinho é clicável (podeAlterarVisibilidade em
+   ComentarioCard.jsx, 27/08) — position:relative ancora o menu de troca
+   (abaixo) relativo a ESTE selinho, não ao card inteiro. */
+.cm-comentario-card-visibilidade-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.cm-comentario-card-visibilidade-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.cm-comentario-card-visibilidade-btn:hover {
+  opacity: 0.7;
+}
+
+/* Reaproveita o menu/opções de .cm-duvida-visibilidade-popover (mesmo menu
+   do composer, ver acima) só que abrindo pra BAIXO (top:100%) em vez de pra
+   cima — este selinho fica no TOPO do card, não no rodapé do form, então
+   abrir pra cima ficaria fora da área visível na maioria dos casos. O card
+   destrava a altura fixa via .cm-comentario-card-expandido (classeExpandido
+   em ComentarioCard.jsx inclui visibilidadeAberta) enquanto este menu está
+   aberto, senão o overflow:hidden de 92px (.cm-duvida .cm-comentario-card)
+   cortaria o menu pela metade. */
+.cm-comentario-card-visibilidade-popover {
+  top: calc(100% + 6px);
+  bottom: auto;
+  right: 0;
+  left: auto;
+}
+
+.cm-comentario-card-texto {
+  margin: 4px 0 0;
+  font-size: 0.88rem;
+  color: var(--cm-text);
+  /* corta comentário longo em 2 linhas visuais (texto de novo comentário já
+     vem limitado a 140 chars pelo maxLength do textarea, isso aqui é só
+     garantia de layout pra comentário antigo/legado sem o limite) */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* Miniatura da foto anexada a um comentário (image_url) — própria linha,
+   alinhada à esquerda, logo abaixo do texto e ACIMA do "Responder" (2ª
+   mudança do cliente em 26/08: antes ficava lado a lado com "Responder"
+   nesse mesmo rodapé, empurrada pro fim da linha via -rodape, que foi
+   removido — agora é só um <button> block normal na ordem do JSX). Cresceu
+   de 40x40 pra 84x84 nessa mudança (pedido do cliente: "maior"). rounded
+   10px (proporcional ao tamanho novo), flex-shrink:0 continua útil quando
+   este botão é filho de algum flex (nenhum caso hoje, mas barato manter).
+   Clique abre o lightbox (ImageLightbox.jsx). */
+.cm-comentario-card-foto-mini {
+  display: block;
+  width: 84px;
+  height: 84px;
+  margin: 6px 0 0;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 10px;
+  flex-shrink: 0;
+  line-height: 0;
+  cursor: zoom-in;
+}
+
+.cm-comentario-card-foto-mini img {
+  width: 84px;
+  height: 84px;
+  object-fit: cover;
+  border: 1px solid var(--cm-border);
+  border-radius: 10px;
+  display: block;
+}
+
+.cm-comentario-card-admin .cm-comentario-card-foto-mini img,
+.cm-comentario-card-orientador .cm-comentario-card-foto-mini img {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Lápis de editar (pedido do cliente 26/08, "como em rede social") — mesmo
+   reset de botão que a lixeira ao lado (.cm-comentario-card-excluir), só que
+   com hover na cor sage (mesma cor de "Responder" no hover) em vez de
+   vermelho, pra não parecer uma ação destrutiva. Só existe no DOM quando
+   ComentarioCard decide podeEditarEste (sempre o próprio autor, nunca
+   admin/orientador só por serem admin/orientador). */
+.cm-comentario-card-editar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--cm-text-soft);
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 6px;
+  line-height: 0;
+}
+
+.cm-comentario-card-editar:hover {
+  color: var(--cm-sage);
+  background: rgba(138, 154, 140, 0.12); /* --cm-sage (#8a9a8c) em rgba */
+}
+
+.cm-comentario-card-excluir {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--cm-text-soft);
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 6px;
+  line-height: 0;
+}
+
+.cm-comentario-card-excluir:hover {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.cm-comentario-card-admin,
+.cm-comentario-card-orientador {
+  border-color: transparent;
+}
+
+.cm-comentario-card-admin {
+  border-left: 3px solid #3b82f6;
+  background: #1e293b;
+}
+
+.cm-comentario-card-orientador {
+  border-left: 3px solid #f59e0b;
+  background: #29210a;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+}
+
+.cm-comentario-card-admin .cm-comentario-card-nome,
+.cm-comentario-card-admin .cm-comentario-card-texto,
+.cm-comentario-card-orientador .cm-comentario-card-nome,
+.cm-comentario-card-orientador .cm-comentario-card-texto {
+  color: #f1f5f9; /* slate-100 */
+}
+
+.cm-comentario-card-admin .cm-comentario-card-quando {
+  color: #94a3b8; /* slate-400 */
+}
+
+.cm-comentario-card-orientador .cm-comentario-card-quando {
+  color: rgba(253, 230, 138, 0.6); /* amber-200/60 */
+}
+
+.cm-comentario-card-admin .cm-comentario-card-excluir,
+.cm-comentario-card-orientador .cm-comentario-card-excluir,
+.cm-comentario-card-admin .cm-comentario-card-editar,
+.cm-comentario-card-orientador .cm-comentario-card-editar {
+  color: rgba(241, 245, 249, 0.65);
+}
+
+/* Nome clicável (Tarefa 2) — só quando quem está vendo é admin/orientador.
+   Reset de <button> pra parecer texto normal + sublinhado só no hover, pra
+   sinalizar "clicável" sem gritar. */
+.cm-comentario-card-nome-clicavel {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  /* text-align:left (26/08, bug relatado: nome centralizado só na visão do
+     admin) — <button> nativo já vem com text-align:center no CSS padrão do
+     navegador, e nada aqui sobrescrevia isso. Só afeta quem vê ESTE nome
+     como botão clicável (podeEnviarMensagem=true na visão de admin/
+     orientador, ver nomeClicavel em ComentarioCard.jsx) — pra aluno comum o
+     nome sempre foi <span> (sem esse default do <button>), por isso nunca
+     apareceu centralizado nessa visão. */
+  text-align: left;
+}
+
+.cm-comentario-card-nome-clicavel:hover {
+  text-decoration: underline;
+}
+
+/* Wrapper de "Responder" + reação rápida (27/08) — mesma linha, cada um
+   opt-in independente (ver comentário em ComentarioCard.jsx). margin-top
+   substitui o que antes vivia só em -responder-btn; flex-wrap:wrap é rede de
+   segurança pro mobile (card estreito com nome longo já reduz o espaço),
+   nunca deveria disparar no desktop (92px de "Sua prática hoje" já conta com
+   1 linha só aqui). */
+.cm-comentario-card-acoes-linha {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+/* "Responder" (Tarefa 1) — antes bloco próprio numa linha só sua, agora
+   dentro de -acoes-linha acima (27/08, ver comentário lá) lado a lado com a
+   reação rápida. Já foi lado a lado com a foto num wrapper -rodape (removido
+   na 2ª mudança de 26/08: cliente pediu foto e Responder cada um na sua
+   própria linha, foto em cima) — este aqui é um wrapper novo/diferente. */
+.cm-comentario-card-responder-btn {
+  display: inline-block;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--cm-text-soft);
+  cursor: pointer;
+}
+
+.cm-comentario-card-responder-btn:hover {
+  color: var(--cm-sage);
+  text-decoration: underline;
+}
+
+.cm-comentario-card-admin .cm-comentario-card-responder-btn,
+.cm-comentario-card-orientador .cm-comentario-card-responder-btn {
+  color: rgba(241, 245, 249, 0.65);
+}
+
+/* Reação rápida (🙏 ❤️ 🔥, 27/08) — 3 botões pill dentro de -acoes-linha
+   acima, ao lado de "Responder". Só em "Sua prática hoje" (onReagir é
+   opt-in, ver ComentarioCard.jsx) — mural "geral" (ComentariosFeed.jsx)
+   nunca renderiza este bloco. */
+.cm-comentario-reacoes {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cm-comentario-reacao-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 1px 6px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.cm-comentario-reacao-btn:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.cm-comentario-reacao-btn:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+/* Emoji que a PRÓPRIA pessoa escolheu (comentario.minhaReacao) — fundo/borda
+   destacados com a cor de marca do projeto (--cm-sage: #8a9a8c, mesma usada
+   no hover de "Responder" acima). rgba() direto em vez de color-mix() — este
+   projeto já teve bug de celular relatado (ver notas 25/08 acima), evita
+   depender de suporte recente demais de CSS. */
+.cm-comentario-reacao-btn-ativo {
+  background: rgba(138, 154, 140, 0.16);
+  border-color: var(--cm-sage);
+}
+
+.cm-comentario-reacao-contagem {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--cm-text-soft);
+}
+
+.cm-comentario-card-admin .cm-comentario-reacao-contagem,
+.cm-comentario-card-orientador .cm-comentario-reacao-contagem {
+  color: rgba(241, 245, 249, 0.65);
+}
+
+/* Formulário inline de resposta — input + Cancelar/Enviar, logo abaixo do
+   comentário pai (placeholder "Responder para @Nome..."). */
+.cm-comentario-resposta-form {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cm-comentario-resposta-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--cm-border);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  color: var(--cm-text);
+  background: #fff;
+}
+
+.cm-comentario-card-admin .cm-comentario-resposta-input,
+.cm-comentario-card-orientador .cm-comentario-resposta-input {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #f1f5f9;
+}
+
+.cm-comentario-resposta-input:focus {
+  outline: none;
+  border-color: var(--cm-sage);
+}
+
+.cm-comentario-resposta-acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.cm-comentario-resposta-cancelar,
+.cm-comentario-resposta-enviar {
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.cm-comentario-resposta-cancelar {
+  background: none;
+  color: var(--cm-text-soft);
+}
+
+.cm-comentario-resposta-enviar {
+  background: var(--cm-sage);
+  color: #fff;
+}
+
+.cm-comentario-resposta-enviar:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Formulário de edição inline (pedido do cliente 26/08) — substitui o <p>
+   do texto quando o autor clica no lápis (.cm-comentario-card-editar acima).
+   Mesmo visual do formulário de resposta (-resposta-form/-input/-acoes/
+   -cancelar/-enviar são reaproveitados, ver ComentarioCard.jsx), só que
+   textarea (2 linhas) em vez de input de 1 linha só, já que o texto
+   original pode ocupar as 2 linhas do clamp do card. */
+.cm-comentario-edicao-form {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cm-comentario-edicao-textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--cm-border);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  color: var(--cm-text);
+  background: #fff;
+  resize: none;
+}
+
+.cm-comentario-card-admin .cm-comentario-edicao-textarea,
+.cm-comentario-card-orientador .cm-comentario-edicao-textarea {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #f1f5f9;
+}
+
+.cm-comentario-edicao-textarea:focus {
+  outline: none;
+  border-color: var(--cm-sage);
+}
+
+/* Contador "N/140" — mesma linha dos botões Cancelar/Salvar
+   (.cm-comentario-resposta-acoes já é flex + justify-content:flex-end),
+   margin-right:auto empurra ele pro início da linha sem precisar de wrapper
+   extra. */
+.cm-comentario-edicao-contador {
+  margin-right: auto;
+  font-size: 0.72rem;
+  color: var(--cm-text-soft);
+}
+
+.cm-comentario-card-admin .cm-comentario-edicao-contador,
+.cm-comentario-card-orientador .cm-comentario-edicao-contador {
+  color: rgba(241, 245, 249, 0.65);
+}
+
+/* Respostas aninhadas — indentadas abaixo do comentário pai, com uma borda
+   à esquerda sinalizando o vínculo. Cada resposta é o mesmo ComentarioCard
+   recursivo (podeResponder=false, ver componente), então herda toda a
+   estilização de avatar/nome/badge/texto normalmente. */
+.cm-comentario-respostas {
+  margin-top: 10px;
+  padding-left: 16px;
+  border-left: 2px solid var(--cm-border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cm-comentario-card-admin .cm-comentario-respostas,
+.cm-comentario-card-orientador .cm-comentario-respostas {
+  border-left-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Lightbox (ImageLightbox.jsx) — abre ao clicar no quadradinho de foto de
+   um comentário. z-index acima de tudo no app (maior uso existente era 60,
+   ver .cm-*-overlay). Fecha no X, clique fora (no fundo) ou ESC. */
+.cm-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  cursor: zoom-out;
+  z-index: 200;
+}
+
+.cm-lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 4px;
+  cursor: default;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.cm-lightbox-fechar {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.cm-lightbox-fechar:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* Modal "Enviar mensagem para @Nome" (Tarefa 2, MensagemModal.jsx) — mesmo
+   overlay escuro fixo do lightbox acima, cartão central com formulário. */
+.cm-mensagem-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  z-index: 200;
+}
+
+.cm-mensagem-modal {
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.cm-mensagem-modal-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.cm-mensagem-modal-topo h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--cm-text);
+}
+
+.cm-mensagem-modal-fechar {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--cm-text-soft);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  line-height: 0;
+}
+
+.cm-mensagem-modal-fechar:hover {
+  background: var(--cm-beige);
+}
+
+.cm-mensagem-modal-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid var(--cm-border);
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: var(--cm-text);
+  resize: vertical;
+}
+
+.cm-mensagem-modal-textarea:focus {
+  outline: none;
+  border-color: var(--cm-sage);
+}
+
+.cm-mensagem-modal-erro {
+  margin: 8px 0 0;
+  font-size: 0.82rem;
+  color: var(--cm-red);
+}
+
+.cm-mensagem-modal-acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.cm-mensagem-modal-cancelar,
+.cm-mensagem-modal-enviar {
+  padding: 9px 18px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.cm-mensagem-modal-cancelar {
+  background: var(--cm-beige);
+  color: var(--cm-text);
+}
+
+.cm-mensagem-modal-enviar {
+  background: var(--cm-sage);
+  color: #fff;
+}
+
+.cm-mensagem-modal-enviar:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Modal de recorte da foto de perfil (AvatarCropModal.jsx) — mesmo overlay
+   escuro fixo do lightbox acima, mas com um cartão central (não a foto
+   direto) porque aqui tem controles (slider de zoom, botões). */
+.cm-avatar-crop-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  z-index: 200;
+}
+
+.cm-avatar-crop-card {
+  position: relative;
+  background: var(--cm-bg);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: var(--cm-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: calc(100vw - 32px);
+}
+
+.cm-avatar-crop-fechar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--cm-beige-soft);
+  color: var(--cm-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.cm-avatar-crop-fechar:hover {
+  background: var(--cm-border);
+}
+
+.cm-avatar-crop-titulo {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--cm-text);
+}
+
+/* Viewport quadrado com overflow escondido — a <img> é maior que ele e se
+   move por dentro (transform translate) conforme o usuário arrasta. */
+.cm-avatar-crop-viewport {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--cm-beige-soft);
+  touch-action: none;
+  user-select: none;
+}
+
+.cm-avatar-crop-viewport img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: none;
+  pointer-events: none;
+}
+
+/* Máscara circular por cima da imagem, só decorativa — mostra ao usuário
+   qual área vai virar o avatar redondo de verdade, mesmo o recorte
+   exportado sendo o quadrado inteiro do viewport. */
+.cm-avatar-crop-mascara {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 999px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+
+.cm-avatar-crop-zoom {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--cm-text-soft);
+}
+
+.cm-avatar-crop-zoom input[type="range"] {
+  flex: 1;
+  accent-color: var(--cm-sage-dark);
+}
+
+.cm-avatar-crop-acoes {
+  display: flex;
+  gap: 10px;
+}
+
+.cm-avatar-crop-acoes .cm-config-btn {
+  margin-top: 0;
+}
+
+/* .cm-duvida-paginacao removida (25/08): DificuldadeDoDia.jsx virou scroll
+   infinito, sem paginação 1/3. .cm-feed-paginacao continua — é de outro
+   componente (FeedComunidade.jsx), não mexe. */
+.cm-feed-paginacao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: var(--cm-text-soft);
+}
+
+.cm-feed-paginacao button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--cm-border);
+  background: #fff;
+  color: #1a1a1a;
+}
+
+.cm-feed-paginacao button:hover:not(:disabled) {
+  background: var(--cm-sage-soft);
+}
+
+.cm-feed-paginacao button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.cm-btn-primary {
+  display: inline-block;
+  background: var(--cm-sage);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 13px 28px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.cm-btn-primary:hover {
+  background: var(--cm-sage-dark);
+}
+
+/* Progress bar */
+.cm-progress-track {
+  flex: 1;
+  height: 8px;
+  background: rgba(51, 49, 44, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.cm-progress-fill {
+  height: 100%;
+  background: var(--cm-sage);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* Cards de vídeo/aula — estilo "com imagem" (gradiente + ícone + tag) */
+.cm-card-aula {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease;
+}
+
+.cm-card-aula:hover {
+  transform: translateY(-2px);
+}
+
+.cm-card-aula-capa {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(150deg, var(--cover-a, var(--cm-sage)), var(--cover-b, var(--cm-sage-dark)));
+}
+
+.cm-card-aula:hover .cm-card-aula-capa {
+  box-shadow: var(--cm-shadow);
+}
+
+.cm-card-aula-icone-fundo {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.cm-card-aula-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.28);
+  color: #fff;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.cm-card-aula-duracao {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  font-size: 0.68rem;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.cm-card-aula-play {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--cm-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.85);
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+}
+
+.cm-card-aula:hover .cm-card-aula-play {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.cm-card-aula-titulo {
+  font-size: 0.86rem;
+  font-weight: 500;
+  padding: 0 2px;
+}
+
+.cm-tag-dourado .cm-card-aula-capa {
+  --cover-a: #d9b673;
+  --cover-b: #a9803f;
+}
+
+.cm-tag-terracota .cm-card-aula-capa {
+  --cover-a: #c78a6b;
+  --cover-b: #a4573a;
+}
+
+.cm-tag-azul .cm-card-aula-capa {
+  --cover-a: #7fa3ad;
+  --cover-b: #4f7982;
+}
+
+.cm-tag-sage .cm-card-aula-capa {
+  --cover-a: var(--cm-sage);
+  --cover-b: var(--cm-sage-dark);
+}
+
+/* Sidebar direita */
+.cm-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cm-widget {
+  background: #fff;
+  border: 1px solid var(--cm-border);
+  border-radius: 22px;
+  padding: 22px;
+}
+
+.cm-widget h3 {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 1.02rem;
+  margin-bottom: 14px;
+}
+
+.cm-evento {
+  padding: 10px 0;
+  border-top: 1px solid var(--cm-border);
+}
+
+.cm-evento:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.cm-evento strong {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 3px;
+}
+
+.cm-evento span {
+  font-size: 0.8rem;
+  color: var(--cm-text-soft);
+}
+
+/* Widget Sequência — bolinhas de presença estilo lúdico */
+.cm-widget-sequencia .cm-widget-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.cm-widget-sequencia h3 {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 0;
+}
+
+.cm-icone-badge {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cm-icone-fogo {
+  background: #fff1e0;
+  color: #e67e22;
+}
+
+.cm-pill-suave {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--cm-sage-dark);
+  background: var(--cm-sage-soft);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.cm-sequencia-numero {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--cm-text);
+  margin: 10px 0 14px;
+}
+
+.cm-sequencia-numero span {
+  font-family: "Inter", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--cm-text-soft);
+  margin-left: 6px;
+}
+
+/* Estados "0 dias" / "1 dia": frase inteira em vez de número grande + rótulo
+   (não há um número isolado pra destacar) — mesma família tipográfica do
+   card, só num tamanho que não estoura a largura do widget. */
+.cm-sequencia-numero-frase {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--cm-text);
+}
+
+.cm-sequencia-dias {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.cm-sequencia-dia {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.cm-sequencia-bolinha {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--cm-bg);
+  border: 1px solid var(--cm-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  transition:
+    background-color 220ms ease,
+    border-color 220ms ease,
+    color 220ms ease;
+}
+
+.cm-sequencia-bolinha.is-concluido {
+  background: var(--cm-text);
+  border-color: var(--cm-text);
+  color: #fff;
+  animation: cm-sequencia-bolinha-pop 220ms ease;
+}
+
+@keyframes cm-sequencia-bolinha-pop {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.cm-sequencia-label {
+  font-size: 0.64rem;
+  color: var(--cm-text-soft);
+  text-transform: uppercase;
+}
+
+/* Texto fixo "A consistência é o segredo!" — substitui o antigo badge
+   dinâmico de percentual (pedido do cliente: sempre o mesmo texto, sem
+   cálculo). É o último elemento do card. */
+.cm-consistencia-box {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.78rem;
+  color: var(--cm-sage-dark);
+  background: var(--cm-sage-soft);
+  border-radius: 12px;
+  padding: 9px 12px;
+  margin-bottom: 0 !important;
+}
+
+.cm-widget-sequencia {
+  padding-bottom: 16px !important;
+}
+
+/* Widget Meu Progresso — verde sálvia sólido, igual referência */
+.cm-widget-progresso {
+  background: var(--cm-sage);
+  border-color: var(--cm-sage);
+  color: #fff;
+}
+
+.cm-widget-progresso-eyebrow {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 10px;
+}
+
+.cm-widget-progresso p {
+  font-size: 0.92rem;
+  margin: 0 0 16px;
+  color: #fff;
+}
+
+.cm-progress-track-escuro {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.cm-progress-fill-claro {
+  background: #fff;
+}
+
+.cm-widget-progresso-meta {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.76rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Desafio da semana — checklist */
+.cm-desafio-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+.cm-desafio-item div {
+  display: flex;
+  flex-direction: column;
+}
+
+.cm-desafio-item strong {
+  font-size: 0.84rem;
+}
+
+.cm-desafio-item span {
+  font-size: 0.76rem;
+  color: var(--cm-text-soft);
+}
+
+.cm-desafio-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: transparent;
+  border: 1.5px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+  margin-top: 1px;
+  padding: 0;
+  cursor: pointer;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease;
+}
+
+.cm-desafio-check:hover {
+  border-color: var(--cm-text);
+}
+
+.cm-desafio-check.is-concluido {
+  background: var(--cm-text);
+  border-color: var(--cm-text);
+  animation: cm-check-scale-in 200ms ease;
+}
+
+/* Card "Desafio da Semana" (.cm-widget.cm-grid-desafio): altura AUTOMÁTICA,
+   cresce pra caber os itens + a mensagem de status/parabéns sem cortar nem
+   criar scroll interno. Antes era travada em 340px com overflow:hidden, mas
+   isso cortava o texto "Parabéns! Você completou todos os desafios da
+   semana" quando o conteúdo passava da altura fixa. min-height:0 (era
+   340px) porque quem garante a altura certa agora é o
+   `.cm-coluna-direita .cm-grid-desafio { flex: 1 1 auto }` mais acima —
+   um min-height fixo aqui só voltaria a abrir vão quando o card crescido
+   pelo flex já passasse dele. Não mexe em outros widgets (ex.: Ranking),
+   que têm suas próprias classes de scroll. */
+.cm-grid-desafio {
+  height: auto !important;
+  min-height: 0;
+  max-height: none !important;
+  overflow: visible !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.cm-grid-desafio h3 {
+  flex-shrink: 0;
+}
+
+/* Corpo do card (checklist + progresso + status): fica relative pra
+   servir de âncora pro overlay de celebração abaixo. flex:1 deixa ele
+   ocupar o espaço do card, mas sem overflow — o card inteiro cresce com o
+   conteúdo (ver .cm-grid-desafio acima) em vez de rolar por dentro. */
+.cm-desafio-corpo {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: visible !important;
+  overflow-y: visible !important;
+}
+
+/* Ajuste fino (23/08, herdado de quando "Sua prática hoje" tinha paginação
+   fixa de 6 comentários — 25/08: virou scroll infinito, lista com
+   flex:1+min-height:0 pra ocupar só o espaço disponível dentro de .cm-duvida
+   sem sobrar vão embaixo, ver .cm-duvida .cm-comentarios-lista acima; a
+   lógica de igualar as 3 colunas com flex:1 1 auto continua a mesma, só não
+   depende mais de contar comentário). Reduz ~70px de altura interna do
+   card. Só encolhe o miolo (padding do card + espaçamento entre os 3 itens)
+   — não mexe no conteúdo/textos.
+   justify-content:center (era flex-start, herdado da regra base lá em
+   cima) porque .cm-coluna-direita .cm-grid-desafio tem flex:1 1 auto —
+   sem isso o título "Desafios da semana" ficava colado no topo e toda a
+   sobra de altura da coluna virava vão só embaixo do card. */
+.cm-grid-desafio {
+  padding: 16px 22px;
+  justify-content: center;
+}
+
+.cm-grid-desafio h3 {
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+
+/* flex:none (era flex:1 na regra base de .cm-desafio-corpo, acima) —
+   com flex:1 o corpo ocupava sozinho 100% da altura sobrando e o
+   justify-content:center do pai (.cm-grid-desafio) não tinha efeito
+   nenhum (nada "sobrava" pra centralizar). Sem crescer, é o card inteiro
+   que centraliza o bloco h3+corpo, distribuindo a folga em cima/embaixo. */
+.cm-grid-desafio .cm-desafio-corpo {
+  flex: none;
+}
+
+.cm-grid-desafio .cm-desafio-item {
+  padding: 4px 0;
+}
+
+.cm-grid-desafio .cm-desafio-progress {
+  margin-top: 8px;
+}
+
+.cm-grid-desafio .cm-desafio-status {
+  margin-top: 6px;
+}
+
+/* Celebração ao completar os 3 itens: lótus abrindo/brilhando por 2.5s
+   por CIMA do checklist (overlay absolute), nunca no fluxo normal — assim
+   ela não empurra/encolhe a altura do card. Anima só opacity + scale
+   (nunca height/margin/padding). */
+.cm-desafio-celebracao {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 4px 2px;
+  background: #fff;
+  border-radius: 16px;
+  animation: cm-desafio-fade-in 250ms ease;
+}
+
+.cm-desafio-celebracao-lotus {
+  font-size: 2.6rem;
+  line-height: 1;
+  margin-bottom: 14px;
+  animation: cm-lotus-abrir 2.5s ease;
+}
+
+.cm-desafio-celebracao-titulo {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--cm-text);
+  margin: 0 0 6px;
+}
+
+.cm-desafio-celebracao-sub {
+  font-size: 0.78rem;
+  color: var(--cm-sage-dark);
+  margin: 0;
+}
+
+@keyframes cm-desafio-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes cm-lotus-abrir {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+    filter: drop-shadow(0 0 0 rgba(155, 127, 199, 0));
+  }
+  30% {
+    transform: scale(1.15);
+    opacity: 1;
+    filter: drop-shadow(0 0 18px rgba(155, 127, 199, 0.55));
+  }
+  55% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 10px rgba(224, 185, 120, 0.45));
+  }
+  75% {
+    transform: scale(1.06);
+    filter: drop-shadow(0 0 16px rgba(155, 127, 199, 0.5));
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    filter: drop-shadow(0 0 0 rgba(155, 127, 199, 0));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-desafio-celebracao-lotus {
+    animation: none;
+  }
+  .cm-desafio-celebracao {
+    animation: none;
+  }
+}
+
+.cm-ranking-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 12px;
+  margin-top: 6px;
+  font-size: 0.88rem;
+  border-radius: 999px;
+}
+
+.cm-ranking-item:first-of-type {
+  margin-top: 0;
+}
+
+.cm-ranking-item.is-voce {
+  font-weight: 600;
+}
+
+.cm-ranking-esquerda {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cm-ranking-pos {
+  min-width: 16px;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+.cm-ranking-nome {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.cm-ranking-dias {
+  font-size: 0.8rem;
+}
+
+/* Página da aula */
+.cm-aula-page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.cm-aula-voltar {
+  display: inline-block;
+  color: var(--cm-text-soft);
+  text-decoration: none;
+  font-size: 0.88rem;
+  margin-bottom: 18px;
+}
+
+.cm-aula-voltar:hover {
+  color: var(--cm-text);
+}
+
+.cm-aula-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .cm-aula-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cm-aula-header {
+  margin-bottom: 20px;
+}
+
+.cm-aula-header h1 {
+  font-size: 1.6rem;
+  margin-bottom: 6px;
+}
+
+/* Banner "Pausa obrigatória" (Tarefa 3, 3-dias-faz/4-dias-pausa) — mesmo
+   tom âmbar do badge de Orientador (#e0b978), fundo suave pra não competir
+   com o header logo acima. Só existe enquanto o próximo dia estiver em
+   pausa (ver emPausaObrigatoria em AulasMeditacaoRaiz.jsx). */
+.cm-pausa-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(224, 185, 120, 0.14);
+  border: 1px solid rgba(224, 185, 120, 0.4);
+  border-radius: 16px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  color: var(--cm-text);
+}
+
+.cm-pausa-banner-icone {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.cm-pausa-banner strong {
+  color: #a97f2e;
+}
+
+.cm-player-wrap {
+  background: var(--cm-beige);
+  border-radius: var(--cm-radius);
+  padding: 14px;
+  margin-bottom: 20px;
+}
+
+.cm-player-wrap .guarded-video {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.cm-aula-videos-do-dia {
+  background: var(--cm-beige);
+  border-radius: var(--cm-radius);
+  padding: 20px;
+  margin-bottom: 28px;
+}
+
+.cm-aula-videos-do-dia h2 {
+  font-size: 1.05rem;
+  margin-bottom: 14px;
+}
+
+/* Painel lateral de /comunidade/aulas-raiz: título "Dia N" + dropdown de
+   dias na mesma linha, e checkmark de concluída nos itens da lista. */
+.cm-aula-videos-do-dia-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.cm-aula-videos-do-dia-cabecalho h2 {
+  margin-bottom: 0;
+}
+
+.cm-dia-select {
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--cm-border);
+  background: var(--cm-bg);
+  color: var(--cm-text);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.cm-video-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  color: inherit;
+  font-size: 0.9rem;
+}
+
+.cm-video-item.is-ativo {
+  background: var(--cm-bg);
+  font-weight: 600;
+}
+
+.cm-video-item:hover {
+  background: var(--cm-bg);
+}
+
+.cm-video-item-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cm-sage);
+  flex-shrink: 0;
+}
+
+.cm-video-item-duracao {
+  margin-left: auto;
+  color: var(--cm-text-soft);
+  font-size: 0.8rem;
+}
+
+/* Lista de aulas de /comunidade/aulas-raiz especificamente: em vez do
+   .cm-video-item inteiro ser um <button> (como em Aula.jsx), aqui ele é um
+   <div> com dois botões-irmãos — abrir o vídeo (título) e marcar/desmarcar
+   concluída (checkbox circular à direita), estilo Hotmart/Notion. Escopado
+   em .cm-aula-sidebar pra não afetar a página antiga de Aula.jsx, que
+   reaproveita as mesmas classes .cm-video-item/-dot acima. */
+.cm-aula-sidebar .cm-video-item {
+  gap: 8px;
+  padding: 6px 8px 6px 12px;
+  width: auto;
+  transition: background 150ms ease;
+}
+
+.cm-aula-sidebar .cm-video-item-titulo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  padding: 4px 0;
+  background: transparent;
+  border: none;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.cm-aula-sidebar .cm-video-item-dot {
+  background: #d1d5db;
+  transition: background 200ms ease;
+}
+
+.cm-aula-sidebar .cm-video-item-dot.is-concluido {
+  background: #22c55e;
+}
+
+/* Checkbox circular: vazado (borda cinza, escurece no hover) quando não
+   concluído; preenchido com check branco, com scale-in de 200ms, quando
+   concluído. Clique isolado do de abrir o vídeo — botão irmão, não
+   aninhado dentro de outro botão. */
+.cm-video-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  border: 1.5px solid #ccc;
+  background: transparent;
+  color: #fff;
+  flex-shrink: 0;
+  padding: 0;
+  cursor: pointer;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease;
+}
+
+.cm-video-check:hover {
+  border-color: var(--cm-text);
+}
+
+.cm-video-check.is-concluido {
+  background: var(--cm-text);
+  border-color: var(--cm-text);
+  animation: cm-check-scale-in 200ms ease;
+}
+
+@keyframes cm-check-scale-in {
+  from {
+    transform: scale(0.5);
+    opacity: 0.4;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.cm-video-legenda {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-top: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-video-check.is-concluido {
+    animation: none;
+  }
+}
+
+/* Bloqueio por dia/calendário (ver AulasMeditacaoRaiz.jsx / progressoDias.js):
+   vídeo ainda não liberado — item esmaecido, cadeado no lugar do dot, cursor
+   de "não permitido" no clique, checkbox de concluir desabilitado. */
+.cm-video-item.is-bloqueado {
+  opacity: 0.6;
+}
+
+.cm-video-item.is-bloqueado .cm-video-item-titulo {
+  cursor: not-allowed;
+}
+
+.cm-video-item-lock {
+  flex-shrink: 0;
+  color: var(--cm-text-soft);
+}
+
+.cm-video-check:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.cm-video-check:disabled:hover {
+  border-color: #ccc;
+}
+
+/* Placeholder no lugar do player quando o vídeo ativo está bloqueado (ex:
+   trocou de dia pelo dropdown e caiu num dia ainda não alcançado) — nunca
+   monta o <video>, só mostra o motivo. */
+.cm-video-bloqueado-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  aspect-ratio: 16 / 9;
+  color: #fff;
+  background: #1f1f1f;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+}
+
+.cm-video-bloqueado-placeholder p {
+  max-width: 320px;
+  font-size: 0.9rem;
+  color: #d1d5db;
+}
+
+/* Toast de bloqueio — mesma receita visual de .cm-config-toast/.cm-encontro-toast. */
+.cm-aula-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: var(--cm-bg);
+  border: 1px solid var(--cm-border);
+  box-shadow: var(--cm-shadow);
+  font-size: 14px;
+  font-weight: 600;
+  color: #b91c1c;
+  z-index: 60;
+  animation: cm-config-toast-in 220ms ease;
+}
+
+.cm-aula-toast svg {
+  color: var(--cm-red);
+  flex-shrink: 0;
+}
+
+/* Empilha o card "Dia N" (.cm-aula-videos-do-dia) com o card da Jornada
+   logo abaixo, os dois na coluna de 280px de .cm-aula-layout. */
+.cm-aula-sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card "Sua Jornada" — anel de progresso circular + trilha dos 16 dias.
+   Vive só aqui: usa lavanda/dourado como acento próprio (--cm-jornada-*),
+   não mexe na paleta sálvia do resto de /comunidade. */
+.cm-jornada {
+  --cm-jornada-violeta: #9b7fc7;
+  --cm-jornada-dourado: #e0b978;
+  background: var(--cm-beige);
+  border-radius: var(--cm-radius);
+  padding: 20px;
+  text-align: center;
+}
+
+/* Ajuste fino (23/08, herdado de quando "Sua prática hoje" tinha paginação
+   fixa de 6 comentários — 25/08: virou scroll infinito, lista com
+   flex:1+min-height:0 pra ocupar só o espaço disponível dentro de .cm-duvida
+   sem sobrar vão embaixo, ver .cm-duvida .cm-comentarios-lista acima; a
+   lógica de igualar as 3 colunas com flex:1 1 auto continua a mesma, só não
+   depende mais de contar comentário). Reduz ~70px de altura interna do
+   card. Só encolhe o miolo (anel + trilha) — não mexe no conteúdo/textos.
+   display:flex + justify-content:center porque .cm-coluna-meio .cm-jornada
+   tem flex:1 1 auto (cresce pra igualar a altura da coluna) — sem isso o
+   card cresce em bloco normal e a sobra de espaço inteira vira vão embaixo
+   do conteúdo. Centralizando, a sobra fica dividida em cima/embaixo. */
+.cm-jornada {
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cm-jornada-anel-wrap {
+  width: 110px;
+  height: 110px;
+  margin: 2px auto 10px;
+}
+
+.cm-jornada-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.cm-jornada-topo h2 {
+  font-size: 1.05rem;
+}
+
+.cm-jornada-titulo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 700;
+}
+
+.cm-jornada-titulo-icone {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Badge de status do dia (ver getStatusJornada em JornadaProgress.jsx) —
+   4 estados: bora-aula (laranja, pulsando de leve), dia-concluido (verde,
+   esperando virar o dia), pausa (roxo/índigo, pausa obrigatória de vários
+   dias — bug real 26/08, ver comentário em getStatusJornada) e
+   curso-concluido (dourado, 48/48). Sem emoji de fogo aqui, só os ícones
+   PNG fornecidos pelo cliente. */
+.cm-jornada-badge {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 4px 12px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.cm-jornada-badge-icone {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.cm-jornada-badge--bora-aula {
+  background: #ffedd5;
+  color: #c2410c;
+  border-color: #fed7aa;
+  animation: cm-jornada-badge-pulso 2.2s ease-in-out infinite;
+}
+
+.cm-jornada-badge--dia-concluido {
+  background: #dcfce7;
+  color: #15803d;
+  border-color: #bbf7d0;
+}
+
+.cm-jornada-badge--pausa {
+  background: #e0e7ff;
+  color: #4338ca;
+  border-color: #c7d2fe;
+  /* bug real 26/08: "Em pausa obrigatória" em nowrap (herdado de
+     .cm-jornada-badge) forçava a largura do texto inteiro e estourava pra
+     fora do card "Sua Jornada" quando a coluna era estreita — só o
+     .cm-jornada-titulo ao lado tinha espaço pra quebrar linha. Testando
+     quebrar em duas linhas ("Em pausa" / "obrigatória") em vez de nowrap;
+     flex-shrink:1 sobrescreve o :0 do .cm-jornada-badge pra esse item
+     poder encolher dentro do space-between de .cm-jornada-topo. */
+  white-space: normal;
+  flex-shrink: 1;
+  text-align: center;
+  line-height: 1.25;
+}
+
+.cm-jornada-badge--curso-concluido {
+  background: #fef9c3;
+  color: #854d0e;
+  border-color: #fde047;
+  font-weight: 700;
+}
+
+@keyframes cm-jornada-badge-pulso {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.72;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-jornada-badge--bora-aula {
+    animation: none;
+  }
+}
+
+.cm-jornada-anel-wrap {
+  position: relative;
+  width: 148px;
+  height: 148px;
+  margin: 4px auto 18px;
+}
+
+.cm-jornada-anel {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.cm-jornada-anel-trilho,
+.cm-jornada-anel-progresso {
+  fill: none;
+  stroke-width: 10;
+}
+
+.cm-jornada-anel-trilho {
+  stroke: var(--cm-beige-soft);
+}
+
+.cm-jornada-anel-progresso {
+  stroke: url(#cm-jornada-gradiente);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 900ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cm-jornada-anel-centro {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.cm-jornada-anel-numero {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--cm-text);
+}
+
+.cm-jornada-anel-legenda {
+  font-size: 0.72rem;
+  color: var(--cm-text-soft);
+}
+
+/* Grid fixo de 7 colunas (não flex-wrap): com flex-wrap as 16 bolinhas
+   quebravam linha de forma inconsistente conforme a largura disponível
+   (ex.: 4/5/6 numa linha, 7 noutra, sobrando 2 soltas) porque o wrap do
+   flexbox não força alinhamento em colunas. Grid com colunas de tamanho
+   fixo garante sempre 7 por linha, alinhadas, em qualquer largura de
+   card/sidebar. */
+.cm-jornada-trilha {
+  display: grid;
+  grid-template-columns: repeat(7, 32px);
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.cm-jornada-bolinha {
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--cm-text-soft);
+  background: var(--cm-bg);
+  border: 1px solid var(--cm-border);
+  cursor: default;
+  transition:
+    background 300ms ease,
+    border-color 300ms ease,
+    color 300ms ease,
+    transform 150ms ease;
+}
+
+.cm-jornada-bolinha:hover {
+  transform: scale(1.12);
+}
+
+.cm-jornada-bolinha.is-completo {
+  background: linear-gradient(135deg, var(--cm-jornada-violeta), var(--cm-jornada-dourado));
+  border-color: transparent;
+  color: #fff;
+}
+
+.cm-jornada-bolinha.is-atual {
+  background: var(--cm-beige-soft);
+  border: 1px dashed var(--cm-jornada-violeta);
+  color: var(--cm-text);
+}
+
+.cm-jornada-bolinha.is-bloqueado {
+  background: var(--cm-beige-soft);
+  border-color: var(--cm-border);
+  color: #c8c3ba;
+}
+
+.cm-jornada-mensagem {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--cm-text);
+}
+
+.cm-jornada-mensagem.is-completa {
+  color: var(--cm-jornada-violeta);
+}
+
+/* Confete — dispara só com a jornada 100% concluída */
+.cm-jornada-confete {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+.cm-jornada-confete-peca {
+  position: absolute;
+  top: -10%;
+  left: calc(8% + (var(--i) * 7%));
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: hsl(calc(var(--i) * 26), 70%, 65%);
+  animation: cm-jornada-cair calc(2.4s + (var(--i) * 0.15s)) linear calc(var(--i) * -0.2s) infinite;
+}
+
+@keyframes cm-jornada-cair {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(180px) rotate(340deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-jornada-anel-progresso {
+    transition: none;
+  }
+  .cm-jornada-confete-peca {
+    animation: none;
+    display: none;
+  }
+}
+
+/* "Sua Jornada" compacto — substitui o antigo "Meu Progresso" no dashboard.
+   Mesmo footprint de um `.cm-widget` comum (fica na coluna do meio, ver
+   .cm-coluna-meio em .cm-main), só troca o anel grande + trilha de 16 dias
+   por um anel pequeno ao lado do texto, pra não ficar maior que os widgets
+   vizinhos (Sequência/Desafio). */
+.cm-jornada-compacta {
+  background: var(--cm-beige);
+}
+
+.cm-jornada-compacta-corpo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cm-jornada-compacta-anel-wrap {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+}
+
+.cm-jornada-compacta-anel-percentual {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 600;
+  font-size: 0.86rem;
+  color: var(--cm-text);
+}
+
+.cm-jornada-anel-progresso.cm-jornada-anel-progresso--compacta {
+  stroke: url(#cm-jornada-gradiente-compacta);
+}
+
+.cm-jornada-compacta-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.cm-jornada-compacta-texto strong {
+  font-size: 0.9rem;
+  color: var(--cm-text);
+}
+
+.cm-jornada-compacta-texto span {
+  font-size: 0.78rem;
+  color: var(--cm-text-soft);
+  line-height: 1.3;
+}
+
+.cm-jornada-compacta-trilha {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.cm-jornada-bolinha.cm-jornada-bolinha--compacta {
+  width: 20px;
+  height: 20px;
+  font-size: 0.6rem;
+}
+
+/* Navegação sequencial de dias */
+.cm-dias-nav {
+  background: var(--cm-beige);
+  border-radius: var(--cm-radius);
+  padding: 18px;
+}
+
+.cm-dias-nav h3 {
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.cm-dias-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.cm-dias-nav-item {
+  display: block;
+  padding: 9px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--cm-text);
+  font-size: 0.86rem;
+}
+
+.cm-dias-nav-item.is-ativo {
+  background: var(--cm-sage);
+  color: #fff;
+  font-weight: 600;
+}
+
+.cm-dias-nav-item:hover:not(.is-ativo) {
+  background: var(--cm-bg);
+}
+
+/* Comentários */
+.cm-comentarios {
+  background: var(--cm-beige);
+  border-radius: var(--cm-radius);
+  padding: 24px;
+}
+
+.cm-comentarios h2 {
+  font-size: 1.1rem;
+  margin-bottom: 18px;
+}
+
+.cm-comentario-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.cm-comentario-form textarea {
+  flex: 1;
+  padding: 11px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--cm-border);
+  background: var(--cm-bg);
+  font-size: 0.9rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 44px;
+}
+
+.cm-comentario-form button {
+  align-self: flex-end;
+  background: var(--cm-sage);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0 22px;
+  height: 40px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  flex-shrink: 0;
+}
+
+.cm-comentario-form button:hover:not(:disabled) {
+  background: var(--cm-sage-dark);
+}
+
+.cm-comentario-form button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Comentários: input já é flex:1 (w-full); no mobile o botão empilha
+   embaixo e também vira w-full em vez de ficar espremido do lado. */
+@media (max-width: 768px) {
+  .cm-comentario-form {
+    flex-direction: column;
+  }
+
+  .cm-comentario-form button {
+    width: 100%;
+    align-self: stretch;
+  }
+}
+
+.cm-comentarios-vazio {
+  color: var(--cm-text-soft);
+  font-size: 0.9rem;
+  margin: 0 0 16px;
+}
+
+.cm-comentarios-paginacao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding-top: 16px;
+  margin-top: 4px;
+  border-top: 1px solid var(--cm-border);
+  font-size: 0.85rem;
+  color: var(--cm-text-soft);
+}
+
+.cm-comentarios-paginacao button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--cm-border);
+  background: var(--cm-bg);
+  color: var(--cm-text);
+}
+
+.cm-comentarios-paginacao button:hover:not(:disabled) {
+  background: var(--cm-sage-soft);
+}
+
+.cm-comentarios-paginacao button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Badges de Administrador/Orientador — compartilhados por ComentarioCard.jsx
+   (mural "geral" em Aulas E "Sua prática hoje" no Dashboard). Orientador tem
+   destaque MAIOR (borda + brilho + estrela), pedido explícito do cliente. */
+.cm-badge-admin,
+.cm-badge-orientador {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0; /* nunca encolhe quando .cm-comentario-card-nome trunca (ver comentário lá) */
+  gap: 3px;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  vertical-align: middle;
+}
+
+.cm-badge-admin {
+  /* Sólido (não translúcido) de propósito — pedido explícito pra "badge
+     azul bem visível", não uma sugestão sutil em cima do fundo escuro. */
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+.cm-badge-orientador {
+  background: #f59e0b;
+  color: #1c1300;
+  font-weight: 800;
+  font-size: 0.74rem;
+}
+
+.cm-badge-orientador svg {
+  color: #1c1300;
+}
+
+/* Reestiliza o GuardedVideo (componente compartilhado) para combinar com
+   o visual claro de /comunidade, sem alterar o componente em si. */
+.comunidade-app .guarded-video-toggle {
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--cm-sage-dark);
+}
+
+.comunidade-app .guarded-video-controls {
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.55));
+}
+
+/* Botão "Já meditei hoje": primeiro item da coluna 2 do dashboard (ver
+   .cm-coluna-meio em .cm-main), mesma largura do card Sequência logo
+   abaixo dele — antes era um topbar de largura cheia alinhado à direita,
+   o cliente pediu pra virar um bloco full-width encostado em cima da
+   Sequência, texto centralizado. */
+.cm-btn-meditei {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  background: var(--cm-text);
+  color: #fff;
+  border: none;
+  border-radius: var(--cm-radius);
+  padding: 13px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.cm-btn-meditei:hover {
+  background: #000;
+}
+
+/* Estado "Já meditei hoje ✓" — marcado e travado até a meia-noite local. */
+.cm-btn-meditei.is-marcado,
+.cm-btn-meditei:disabled {
+  background: #e4e1da;
+  color: var(--cm-text-soft);
+  cursor: not-allowed;
+}
+
+.cm-btn-meditei.is-marcado:hover {
+  background: #e4e1da;
+}
+
+/* .cm-card-biblioteca segue existindo pro CardBiblioteca.jsx (não usado no
+   Dashboard hoje — a seção "Biblioteca de Meditações" foi removida a
+   pedido do cliente — mas mantido caso o card volte a ser usado em outra
+   tela). O bloco de título/filtros/grid que só existia pra montar aquela
+   seção (`.cm-biblioteca-header`, `.cm-biblioteca-filtros`,
+   `.cm-filtro-chip`, `.cm-grid-biblioteca`, `.cm-biblioteca-vazio`) foi
+   removido junto, sem uso em nenhum outro lugar. */
+.cm-card-biblioteca {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--cm-border);
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 0;
+  text-align: left;
+  color: inherit;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.cm-card-biblioteca:hover {
+  border-color: rgba(51, 49, 44, 0.18);
+  box-shadow: var(--cm-shadow);
+}
+
+/* Capa: crop 4:3 das fotos reais do Dr. Renato, com um grading único pra
+   disfarçar que vêm de 3 sessões bem diferentes (estúdio cinza x rio ao ar
+   livre) — brightness/contrast no filter + tint quente via ::before em
+   soft-light, e um overlay preto plano (unifica tudo em 12%) somado a um
+   gradiente mais forte perto do rodapé só pra manter os badges legíveis. */
+.cm-card-biblioteca-capa {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 16px;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(1.05) contrast(0.95);
+}
+
+.cm-card-biblioteca-capa::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #f5f1eb;
+  mix-blend-mode: soft-light;
+  opacity: 0.55;
+}
+
+.cm-card-biblioteca-capa::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.12) 55%, rgba(0, 0, 0, 0.46) 100%);
+}
+
+.cm-card-biblioteca-categoria,
+.cm-card-biblioteca-duracao,
+.cm-card-biblioteca-play {
+  position: absolute;
+  z-index: 1;
+}
+
+.cm-card-biblioteca-categoria {
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #1a1a1a;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.cm-card-biblioteca-duracao {
+  bottom: 10px;
+  left: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 4px 9px;
+  border-radius: 999px;
+}
+
+.cm-card-biblioteca-play {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+  opacity: 0;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+}
+
+.cm-card-biblioteca:hover .cm-card-biblioteca-play {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Em telas sem hover (mobile/tablet touch), o play fica sempre visível —
+   sem isso, ninguém veria o botão até tocar (e o toque já dispara o card). */
+@media (hover: none) {
+  .cm-card-biblioteca-play {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.cm-card-biblioteca-titulo {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  padding-left: 5px;
+}
+
+.cm-card-biblioteca-rodape-area {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 2px 2px;
+}
+
+.cm-card-biblioteca-subtitulo {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: #6b7280;
+  padding-left: 5px;
+  margin: 0;
+}
+
+.cm-card-biblioteca-subtitulo em {
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Sidebar: Próximo encontro ao vivo — bolinha pulsante + caixa com
+   anfitrião, igual referência.
+
+   Usa o MESMO card branco arredondado padrão de .cm-widget (background/
+   border/padding) que todo widget do dashboard usa — título, caixa bege do
+   evento e botão preto ficam todos dentro do mesmo container, em vez de
+   soltos sobre o fundo da página. Não precisa de override nenhum aqui:
+   herda .cm-widget puro. */
+
+.cm-encontro-vivo h3 {
+  gap: 9px;
+}
+
+.cm-dot-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cm-sage);
+  animation: cm-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes cm-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.cm-encontro-caixa {
+  background: var(--cm-beige);
+  border: 1px solid var(--cm-border);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 14px;
+}
+
+.cm-encontro-vivo .cm-encontro-titulo {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.cm-encontro-quando {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--cm-text-soft);
+}
+
+.cm-encontro-timer {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--cm-sage-soft);
+  color: var(--cm-sage-dark);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.cm-encontro-anfitriao {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.cm-encontro-anfitriao img {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.cm-encontro-anfitriao span {
+  font-size: 0.78rem;
+  color: var(--cm-text-soft);
+}
+
+.cm-encontro-divisor {
+  border: none;
+  border-top: 1px solid #e8e0d5;
+  margin: 16px 0;
+}
+
+.cm-encontro-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cm-encontro-lista li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.cm-encontro-check {
+  flex-shrink: 0;
+  color: var(--cm-green);
+}
+
+.cm-encontro-social {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.cm-encontro-avatares {
+  display: flex;
+}
+
+.cm-encontro-avatar-bolinha {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e8e0d5;
+  color: var(--cm-text);
+  font-size: 10px;
+  font-weight: 700;
+  border: 2px solid #fff;
+}
+
+.cm-encontro-avatar-bolinha + .cm-encontro-avatar-bolinha {
+  margin-left: -8px;
+}
+
+.cm-encontro-social-texto {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.cm-encontro-social-vazio {
+  display: block;
+  margin-top: 14px;
+  font-size: 13px;
+}
+
+.cm-encontro-btn {
+  width: 100%;
+  margin-top: 16px;
+  padding: 10px;
+  font-size: 0.84rem;
+  text-align: center;
+  /* Referência usa botão preto sólido aqui (não o sage do cm-btn-primary
+     padrão) — sobrescreve só neste CTA específico. */
+  background: var(--cm-text);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.cm-encontro-btn:hover {
+  background: #000;
+}
+
+.cm-encontro-btn:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+/* Estado "já reservei": inverte pra fundo branco/borda preta com o check
+   verde, e no hover troca de vermelho pra sinalizar "clique de novo pra
+   cancelar" sem precisar de um segundo botão. */
+.cm-encontro-btn.is-reservado {
+  background: #fff;
+  color: var(--cm-text);
+  border: 1px solid var(--cm-text);
+}
+
+.cm-encontro-btn.is-reservado:hover:not(:disabled) {
+  background: var(--cm-red-soft);
+  border-color: var(--cm-red);
+  color: var(--cm-red);
+}
+
+.cm-encontro-btn-normal {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cm-encontro-btn-check {
+  color: var(--cm-green);
+}
+
+.cm-encontro-btn-hover {
+  display: none;
+}
+
+.cm-encontro-btn.is-reservado:hover:not(:disabled) .cm-encontro-btn-normal {
+  display: none;
+}
+
+.cm-encontro-btn.is-reservado:hover:not(:disabled) .cm-encontro-btn-hover {
+  display: inline-flex;
+}
+
+.cm-encontro-btn.is-reservado:hover:not(:disabled) .cm-encontro-btn-check {
+  color: var(--cm-red);
+}
+
+/* Botão "Entrar na live" — pedido explícito do cliente pra ficar IDÊNTICO
+   ao "Reservar minha vaga" quando liberado (mesmas classes cm-btn-primary
+   cm-encontro-btn, sem estilo outline próprio). O estado travado abaixo
+   (.is-travado) é a única variação: cinza claro/desabilitado enquanto o
+   professor não libera em /admin (Controle da Live). */
+.cm-encontro-btn.is-travado,
+.cm-encontro-btn.is-travado:hover,
+.cm-encontro-btn.is-travado:disabled {
+  background: #d1d5db;
+  color: #6b7280;
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+.cm-encontro-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+  z-index: 60;
+  animation: cm-encontro-toast-in 0.2s ease;
+}
+
+.cm-encontro-toast.is-sucesso {
+  background: var(--cm-green);
+}
+
+.cm-encontro-toast.is-erro {
+  background: var(--cm-red);
+}
+
+@keyframes cm-encontro-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Desafio — barra de progresso agregada dos itens concluídos */
+.cm-desafio-progress {
+  margin-top: 16px;
+  height: 6px;
+  background: var(--cm-beige);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.cm-desafio-progress-fill {
+  height: 100%;
+  background: var(--cm-sage);
+  border-radius: 999px;
+  transition: width 400ms ease;
+}
+
+/* Status textual (0/N, X de N, ou parabéns nos 3/3) — dentro do MESMO card
+   "Desafio da Semana", logo abaixo da barra de progresso. Antes vivia num
+   card separado (ContadorDesafioSemanal.jsx), removido no merge dos dois
+   cards em um só. */
+.cm-desafio-status {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: var(--cm-text-soft);
+  text-align: center;
+}
+
+/* Card "Frase Motivacional da Semana" (FraseMotivacionalSemana.jsx) —
+   substitui o Ranking de Presença no fim da coluna 3 (ver comentário em
+   ColunaEncontros.jsx). Card branco simples (herda fundo/borda de
+   .cm-widget), sem h3/título — só aspas decorativas + frase + subfrase. */
+.cm-frase-semana {
+  border-radius: 20px;
+  text-align: center;
+}
+
+.cm-frase-aspas {
+  display: block;
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--cm-sage);
+  font-family: Georgia, "Times New Roman", serif;
+  margin-bottom: 4px;
+}
+
+.cm-frase-texto {
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 8px;
+}
+
+.cm-frase-subtexto {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: var(--cm-text-soft);
+  margin: 0;
+}
+
+/* Sidebar: variante escura (Ranking de Presença, "fundo preto" do print) */
+.cm-widget-escuro {
+  background: var(--cm-text);
+  border-color: var(--cm-text);
+  color: #fff;
+}
+
+/* Ranking de Presença (.cm-grid-ranking): min-height:0 (era 318px) porque
+   quem absorve a altura sobrando na coluna 2 agora é o
+   `.cm-coluna-meio .cm-jornada { flex: 1 1 auto }` mais acima (Sua
+   Jornada cresce, Ranking fica com sua altura natural de conteúdo) — um
+   min-height fixo aqui voltaria a abrir vão. margin:16px continua
+   reduzindo o respiro logo acima do card, sem mexer em nenhum outro
+   .cm-widget/.cm-widget-escuro/.cm-jornada. */
+.cm-widget-escuro.cm-grid-ranking {
+  margin: 16px 0px 0px 0px !important;
+  padding: 26px 22px 28px 22px !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+.cm-widget-escuro h3 {
+  color: #fff;
+}
+
+.cm-widget-escuro .cm-ranking-item {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.cm-widget-escuro .cm-ranking-nome {
+  color: #fff;
+}
+
+.cm-widget-escuro .cm-ranking-pos {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.cm-widget-escuro .cm-ranking-dias {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.cm-widget-escuro .cm-ranking-item.is-voce {
+  background: #fff;
+}
+
+.cm-widget-escuro .cm-ranking-item.is-voce .cm-ranking-nome,
+.cm-widget-escuro .cm-ranking-item.is-voce .cm-ranking-dias {
+  color: var(--cm-text);
+}
+
+.cm-widget-escuro .cm-ranking-item.is-voce .cm-ranking-pos {
+  color: var(--cm-text-soft);
+}
+
+/* Card "Meditando junto" (MeditandoJunto.jsx) — coluna do meio, 3 linhas de
+   pulso real da comunidade em vez de itens de ranking. Fundo branco/texto
+   preto padrão (.cm-widget puro, sem .cm-widget-escuro) e borda sem cor —
+   pedido do cliente 27/08, antes usava a mesma variante escura do Ranking. */
+.cm-grid-pulso {
+  border-color: transparent;
+}
+
+.cm-pulso-linha {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid var(--cm-border);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.cm-pulso-linha:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.cm-pulso-sub {
+  display: block;
+  font-size: 0.72rem;
+  opacity: 0.7;
+  margin-top: 2px;
+}
+
+/* Feed da comunidade */
+.cm-feed-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cm-feed-post {
+  display: flex;
+  gap: 12px;
+  padding: 16px 0;
+  border-top: 1px solid var(--cm-border);
+}
+
+.cm-feed-post:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.cm-feed-post-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--cm-sage-soft);
+  color: var(--cm-sage-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.82rem;
+  flex-shrink: 0;
+}
+
+.cm-feed-post-quando {
+  color: var(--cm-text-soft);
+  font-size: 0.76rem;
+  margin-left: 8px;
+  font-weight: 400;
+}
+
+.cm-feed-post-texto {
+  margin: 4px 0 6px;
+  font-size: 0.9rem;
+  color: var(--cm-text);
+}
+
+.cm-feed-post-curtidas {
+  font-size: 0.78rem;
+  color: var(--cm-text-soft);
+}
+
+.cm-feed-vazio {
+  padding: 32px 8px;
+  text-align: center;
+  color: var(--cm-text-soft);
+  font-size: 0.9rem;
+}
+
+/* Card do feed liberado — FeedComunidade.jsx não é mais montado em
+   Dashboard.jsx (era o "card fantasma" duplicado embaixo de "Sua prática
+   hoje", pedido do cliente pra tirar). Classe mantida porque o componente
+   ainda existe e pode voltar a ser usado em outra tela. */
+.cm-feed-liberado {
+  background: #f9f7f2;
+  border: 1px solid var(--cm-border);
+  border-radius: var(--cm-radius);
+  box-shadow: var(--cm-shadow);
+  padding: 32px;
+}
+
+.cm-feed-bloqueado {
+  position: relative;
+  min-height: 320px;
+}
+
+.cm-feed-blur {
+  filter: blur(6px);
+  opacity: 0.6;
+  pointer-events: none;
+  user-select: none;
+}
+
+.cm-feed-overlay-construcao {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+  padding: 32px;
+  background: rgba(255, 254, 251, 0.65);
+  border-radius: var(--cm-radius);
+}
+
+.cm-feed-overlay-construcao h3 {
+  font-size: 1.2rem;
+}
+
+.cm-feed-overlay-construcao p {
+  max-width: 360px;
+  color: var(--cm-text-soft);
+  font-size: 0.88rem;
+  margin: 0 0 6px;
+}
+
+/* ==========================================================================
+   /comunidade/configuracoes — página própria (fora do grid de .cm-main),
+   mesma ideia de largura travada + padding de .cm-aula-page, mas em coluna
+   única e mais estreita (é um formulário, não um layout de 3 colunas).
+   Reaproveita os tokens --cm-* de .comunidade-app (inclusive --cm-green/
+   --cm-red, adicionados ali só pra esta página e pro card de troca de
+   senha). ========================================================== */
+
+.cm-config-page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* px-4 md:px-8: no mobile os 32px de padding das páginas viram 16px, pra
+   sobrar mais largura útil de conteúdo em telas estreitas. */
+@media (max-width: 768px) {
+  .cm-main,
+  .cm-aula-page,
+  .cm-config-page {
+    padding: 16px;
+  }
+}
+
+.cm-config-header {
+  margin-bottom: 4px;
+}
+
+.cm-config-header h1 {
+  font-size: 1.6rem;
+  margin: 0 0 4px;
+}
+
+.cm-config-header p {
+  color: var(--cm-text-soft);
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+/* Página /comunidade/mensagens (Tarefa 2, Mensagens.jsx) — chat estilo
+   WhatsApp com a equipe. Mesma largura/padding de .cm-config-page, mas
+   altura travada na viewport (menos o padding) pra caber cabeçalho + lista
+   rolável + formulário fixo embaixo, sem a página inteira rolar. */
+.cm-mensagens-page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .cm-mensagens-page {
+    padding: 16px;
+  }
+}
+
+/* Barra de busca de usuários (Tarefa 2, 26/08) — só admin/orientador vêem
+   (BuscaUsuarios.jsx, renderizado por Mensagens.jsx entre o header e o
+   chat). position:relative é a âncora pra -lista (dropdown) flutuar por
+   cima do chat sem empurrar layout. flex-shrink:0 pelo mesmo motivo do
+   form: .cm-mensagens-page é flex column de altura travada (100vh), só o
+   chat (flex:1) deve ceder espaço. */
+.cm-busca-usuarios {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.cm-busca-usuarios-barra {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 12px;
+  border: 1px solid var(--cm-border);
+  border-radius: 8px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cm-busca-usuarios-barra:focus-within {
+  border-color: var(--cm-sage);
+}
+
+.cm-busca-usuarios-icone {
+  color: var(--cm-text-soft);
+  flex-shrink: 0;
+}
+
+.cm-busca-usuarios-barra input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  font-size: 0.9rem;
+  font-family: inherit;
+  background: transparent;
+  color: var(--cm-text);
+}
+
+.cm-busca-usuarios-lista {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 4px);
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid var(--cm-border);
+  border-radius: 8px;
+  box-shadow: var(--cm-shadow);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 5;
+}
+
+.cm-busca-usuarios-vazio {
+  color: var(--cm-text-soft);
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 14px;
+  margin: 0;
+}
+
+.cm-busca-usuarios-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--cm-text);
+}
+
+.cm-busca-usuarios-item:hover {
+  background: #f5f5f5;
+}
+
+.cm-busca-usuarios-avatar {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  background: var(--cm-sage-soft);
+  color: var(--cm-sage-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.72rem;
+  flex-shrink: 0;
+}
+
+.cm-busca-usuarios-avatar-img {
+  object-fit: cover;
+  background: var(--cm-beige-soft);
+}
+
+/* Indicador "Conversando com X" (Tarefa 2) — só aparece pra admin/orientador
+   depois de selecionar alguém na busca; X fecha e volta pro próprio thread
+   (equivalente a usuarioSelecionado=null em Mensagens.jsx). */
+.cm-mensagens-thread-topo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--cm-sage-soft);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cm-sage-dark);
+}
+
+.cm-mensagens-thread-fechar {
+  margin-left: auto;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--cm-sage-dark);
+  display: grid;
+  place-items: center;
+  padding: 2px;
+}
+
+.cm-mensagens-chat {
+  flex: 1;
+  min-height: 0;
+  background: #fff;
+  border: 1px solid var(--cm-border);
+  border-radius: var(--cm-radius);
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.cm-mensagens-vazio {
+  color: var(--cm-text-soft);
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 24px;
+}
+
+.cm-mensagens-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Linha de UMA mensagem: avatar (36px, sempre à esquerda da bolha) + coluna
+   com nome/bolha/hora (.cm-mensagem-corpo). justify-content no próprio flex
+   (não row-reverse) é o que joga o par avatar+corpo pra ponta direita nas
+   mensagens "is-eu" SEM inverter a ordem interna — avatar continua colado
+   à esquerda da bolha dos dois lados, só o grupo inteiro que troca de
+   ponta (pedido do cliente, 26/08). */
+.cm-mensagem-bolha-linha {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.cm-mensagem-bolha-linha.is-eu {
+  justify-content: flex-end;
+}
+
+.cm-mensagem-bolha-linha.is-equipe {
+  justify-content: flex-start;
+}
+
+/* Foto de perfil de quem mandou a mensagem — mesmo tamanho/formato de
+   .cm-comentario-card-avatar (36px, iniciais quando não há foto). O lado
+   "equipe" nunca tem avatarUrl de verdade hoje (mensagens_privadas não faz
+   JOIN em alunos/admin como comentarios.php faz), então sempre cai nas
+   iniciais — só o avatar do próprio aluno logado usa foto de verdade. */
+.cm-mensagem-avatar {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 50%;
+  background: var(--cm-sage-soft);
+  color: var(--cm-sage-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.cm-mensagem-avatar-img {
+  object-fit: cover;
+  background: var(--cm-beige-soft);
+}
+
+/* Coluna nome+bolha+hora ao lado do avatar — max-width aqui (não mais na
+   bolha) é o que trava a largura do balão em 75%, com align-items
+   flex-end/flex-start fazendo nome e bolha encolherem pro próprio conteúdo
+   em vez de esticar pra largura toda da coluna. */
+.cm-mensagem-corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 75%;
+  min-width: 0;
+}
+
+.is-eu .cm-mensagem-corpo {
+  align-items: flex-end;
+}
+
+.is-equipe .cm-mensagem-corpo {
+  align-items: flex-start;
+}
+
+.cm-mensagem-nome {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--cm-text-soft);
+  padding: 0 2px;
+}
+
+.cm-mensagem-bolha {
+  max-width: 100%;
+  padding: 9px 12px;
+  border-radius: 14px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.cm-mensagem-bolha p {
+  margin: 0;
+}
+
+.cm-mensagem-bolha-hora {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.7rem;
+  opacity: 0.65;
+}
+
+.is-eu .cm-mensagem-bolha {
+  background: var(--cm-sage);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.is-equipe .cm-mensagem-bolha {
+  background: var(--cm-beige);
+  color: var(--cm-text);
+  border-bottom-left-radius: 4px;
+}
+
+.cm-mensagens-form {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.cm-mensagens-form input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1px solid var(--cm-border);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+.cm-mensagens-form input:focus {
+  outline: none;
+  border-color: var(--cm-sage);
+}
+
+.cm-mensagens-form button {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--cm-sage);
+  color: #fff;
+  border: none;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.cm-mensagens-form button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Cards brancos arredondados 20px, sombra suave — mesmo espírito visual dos
+   cards do Início (.cm-widget), mas com radius próprio pedido pra esta
+   tela; não reaproveita .cm-widget direto pra não herdar padding/gap
+   pensados pro grid do dashboard. */
+.cm-config-card {
+  background: var(--cm-bg);
+  border: 1px solid var(--cm-border);
+  border-radius: 20px;
+  box-shadow: var(--cm-shadow);
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cm-config-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+h3.cm-config-subtitle {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin: 0 0 20px;
+  color: var(--cm-text);
+}
+
+.cm-config-sep {
+  border: none;
+  border-top: 1px solid var(--cm-border);
+  margin: 2px 0;
+}
+
+.cm-config-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.cm-config-field:last-of-type {
+  margin-bottom: 0;
+}
+
+.cm-config-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cm-text);
+}
+
+.cm-config-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cm-config-input {
+  width: 100%;
+  height: 48px;
+  border: 1.5px solid var(--cm-border);
+  background: var(--cm-bg);
+  border-radius: 12px;
+  padding: 0 14px;
+  font-size: 15px;
+  color: var(--cm-text);
+  outline: none;
+  font-family: inherit;
+  transition:
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+
+.cm-config-input:focus {
+  border-color: var(--cm-text);
+}
+
+.cm-config-input.is-disabled,
+.cm-config-input:disabled {
+  color: var(--cm-text-soft);
+  background: var(--cm-beige-soft);
+  cursor: not-allowed;
+}
+
+.cm-config-input.is-valid,
+.cm-config-input.is-strong {
+  border-color: var(--cm-green);
+  padding-right: 42px;
+}
+
+.cm-config-input.is-strong {
+  background: var(--cm-green-soft);
+}
+
+.cm-config-input.is-invalid {
+  border-color: var(--cm-red);
+  padding-right: 42px;
+}
+
+.cm-config-input.is-weak {
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.cm-config-input-senha {
+  padding-right: 42px;
+}
+
+.cm-config-input-time {
+  max-width: 160px;
+}
+
+.cm-config-icon-right {
+  position: absolute;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.cm-config-icon-group {
+  pointer-events: auto;
+}
+
+.cm-config-icon-valid {
+  color: var(--cm-green);
+  display: inline-flex;
+  animation: cm-config-pop 200ms ease;
+}
+
+.cm-config-eye-btn {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--cm-text-soft);
+  border-radius: 6px;
+  transition: color 200ms ease;
+}
+
+.cm-config-eye-btn:hover {
+  color: var(--cm-text);
+}
+
+@keyframes cm-config-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.cm-config-error {
+  font-size: 12px;
+  color: var(--cm-red);
+}
+
+.cm-config-success {
+  font-size: 12px;
+  color: var(--cm-green);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cm-config-hint {
+  font-size: 12px;
+  color: var(--cm-text-soft);
+}
+
+.cm-config-field-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.cm-config-counter {
+  font-size: 12px;
+  color: var(--cm-text-soft);
+  white-space: nowrap;
+}
+
+.cm-config-checklist {
+  list-style: none;
+  margin: 2px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.cm-config-check-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--cm-text-soft);
+  transition: color 200ms ease;
+}
+
+.cm-config-check-item.is-ok {
+  color: var(--cm-green);
+}
+
+.cm-config-check-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--cm-border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cm-bg);
+  flex-shrink: 0;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease;
+}
+
+.cm-config-check-item.is-ok .cm-config-check-dot {
+  background: var(--cm-green);
+  border-color: var(--cm-green);
+}
+
+/* Campo "Foto de perfil" (Configuracoes.jsx) — preview circular + botão
+   "Escolher foto", lado a lado. */
+.cm-config-avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cm-config-avatar-preview {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: var(--cm-sage-soft);
+  color: var(--cm-sage-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.cm-config-avatar-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cm-config-avatar-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+
+/* Botão secundário (contorno) — usado aqui pro "Escolher foto" e no rodapé
+   do AvatarCropModal ("Cancelar"), pra não competir visualmente com
+   .cm-config-btn.is-ready (preto sólido, ação principal do card). */
+.cm-config-btn-secundario {
+  height: 40px;
+  padding: 0 18px;
+  border: 1.5px solid var(--cm-border);
+  border-radius: 12px;
+  background: var(--cm-bg);
+  color: var(--cm-text);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+
+.cm-config-btn-secundario:hover {
+  border-color: var(--cm-text);
+}
+
+.cm-config-btn-secundario:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cm-config-btn {
+  align-self: flex-start;
+  height: 48px;
+  padding: 0 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 20px;
+  background: var(--cm-border);
+  color: var(--cm-text-soft);
+  cursor: not-allowed;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease,
+    opacity 200ms ease;
+}
+
+.cm-config-btn.is-ready {
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+}
+
+.cm-config-btn.is-ready:hover {
+  background: #1a1a1a;
+}
+
+.cm-config-btn:disabled {
+  opacity: 0.7;
+}
+
+.cm-config-sair {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--cm-red);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 200ms ease;
+}
+
+.cm-config-sair:hover {
+  opacity: 0.75;
+}
+
+.cm-config-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: var(--cm-bg);
+  border: 1px solid var(--cm-border);
+  box-shadow: var(--cm-shadow);
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 50;
+  animation: cm-config-toast-in 220ms ease;
+}
+
+.cm-config-toast.is-sucesso {
+  color: #15803d;
+}
+
+.cm-config-toast.is-sucesso svg {
+  color: var(--cm-green);
+}
+
+.cm-config-toast.is-erro {
+  color: #b91c1c;
+}
+
+.cm-config-toast.is-erro svg {
+  color: var(--cm-red);
+}
+
+@keyframes cm-config-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 26/08 (prompt master responsividade): faixa estendida de 768 pra 1024px
+   — o hamburger agora cobre celular E tablet inteiro (769-1024 antes caía
+   num meio-termo sem tratamento próprio, ver comentário no @media
+   min-width:768/max-width:1024 mais acima). O bloco de grid do dashboard
+   (flatten + order dos widgets) continua só pro celular puro — ver
+   @media max-width:767px mais abaixo, com o comentário original desse
+   truque. */
+@media (max-width: 1024px) {
+  .cm-shell {
+    flex-direction: column;
+  }
+
+  /* 26/08, bug relatado: nessa largura (375px) a sidebar virava uma topbar
+     com nav em ícones + card do usuário (nome "Olá Nome" + badge "Membro
+     da comunidade" + Sair) dividindo a MESMA linha via grid-template-areas
+     — sem espaço pra tudo, o conteúdo quebrava/estourava. Trocado por
+     hamburger: o topbar agora só tem 2 elementos lado a lado (botão
+     hamburger à esquerda, avatar à direita); brand, nav completa e o resto
+     do card do usuário (nome/badge/Sair) foram todos pro drawer que abre
+     por cima da página (HamburgerMenu.jsx, renderizado por
+     ComunidadeSidebar.jsx entre o brand e a nav — os dois ficam
+     display:none aqui, então sobra só o botão do hamburger no lugar). */
+  .cm-sidebar-left {
+    width: 100%;
+    height: auto;
+    position: static;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+  }
+
+  .cm-comunidade-seletor,
+  .cm-sidebar-nav,
+  .cm-sidebar-copy {
+    display: none;
+  }
+
+  .cm-sidebar-footer {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Cards de mensagens/ajuda somem do topbar — "Mensagens" vira link
+     dentro do drawer (com o mesmo badge de não lidas), ajuda desktop
+     (cm-ajuda-card--desktop) já não faz sentido fora da sidebar fixa,
+     escondida por completo nesta mesma faixa. */
+  .cm-mensagens-card,
+  .cm-ajuda-card--desktop {
+    display: none !important;
+  }
+
+  /* Card do usuário do rodapé (nome/badge/avatar/Sair) some inteiro no
+     mobile — avatar, "Olá, Nome" e badge agora vivem dentro de
+     .cm-header-mobile-final (topbar), Sair fica só no drawer. */
+  .cm-sidebar-user-card {
+    display: none;
+  }
+
+  /* HEADER MOBILE FINAL (26/08) — topbar fixo com hamburger + badge
+     "Membro da comunidade" + "Olá, Nome" centralizado + avatar numa linha
+     só via grid 32/135/1fr/32. Antes só hamburger+avatar apareciam aqui e
+     nome/badge ficavam escondidos dentro do drawer; agora ficam visíveis
+     nos 2 lugares. Drawer/overlay/toggle continuam intocados. */
+  .cm-header-mobile-final {
+    display: grid;
+    grid-template-columns: 32px 135px 1fr 32px;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    height: 56px;
+    padding: 10px 12px;
+    /* background: #f5e8d2; */
+    max-width: 100vw;
+    overflow: hidden;
+  }
+
+  .cm-badge-membro-topo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 135px;
+    padding: 6px 8px;
+    font-size: 10.5px;
+    line-height: 1.1;
+    font-weight: 600;
+    color: var(--cm-sage-dark);
+    background: var(--cm-sage-soft);
+    border-radius: 999px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* justify-content:center + width:100% no wrapper garante espaço IGUAL
+     dos 2 lados do nome (entre badge e avatar) mesmo eles tendo larguras
+     diferentes (135px vs 32px) — centraliza em relação ao espaço do meio,
+     não em relação à tela inteira. */
+  .ola-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .ola-nome {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    margin: 0 auto;
+    max-width: 100%;
+    font-size: 0.84rem;
+    font-weight: 600;
+  }
+
+  .cm-header-mobile-avatar {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+
+  /* Botão hamburger: 3 traços (ver HamburgerMenu.jsx) — quadrado simples
+     sem fundo, do lado esquerdo do topbar (a ordem no DOM já garante isso,
+     já que brand/nav ao redor dele estão display:none acima). */
+  .cm-hamburger-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: none;
+    border: none;
+    flex-shrink: 0;
+  }
+
+  .cm-hamburger-btn span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--cm-text);
+  }
+
+  .cm-hamburger-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1001;
+  }
+
+  .cm-hamburger-drawer {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: -80%;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background: var(--cm-beige-soft);
+    padding: 20px 16px;
+    z-index: 1002;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+  }
+
+  .cm-hamburger-drawer.is-open {
+    left: 0;
+  }
+
+  .cm-hamburger-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 18px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--cm-border);
+  }
+
+  .cm-hamburger-header strong {
+    display: block;
+    font-size: 0.9rem;
+  }
+
+  .cm-hamburger-header .cm-badge-membro {
+    margin-top: 4px;
+  }
+
+  .cm-hamburger-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .cm-hamburger-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 12px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--cm-text-soft);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .cm-hamburger-link:hover {
+    background: var(--cm-beige);
+    color: var(--cm-text);
+  }
+
+  .cm-hamburger-link.is-ativo {
+    background: var(--cm-text);
+    color: #fff;
+  }
+
+  .cm-hamburger-badge {
+    margin-left: auto;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    background: var(--cm-red);
+    color: #fff;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+    line-height: 1;
+  }
+
+  .cm-hamburger-footer {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--cm-border);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .cm-hamburger-whatsapp {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 12px;
+    border-radius: 12px;
+    border: none;
+    background: #25d366;
+    color: #fff;
+    font-size: 0.86rem;
+    font-weight: 600;
+  }
+
+  .cm-hamburger-sair {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 12px;
+    border-radius: 12px;
+    border: none;
+    background: transparent;
+    color: var(--cm-text-soft);
+    font-size: 0.86rem;
+    font-weight: 500;
+  }
+
+  .cm-hamburger-sair:hover {
+    background: var(--cm-beige);
+    color: var(--cm-text);
+  }
+}
+
+/* ==========================================================================
+   Celular puro (<=767px) — reordena o Dashboard pra virar 1 feed único, na
+   ordem pedida pelo cliente: topbar compacto -> "Já meditei hoje" +
+   "Próximo encontro" -> Sequência + Sua Jornada -> Meditando junto ->
+   Desafio da semana -> Ranking de Presença -> "Sua prática hoje" por
+   ÚLTIMO (comentários já vêm dentro do mesmo card, ver
+   DificuldadeDoDia.jsx — o feed dela empilhado antes dos outros widgets,
+   26/08, dava a falsa impressão de página gigante quando na verdade era só
+   o usuário rolando o feed sem querer). No tablet (768-1024) as colunas
+   continuam como blocos próprios em vez desse truque — ver @media
+   min-width:768/max-width:1024 mais acima.
+
+   Truque central: .cm-grid-feed / .cm-coluna-meio / .cm-coluna-direita (as
+   3 colunas do grid desktop) viram `display: contents` — elas somem do
+   layout mas os widgets de dentro continuam no DOM, agora como filhos
+   DIRETOS de .cm-main. Só assim dá pra intercalar widgets que hoje moram em
+   colunas diferentes (ex: botão "Já meditei hoje", coluna 2, e "Próximo
+   encontro ao vivo", coluna 3, virando os 2 primeiros cards do mobile) sem
+   duplicar nenhum componente nem mexer em nenhum .jsx — a ordem visual vira
+   só CSS (`order`), a ordem real do DOM não muda. ========================== */
+@media (max-width: 767px) {
+  /* Grid único do conteúdo: 1 ou 2 colunas dependendo do espaço (auto-fit),
+     nunca mais que 2 num container de até 768px — é essa flexibilidade que
+     deixa Sequência/Jornada lado a lado quando cabe e empilhadas quando
+     não cabe, sem precisar de outro breakpoint. */
+  .cm-main {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .cm-grid-feed,
+  .cm-coluna-meio,
+  .cm-coluna-direita {
+    /* !important pra vencer o display:flex !important do desktop (ver
+       regra unificada das 3 colunas mais acima no arquivo) — sem isso o
+       flex column de 100% de altura vazava pro mobile e quebrava o
+       empilhamento em 1/2 colunas do grid auto-fit abaixo. */
+    display: contents !important;
+  }
+
+  /* Largura cheia (ocupa as 2 colunas quando elas existem) */
+  .cm-btn-meditei,
+  .cm-encontro-vivo,
+  .cm-duvida,
+  .cm-grid-pulso,
+  .cm-grid-desafio,
+  .cm-grid-ranking,
+  .cm-grid-frase {
+    grid-column: 1 / -1;
+  }
+
+  /* Ordem pedida pelo cliente. Sequência (.cm-widget-sequencia) e Jornada
+     (.cm-jornada) ficam de propósito SEM grid-column própria: o
+     auto-placement do grid já resolve "lado a lado se couber" (2 colunas)
+     ou "empilhado" (1 coluna) sozinho, ver .cm-main acima. */
+  .cm-btn-meditei {
+    order: 1;
+  }
+
+  .cm-encontro-vivo {
+    order: 2;
+  }
+
+  .cm-widget-sequencia {
+    order: 4;
+  }
+
+  .cm-jornada {
+    order: 5;
+  }
+
+  .cm-grid-pulso {
+    order: 6;
+  }
+
+  .cm-grid-desafio {
+    order: 8;
+    /* min-height:340px do desktop sobrava vazio numa tela estreita — altura
+       100% automática, sem limite/scroll (overflow:visible já é global,
+       ver regra base de .cm-grid-desafio/.cm-desafio-corpo). */
+    min-height: 0;
+    padding: 20px;
+  }
+
+  .cm-desafio-item {
+    padding: 6px 0;
+  }
+
+  /* min-height:318px + justify-content:center (regra base, ver acima) existem
+     só pra igualar a altura desse card à coluna vizinha no grid de 3
+     colunas do desktop — em coluna única no mobile isso sobrava um vão vazio
+     enorme embaixo do último dia do ranking. Mesma especificidade (2
+     classes) + mais abaixo no arquivo pra vencer o !important da regra
+     base. */
+  .cm-widget-escuro.cm-grid-ranking {
+    order: 9;
+    min-height: 0 !important;
+    padding: 22px !important;
+    justify-content: flex-start !important;
+  }
+
+  /* Frase Motivacional da Semana ocupa a mesma posição (order:9, último
+     widget da coluna 3) que o Ranking de Presença ocupava antes — card
+     branco de altura automática, sem precisar do min-height/!important
+     específico do card escuro acima. */
+  .cm-grid-frase {
+    order: 9;
+    padding: 22px;
+  }
+
+  /* "Sua prática hoje" por último (26/08, pedido do cliente — ver comentário
+     no topo deste bloco). order:10 vence todo mundo acima (o maior era 9). */
+  .cm-duvida {
+    order: 10;
+    padding: 20px;
+  }
+}
+
+/* Reforço explícito: hamburger/drawer/overlay nunca aparecem no desktop
+   (a regra base, sem @media, lá em cima já faz isso — aqui é só uma trava
+   a mais, caso a ordem das regras mude no futuro). 1025px pra bater com a
+   faixa tablet (768-1024) que agora também usa o hamburger. */
+@media (min-width: 1025px) {
+  .cm-hamburger-btn,
+  .cm-hamburger-overlay,
+  .cm-hamburger-drawer {
+    display: none !important;
+  }
+}
+
+/* Correção: comentário cortado com "..." no celular (Home e Aulas) — o
+   line-clamp aplicado ao texto do comentário estava truncando em 1 linha.
+   Regra fora de qualquer @media, no final do arquivo, pra vencer tudo. */
+.cm-comentario-texto,
+.cm-duvida-comentario p,
+.cm-comentario-corpo p,
+.cm-feed-comentario-texto,
+[class*="comentario"] p {
+  display: block !important;
+  -webkit-line-clamp: unset !important;
+  -webkit-box-orient: unset !important;
+  line-clamp: unset !important;
+  overflow: visible !important;
+  white-space: normal !important;
+  text-overflow: clip !important;
+  max-height: none !important;
+  height: auto !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+}
+
+@media (max-width: 768px) {
+  .cm-comentario-card,
+  .cm-duvida-comentario,
+  .cm-feed-comentario {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+}
+
+/* Reforça o clamp de 2 linhas SÓ dentro de "Sua prática hoje" (25/08) por
+   cima da regra "vencer tudo" logo acima (`[class*="comentario"] p`), que
+   zera line-clamp/max-height em QUALQUER <p> com "comentario" na classe
+   pra corrigir o truncamento de 1 linha no celular — sem essa exceção
+   aqui, .cm-comentario-card-texto nunca ficaria em 2 linhas e o card de
+   92px fixo (regra .cm-duvida .cm-comentario-card acima) cortaria o
+   parágrafo no meio de qualquer jeito, feio, em vez de terminar em "…".
+   `.cm-duvida .cm-comentario-card-texto` tem 2 classes de especificidade
+   (0,2,0), maior que o seletor de atributo de 1 classe da regra acima
+   (0,1,1) — ganha mesmo com !important dos dois lados, sem depender de
+   ordem no arquivo. ComentariosFeed.jsx (mural em Aulas, fora de
+   .cm-duvida) continua sem clamp nenhum, como a correção de celular
+   pedia. */
+.cm-duvida .cm-comentario-card-texto {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  line-clamp: 2 !important;
+  overflow: hidden !important;
+  white-space: normal !important;
+  max-height: none !important; /* o clamp já limita a 2 linhas, não precisa de teto em px */
+  /* line-height/margin mais enxutos que o padrão (1.5/4px) só aqui — é o
+     que faz as 2 linhas do clamp caberem dentro do card de 92px fixo
+     (padding 8px + linha do nome/badges ~25px + este bloco) sem cortar a
+     2ª linha visualmente na maioria dos comentários. */
+  line-height: 1.35;
+  margin-top: 2px;
+}
+
+/* Correção responsivo mobile (25/08) — "Sua prática hoje" quebrada no
+   celular: mensagem cortada, resposta do Administrador cortada à direita e
+   foto/data/lixeira do cabeçalho desalinhadas verticalmente. Bloco NOVO, no
+   fim do arquivo de propósito: precisa vencer por ORDEM (mesma
+   especificidade, ambos com !important) tanto o clamp de 2 linhas de
+   `.cm-duvida .cm-comentario-card-texto` (regra logo acima) quanto os 92px
+   fixos de `.cm-duvida .cm-comentario-card` (regra lá em cima, perto de
+   .cm-comentario-card) — os dois foram pensados só pro desktop (6 itens
+   de 92px = 624px), no celular a coluna é bem mais estreita e a MESMA
+   mensagem quebra em muito mais linhas, então o clamp/altura fixa cortavam
+   o texto no meio. Nota: "resposta do Administrador" é o MESMO
+   ComentarioCard.jsx renderizado aninhado dentro de
+   .cm-comentario-respostas (não existe um componente "resposta" à parte),
+   então a correção da largura mira `.cm-comentario-respostas
+   .cm-comentario-card`. */
+@media (max-width: 768px) {
+  /* PROBLEMA 1: destrava a altura fixa de 92px só no mobile — no desktop
+     continua 92px (regra .cm-duvida .cm-comentario-card lá em cima,
+     intocada). align-items:flex-start porque agora o card cresce em altura
+     com o texto; centralizar o avatar (36px) contra um card alto ficaria
+     estranho, ele deve ficar ancorado no topo, igual a maioria dos feeds de
+     comentário. */
+  .cm-duvida .cm-comentario-card {
+    min-height: 110px;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    padding: 12px 14px;
+    align-items: flex-start;
+  }
+
+  /* Mensagem inteira em vez de cortada em 2 linhas — !important pra vencer
+     a regra .cm-duvida .cm-comentario-card-texto logo acima (mesma
+     especificidade de 2 classes, essa aqui ganha por vir depois no
+     arquivo). 4 linhas de clamp em vez de "normal" sem limite nenhum:
+     evita que um comentário gigante estoure o card indefinidamente, mas já
+     é o suficiente pra caber a mensagem inteira dos casos reportados. */
+  .cm-duvida .cm-comentario-card-texto {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 4 !important;
+    line-clamp: 4 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: visible !important;
+    max-height: none !important;
+    font-size: 14px;
+    line-height: 1.4;
+    word-break: break-word;
+    margin-top: 4px;
+  }
+
+  /* PROBLEMA 2: bloco do Administrador/Orientador cortado na direita.
+     .cm-comentario-respostas já indenta com padding-left:16px (traço de
+     vínculo) — o card da resposta em si só precisa ficar travado dentro
+     dessa largura já reduzida, nunca mais largo que o espaço disponível, e
+     quebrar palavra em vez de estourar a lateral do card. */
+  .cm-comentario-respostas {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .cm-comentario-respostas .cm-comentario-card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  /* PROBLEMA 3: data/lixeira do cabeçalho (cluster
+     .cm-comentario-card-topo-direita) — mantém a centralização vertical que
+     já existe via align-items:center (.cm-comentario-card-topo) e
+     align-self:center (.cm-comentario-card-topo-direita > *, ambos lá em
+     cima) — aqui só reforça o mesmo eixo pro cluster inteiro, garantindo
+     que sobrevive mesmo com o card agora de altura variável (Problema 1). A
+     foto mini (image_url) saiu daqui em 26/08 — a regra de encolher ela no
+     celular, logo abaixo, agora vale pra onde ela mora hoje (própria linha,
+     abaixo do texto), não precisou mudar por ser um seletor geral. Valor
+     ajustado de 32px pra 64px na 2ª mudança do mesmo dia, pra acompanhar o
+     tamanho maior de 84px do desktop (.cm-comentario-card-foto-mini). */
+  .cm-comentario-card-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cm-comentario-card-topo-direita {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cm-comentario-card-foto-mini,
+  .cm-comentario-card-foto-mini img {
+    width: 64px;
+    height: 64px;
+  }
+
+  /* PROBLEMA 4 (26/08): data da resposta estourando pra fora da bolha em
+     respostas do Administrador/Orientador. .cm-comentario-card-topo herda
+     flex-wrap:nowrap da regra base (desktop, lá em cima) e nunca é
+     resetado pra mobile — junto com overflow:visible do Problema 1 (que
+     precisa continuar visible pro card crescer em altura), isso deixa o
+     cluster nome+badge+data sem pra onde ir quando não cabe tudo numa
+     linha só: em vez de quebrar, ele vaza pra direita, escapando da
+     bolida. É mais fácil de acontecer numa resposta aninhada
+     (.cm-comentario-respostas indenta com padding-left, sobrando ainda
+     menos largura) com badge "Administrador"/"Orientador" (flex-shrink:0,
+     nunca encolhe) + data lado a lado. Correção: permite quebrar linha
+     igual o resto do card já faz (altura livre) — .cm-comentario-card-nome
+     continua encolhendo primeiro (min-width:0 + ellipsis), e só se ainda
+     assim não couber, o cluster inteiro de .cm-comentario-card-topo-direita
+     (data + lixeira, flex-shrink:0) desce pra 2ª linha dentro da própria
+     bolha em vez de vazar pra fora dela. margin-left:auto da regra base
+     também precisa ser zerado aqui, senão o cluster continua sendo
+     empurrado pra ponta direita mesmo já estando sozinho numa linha nova,
+     ao invés de ficar colado no restante do conteúdo. */
+  .cm-comentario-card-topo {
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+
+  .cm-comentario-card-topo-direita {
+    margin-left: 0;
+    flex-wrap: nowrap;
+  }
+}
+
+/* Celular estreito (320-480px, prompt master responsividade 26/08) —
+   ajustes finos que a faixa geral de celular (<=767px, mais acima) não
+   cobria: padding lateral menor no container, cards com margem entre si em
+   vez de grudados, botão de enviar dúvida ocupando a largura toda, e os
+   cards escuros de resposta (Admin/Orientador) com padding e fonte um
+   pouco menores pra sobrar mais espaço de leitura numa tela de 320-390px. */
+@media (max-width: 480px) {
+  .cm-main {
+    padding: 0 12px;
+  }
+
+  .cm-main > * {
+    margin: 0 0 12px;
+  }
+
+  /* Reforço extra de contenção horizontal (mesmo raciocínio do comentário
+     de .comunidade-app lá em cima, "26/08, bug relatado: dava pra arrastar
+     a tela pro lado") — cobre o shell e o content também, não só o
+     container mais externo. */
+  .cm-shell,
+  .cm-content {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  /* Sobra pouca largura pra "toggle + botão" lado a lado nessa faixa — o
+     contador sobe pra sua própria linha (flex-wrap no pai força isso, já que
+     -direita abaixo pede 100% de largura) e, dentro de -direita, o toggle
+     encolhe pra só o ícone (label "Público"/"Privado"/"Orientador" some,
+     mas continua no aria-label/title e no popover ao abrir) sobrando o
+     máximo de espaço pro botão "Compartilhar", que cresce (flex:1) pra
+     preencher o resto — mesmo efeito visual de "botão ocupando a largura
+     toda" que existia antes do toggle ser adicionado.  */
+  .cm-duvida-form-acoes {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+
+  .cm-duvida-form-acoes-direita {
+    width: 100%;
+  }
+
+  .cm-duvida-visibilidade-btn span {
+    display: none;
+  }
+
+  /* No desktop o popover abre pra esquerda (right:0, ver regra base) porque
+     o toggle fica perto do fim da linha, perto de "Compartilhar". Aqui
+     embaixo de 480px o toggle vira o 1º elemento de -direita (que agora
+     ocupa 100% da largura, ver acima) — abrir pra esquerda vazaria pra fora
+     da tela. Abre pra direita em vez disso, onde sobra o espaço todo do
+     botão "Compartilhar" ao lado. */
+  .cm-duvida-visibilidade-popover {
+    right: auto;
+    left: 0;
+  }
+
+  .cm-duvida-enviar {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .cm-comentario-card-admin,
+  .cm-comentario-card-orientador {
+    padding: 12px;
+  }
+
+  .cm-comentario-card-admin .cm-comentario-card-texto,
+  .cm-comentario-card-orientador .cm-comentario-card-texto {
+    font-size: 13.5px;
+  }
+}
